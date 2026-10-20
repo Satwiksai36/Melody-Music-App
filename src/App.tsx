@@ -12,11 +12,13 @@ import { AlbumDetailScreen } from './screens/AlbumDetailScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { PlayerScreen } from './screens/PlayerScreen';
 import SpotifyCallbackScreen from './screens/SpotifyCallbackScreen';
+import { CapacitorBridge } from './components/common/CapacitorBridge';
 
 export const App: React.FC = () => {
   return (
     <PlayerProvider>
       <BrowserRouter>
+        <CapacitorBridge />
         <Routes>
           {/* All screens wrapped in AppLayout for consistent mobile container view */}
           <Route element={<AppLayout />}>

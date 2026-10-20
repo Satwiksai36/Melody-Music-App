@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { Track } from '../types';
 import { MOCK_TRACKS } from '../data/mockData';
 import { storageService } from '../services/storageService';
@@ -240,19 +240,23 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       let spotifyId = getSpotifyTrackId(track.id);
 
       if (!spotifyId) {
-        // Track is from mock catalog â€” resolve it on Spotify by title + artist
+        // Track is from catalog - resolve it on Spotify by title + artist
         const result = await resolveTrackOnSpotify(track.title, track.artist);
         if (result) {
-          spotifyId = result.providerId;
+          if (!result.isPlayable && !result.previewUrl && !isSpotifyPremium) {
+            setPlaybackStatus('unavailable');
+            setPlaybackError(`"${track.title}" is unavailable on this Spotify account.`);
+            setIsPlaying(false);
+            return;
+          }
           await spotifyPlayer.play(result);
         } else {
+          setPlaybackStatus('unavailable');
           setPlaybackError(`"${track.title}" was not found on Spotify.`);
-          setIsPreviewMode(false);
-          // Fall back to mock ticker playback
-          setIsPlaying(true);
+          setIsPlaying(false);
         }
       } else {
-        // Track already has a Spotify ID from a previous search
+        // Track already has a Spotify ID
         const musicTrack = {
           providerId: spotifyId,
           provider: 'spotify' as const,
@@ -262,15 +266,16 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           artworkUrl: track.coverUrl,
           durationMs: track.duration * 1000,
           previewUrl: track.audioUrl ?? null,
-          isPlayable: true,
+          isPlayable: isSpotifyPremium,
           externalUrl: '',
         };
         await spotifyPlayer.play(musicTrack);
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Playback error';
+      setPlaybackStatus('error');
       setPlaybackError(msg);
-      setIsPlaying(true); // continue mock ticker
+      setIsPlaying(false);
     }
   };
 
@@ -293,11 +298,12 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       }
     }
     setCurrentTime(0);
-    setIsPlaying(true);
     setIsPreviewMode(false);
 
     if (spotifyStatus === 'connected') {
       resolveAndPlay(track);
+    } else {
+      setIsPlaying(true);
     }
   };
 
@@ -396,7 +402,52 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     spotifyPlayer.setVolume(clamped * 100);
   };
 
-  const toggleMute = () => setIsMuted((prev) => !prev);
+  // ─── MediaSession API (Android Notification & Lock Screen Controls) ────────
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('mediaSession' in navigator)) return;
+
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: currentTrack.title,
+        artist: currentTrack.artist,
+        album: currentTrack.movieOrAlbum || 'Melody Music',
+        artwork: [
+          { src: currentTrack.coverUrl, sizes: '96x96', type: 'image/jpeg' },
+          { src: currentTrack.coverUrl, sizes: '128x128', type: 'image/jpeg' },
+          { src: currentTrack.coverUrl, sizes: '256x256', type: 'image/jpeg' },
+          { src: currentTrack.coverUrl, sizes: '512x512', type: 'image/jpeg' },
+        ],
+      });
+
+      navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        if (!isPlaying) togglePlayPause();
+      });
+      navigator.mediaSession.setActionHandler('pause', () => {
+        if (isPlaying) togglePlayPause();
+      });
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        prevTrack();
+      });
+      navigator.mediaSession.setActionHandler('nexttrack', () => {
+        nextTrack();
+      });
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        if (details.seekTime !== undefined && details.seekTime !== null) {
+          seekTo(details.seekTime);
+        }
+      });
+      navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+        seekTo(Math.max(0, currentTime - (details.seekOffset || 10)));
+      });
+      navigator.mediaSession.setActionHandler('seekforward', (details) => {
+        seekTo(Math.min(duration, currentTime + (details.seekOffset || 10)));
+      });
+    } catch {
+      // Ignore unsupported browser handlers
+    }
+  }, [currentTrack, isPlaying, currentTime, duration]);
 
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
