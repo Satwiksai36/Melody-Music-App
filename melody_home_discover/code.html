@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes eqBar1 { 0%, 100% { height: 6px; } 50% { height: 18px; } }
+@keyframes eqBar2 { 0%, 100% { height: 16px; } 50% { height: 8px; } }
+@keyframes eqBar3 { 0%, 100% { height: 8px; } 50% { height: 20px; } }
+.eq-bar-1 { animation: eqBar1 0.7s ease-in-out infinite; }
+.eq-bar-2 { animation: eqBar2 0.85s ease-in-out infinite 0.15s; }
+.eq-bar-3 { animation: eqBar3 0.65s ease-in-out infinite 0.3s; }
+.eq-paused .eq-bar-1, .eq-paused .eq-bar-2, .eq-paused .eq-bar-3 { animation-play-state: paused !important; }
+.pop-active { transform: scale(1.25); }
+</style></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen select-none"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-2"><div class="relative w-9 h-9 flex items-center justify-center flex-shrink-0 cursor-pointer active:scale-95 transition-transform"><div class="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-[0_2px_8px_rgba(66,29,219,0.15)]"><div class="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center gap-[2.5px]"><span class="w-[2.5px] h-3 rounded-full bg-[#ff5e3a]"></span><span class="w-[2.5px] h-4.5 rounded-full bg-[#ff453a]"></span><span class="w-[2.5px] h-5 rounded-full bg-[#5b42f3]"></span><span class="w-[2.5px] h-4 rounded-full bg-[#3830a3]"></span><span class="w-[2.5px] h-2.5 rounded-full bg-[#0d9488]"></span></div></div><div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary shadow-sm ring-1 ring-surface"><span class="material-symbols-outlined text-[10px] leading-none" style="font-variation-settings: 'FILL' 1;">bolt</span></div></div><img alt="Melody" class="h-6 w-auto object-contain cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFyQ5-3_l1wmMeKOxVeuYk_GWtjrMpoUVhlzBaDU1AZ4i75ocJN2t2LLr6gK8y3XT5G-ZYIMEwH8_2ez_9LqQX0htBtQ516_gwC6nFPZ6W26_isKzcDhzpLBh_XidOUXOQlVxaBHCI4Y0zrHvedT8ECEgAqCvD7b0iVNveTPGqZl6d-EWe3BroEe_YLqcC6sv_20UH5VxzM4lHOuc7GK-i4oVeW-lbOLseSjWcEcZl1O6L1ul4_R5xxp1VdlIFXpWTqZg"/></div><div class="flex items-center gap-space-xs"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95" id="header-search-btn"><span class="material-symbols-outlined text-[24px]">search</span></button><div class="w-11 h-11 flex items-center justify-center cursor-pointer active:scale-95 transition-transform"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)] ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-[140px] bg-surface"><div class="flex flex-col w-full">
+<!-- Top Greeting & Search Zone (Electric Lavender Surface Accent) -->
+<section class="px-margin pt-space-sm pb-space-md flex flex-col gap-space-md">
+<!-- Header Greeting with Personal Touch & Doodle Accent -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight">Hey Riyad!</span>
+<span class="text-xl inline-block origin-bottom-right hover:rotate-12 active:rotate-45 transition-transform cursor-pointer" id="wave-emoji">👋</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Your next favourite starts here 🎵</p>
+</div>
+<!-- Quick Action / Mood Sparkle Badge -->
+<button aria-label="Mood Station" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-sm hover:scale-105 active:scale-90 transition-all" id="mood-station-btn">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</button>
+</div>
+<!-- Expressive Pill Search Bar -->
+<div class="relative w-full flex items-center bg-surface-container rounded-full px-space-md py-space-sm shadow-[0_4px_16px_rgba(91,66,243,0.05)] focus-within:bg-surface-container-lowest focus-within:shadow-[0_6px_20px_rgba(91,66,243,0.12)] transition-all">
+<span class="material-symbols-outlined text-outline text-[22px] mr-space-xs">search</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none" id="main-search-input" placeholder="Search Telugu, Bollywood, artists..." type="text"/>
+<button aria-label="Audio &amp; Filters" class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:text-primary transition-colors flex-shrink-0 active:scale-95" id="search-filter-btn">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Language Quick-Filter Chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar -mx-margin px-margin py-1">
+<button class="lang-chip px-space-md py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-all duration-200 flex-shrink-0 active:scale-95" data-lang="all">
+        All Vibes
+      </button>
+<button class="lang-chip px-space-md py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all duration-200 flex-shrink-0 active:scale-95" data-lang="telugu">
+        Telugu 🎧
+      </button>
+<button class="lang-chip px-space-md py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all duration-200 flex-shrink-0 active:scale-95" data-lang="hindi">
+        Bollywood ✨
+      </button>
+<button class="lang-chip px-space-md py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all duration-200 flex-shrink-0 active:scale-95" data-lang="tamil">
+        Tamil 🔥
+      </button>
+<button class="lang-chip px-space-md py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all duration-200 flex-shrink-0 active:scale-95" data-lang="english">
+        Indie &amp; English
+      </button>
+</div>
+</section>
+<!-- Editorial Spotlight Hero: Telugu Chartbusters 2024 -->
+<section class="px-margin mb-space-lg" data-genre="telugu">
+<div class="relative w-full rounded-xl overflow-hidden bg-gradient-to-br from-tertiary-fixed via-[#FFE29A] to-secondary-fixed shadow-[0_12px_32px_rgba(254,93,57,0.18)] p-space-md flex flex-col justify-between min-h-[220px]">
+<!-- Whimsical Rainbow / Audio Wave Arches Graphic (Retro-Modern Indian Editorial Look) -->
+<div class="absolute -top-10 -right-8 w-44 h-44 rounded-full pointer-events-none opacity-80">
+<svg class="w-full h-full" viewbox="0 0 160 160">
+<circle cx="80" cy="80" fill="none" opacity="0.4" r="70" stroke="#5B42F3" stroke-dasharray="14 8" stroke-width="10"></circle>
+<circle cx="80" cy="80" fill="none" opacity="0.6" r="54" stroke="#FE5D39" stroke-width="12"></circle>
+<circle cx="80" cy="80" fill="none" opacity="0.7" r="38" stroke="#155544" stroke-width="10"></circle>
+<circle cx="80" cy="80" fill="#FE5D39" r="22"></circle>
+</svg>
+</div>
+<!-- Playful Cutout Halo & Doodles Behind Artist -->
+<div class="absolute right-3 bottom-0 w-44 h-48 pointer-events-none flex items-end justify-center">
+<!-- Mint & Yellow Arched Backdrop Plate -->
+<div class="absolute bottom-0 w-36 h-40 bg-tertiary-fixed-dim/70 rounded-t-full -z-0"></div>
+<!-- Duotone Artist Cutout -->
+<img class="relative z-10 w-40 h-44 object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.15)]" data-alt="Editorial duotone high-contrast monochrome studio cutout of a stylish Indian male playback singer with modern sunglasses, joyful expressive smile, set against retro pastel graphic elements and sunny arches in warm mint and saffron palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF_3Q1gpSrNvrNkdJBawGlPvnFS8Xvl3W-2LfP9OLYPaEBXkUQH_u96RUREjsYLw62E_OYC6Nwj7wgSSEsoEU_9e1dDyumCK2f_YovzWeNwcMY3WAW71Yilawc3dvOIT5Jo9FTKfkM0PPertgALyIlVUx0xEmmmi6YafkbbdYTYH6cU328qz3pz1DeLitXXQ454Vas-VyW1l-4H7f2j3d-pNWXxGzvcDx4U_YKI3DysHy8iioy8ymXqw"/>
+<!-- Hand-drawn soundwave marks -->
+<div class="absolute top-4 left-2 flex gap-1 z-20">
+<span class="w-1 h-3 bg-secondary-container rounded-full rotate-[-15deg]"></span>
+<span class="w-1 h-4 bg-primary rounded-full rotate-[-5deg]"></span>
+<span class="w-1 h-2 bg-secondary-container rounded-full rotate-[12deg]"></span>
+</div>
+</div>
+<!-- Hero Card Typography & Badges -->
+<div class="relative z-20 max-w-[58%] flex flex-col gap-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="px-2.5 py-0.5 rounded-full bg-on-secondary-fixed text-surface font-label-sm text-label-sm tracking-wider uppercase">
+            Curated Mix
+          </span>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary-container"></span>
+</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-secondary-fixed leading-tight tracking-tight mt-1">
+          Telugu Chartbusters
+        </h2>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant font-medium">
+          Top 50 high-octane mass beats &amp; soulful acoustic hits of 2024.
+        </p>
+</div>
+<!-- Floating Primary Play Pill -->
+<div class="relative z-20 flex items-center justify-between pt-space-md">
+<div class="flex items-center gap-space-xs bg-surface/70 backdrop-blur-md px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-tertiary">graphic_eq</span>
+<span class="font-label-sm text-label-sm text-on-surface">Updated Today • 3.2M Plays</span>
+</div>
+<button aria-label="Play Telugu Chartbusters" class="w-13 h-13 px-4 py-3 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center gap-1.5 shadow-[0_6px_20px_rgba(254,93,57,0.4)] active:scale-95 transition-all group cursor-pointer hover:shadow-xl" data-artist="Top 50 Curated Mix • 2024" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuDF_3Q1gpSrNvrNkdJBawGlPvnFS8Xvl3W-2LfP9OLYPaEBXkUQH_u96RUREjsYLw62E_OYC6Nwj7wgSSEsoEU_9e1dDyumCK2f_YovzWeNwcMY3WAW71Yilawc3dvOIT5Jo9FTKfkM0PPertgALyIlVUx0xEmmmi6YafkbbdYTYH6cU328qz3pz1DeLitXXQ454Vas-VyW1l-4H7f2j3d-pNWXxGzvcDx4U_YKI3DysHy8iioy8ymXqw" data-title="Telugu Chartbusters" id="hero-play-btn">
+<span class="material-symbols-outlined text-[24px] hero-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span class="font-label-lg text-label-lg pr-1 hero-text">Play</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Horizontal Carousel: Trending Telugu & Bollywood Hits -->
+<section class="mb-space-lg">
+<div class="px-margin flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-6 rounded-full bg-secondary-container"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Trending Hits</h3>
+</div>
+<a class="font-label-md text-label-md text-primary font-bold hover:underline flex items-center gap-0.5 active:translate-x-0.5 transition-transform" href="#">
+        See All
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<!-- Scrollable Reel -->
+<div class="flex gap-space-md overflow-x-auto no-scrollbar px-margin pb-2">
+<!-- Card 1: Kurchi Madathapetti -->
+<div class="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform" data-artist="Thaman S, Sri Krishna • Guntur Kaaram" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuDsY8F9Q-oqDxstZd09gLnDoG4whuaP-_DM_FDi9oOjNqGnTpg_-59mlgY3Kz7K1ZvT4YHB_eo0G1VPAnVEj0WviRSWZCB4wDDxLFl55l56nOcqjoo9-cXQnoSfsxfAgQ-_iWj1XNj4pE95CAGJ4gMZLTq-_dqoqhlzjx1SxHpX5VCsZT3lsBySkqH39QqG56SxOIZaxiOSmLxA-NgiLOj_Evid0ZAkuK87ucUPZ8WqtCJ41HK5pVVXDw" data-genre="telugu" data-id="1" data-title="Kurchi Madathapetti">
+<div class="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Vibrant dynamic high-energy Indian cinematic film album cover featuring neon party lights, vibrant yellow and coral gradients, stylish dancers silhouette in joyful energetic motion." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsY8F9Q-oqDxstZd09gLnDoG4whuaP-_DM_FDi9oOjNqGnTpg_-59mlgY3Kz7K1ZvT4YHB_eo0G1VPAnVEj0WviRSWZCB4wDDxLFl55l56nOcqjoo9-cXQnoSfsxfAgQ-_iWj1XNj4pE95CAGJ4gMZLTq-_dqoqhlzjx1SxHpX5VCsZT3lsBySkqH39QqG56SxOIZaxiOSmLxA-NgiLOj_Evid0ZAkuK87ucUPZ8WqtCJ41HK5pVVXDw"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-on-surface/60 backdrop-blur-md text-surface font-label-sm text-label-sm">
+            #1 Telugu
+          </span>
+<button aria-label="Like Kurchi Madathapetti" class="like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-on-surface/50 backdrop-blur-md text-surface flex items-center justify-center hover:bg-secondary-container hover:text-white transition-all active:scale-75">
+<span class="material-symbols-outlined text-[16px] like-icon">favorite_border</span>
+</button>
+<button aria-label="Play Kurchi Madathapetti" class="track-play-btn absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-lg active:scale-90 transition-transform hover:shadow-xl hover:scale-105">
+<span class="material-symbols-outlined text-[20px] play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors">
+            Kurchi Madathapetti
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+            Thaman S, Sri Krishna • Guntur Kaaram
+          </p>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">3:38 mins</span>
+</div>
+</div>
+<!-- Card 2: Chaleya -->
+<div class="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform" data-artist="Arijit Singh, Shilpa Rao • Jawan" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuCCHq9T7hVT0Z-VCjOYIF2uiyjLY7ORWcjcIT-gIGC1VgtfMX6R-abZdfwWosOtudIQe1qx6zpa1xIGSCOO7x27PGsQZCh1PPOAPPbLLWBNk3Tx9eO0dO5bHqGnGjH8Bktsk-uImaIfOvAb6pj86cdmzWB2GIZl36TIFZq9v-eZ_wX7yR2G0eHZnlM3z5IfUpILGMXTpAbyjlzNXyTEFm_nyzPuMLBFpvvbRyzTtTt66GzMGauR99XlCw" data-genre="hindi" data-id="2" data-title="Chaleya">
+<div class="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Romantic Bollywood music visual art with dreamy twilight seaside atmosphere, pastel lavender and peach skies, acoustic guitar styling, cinematic warm photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCHq9T7hVT0Z-VCjOYIF2uiyjLY7ORWcjcIT-gIGC1VgtfMX6R-abZdfwWosOtudIQe1qx6zpa1xIGSCOO7x27PGsQZCh1PPOAPPbLLWBNk3Tx9eO0dO5bHqGnGjH8Bktsk-uImaIfOvAb6pj86cdmzWB2GIZl36TIFZq9v-eZ_wX7yR2G0eHZnlM3z5IfUpILGMXTpAbyjlzNXyTEFm_nyzPuMLBFpvvbRyzTtTt66GzMGauR99XlCw"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-on-surface/60 backdrop-blur-md text-surface font-label-sm text-label-sm">
+            Top Global
+          </span>
+<button aria-label="Like Chaleya" class="like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-on-surface/50 backdrop-blur-md text-surface flex items-center justify-center hover:bg-secondary-container hover:text-white transition-all active:scale-75">
+<span class="material-symbols-outlined text-[16px] like-icon">favorite_border</span>
+</button>
+<button aria-label="Play Chaleya" class="track-play-btn absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-lg active:scale-90 transition-transform hover:shadow-xl hover:scale-105">
+<span class="material-symbols-outlined text-[20px] play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors">
+            Chaleya
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+            Arijit Singh, Shilpa Rao • Jawan
+          </p>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">3:20 mins</span>
+</div>
+</div>
+<!-- Card 3: Ta Takkara -->
+<div class="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform" data-artist="Santhosh Narayanan • Kalki 2898 AD" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuDWqXvrOtab-j0sC7hA09bgpwC7on6N3ls1sb7oN1YDOT9koiS52dKU2duMWFRkgSSxnTZn03tgiHYs5OUVqWGyI7cKLJx1RS31u52HmRmreNRcw5tGLyu7ROpSwVRGt4VldWc8k8X7PfmVKh7iGYiP3yCaBJ2AYj15I1oj75mS0Zw10-yVN12R7lIZCca23uIYPjb3kURP6Cm_H0DSEKAF2hlD9vxlnomXXwhN84Z46bWJhGgD3vAeag" data-genre="telugu" data-id="3" data-title="Ta Takkara">
+<span class="font-label-sm text-label-sm text-outline mt-0.5 hidden"></span>
+<div class="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Futuristic sci-fi Indian musical aesthetic with glowing cyan and gold neon accents, cosmic starscapes, futuristic temple architecture, album poster composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWqXvrOtab-j0sC7hA09bgpwC7on6N3ls1sb7oN1YDOT9koiS52dKU2duMWFRkgSSxnTZn03tgiHYs5OUVqWGyI7cKLJx1RS31u52HmRmreNRcw5tGLyu7ROpSwVRGt4VldWc8k8X7PfmVKh7iGYiP3yCaBJ2AYj15I1oj75mS0Zw10-yVN12R7lIZCca23uIYPjb3kURP6Cm_H0DSEKAF2hlD9vxlnomXXwhN84Z46bWJhGgD3vAeag"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-on-surface/60 backdrop-blur-md text-surface font-label-sm text-label-sm">
+            Trending
+          </span>
+<button aria-label="Like Ta Takkara" class="like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-on-surface/50 backdrop-blur-md text-surface flex items-center justify-center hover:bg-secondary-container hover:text-white transition-all active:scale-75">
+<span class="material-symbols-outlined text-[16px] like-icon">favorite_border</span>
+</button>
+<button aria-label="Play Ta Takkara" class="track-play-btn absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-lg active:scale-90 transition-transform hover:shadow-xl hover:scale-105">
+<span class="material-symbols-outlined text-[20px] play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors">
+            Ta Takkara
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+            Santhosh Narayanan • Kalki 2898 AD
+          </p>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">3:42 mins</span>
+</div>
+</div>
+<!-- Card 4: Kesariya -->
+<div class="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform" data-artist="Arijit Singh, Pritam • Brahmāstra" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuC2RQqfWGJAWJe-4YLzjbmiK88zzdl0JS-Tcd4CpabaD30QmeibSxbNWigdzdYSTdKSo4QqPc6DezdDEFetfaw-9DDliC2ZcV0rZFbZiJIR0zMYUZqBwxZyCc3iGwNQ7O-yLe7yvy7mBUDx5XISGCxqlLyAYJ50sh7rYCMu_RmR5bylu1BAbEwvM_n5RWQI6nfO3dGPYCUk4FNicvqkcgx1BL_jO1SQEhogkqQONaI7eV3ucyjMMZRQjg" data-genre="hindi" data-id="4" data-title="Kesariya">
+<div class="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Warm golden hour saffron colored Varanasi ghata celebration with flying marigold petals, spiritual acoustic melody aesthetic, high saturation rich orange hues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2RQqfWGJAWJe-4YLzjbmiK88zzdl0JS-Tcd4CpabaD30QmeibSxbNWigdzdYSTdKSo4QqPc6DezdDEFetfaw-9DDliC2ZcV0rZFbZiJIR0zMYUZqBwxZyCc3iGwNQ7O-yLe7yvy7mBUDx5XISGCxqlLyAYJ50sh7rYCMu_RmR5bylu1BAbEwvM_n5RWQI6nfO3dGPYCUk4FNicvqkcgx1BL_jO1SQEhogkqQONaI7eV3ucyjMMZRQjg"/>
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-on-surface/60 backdrop-blur-md text-surface font-label-sm text-label-sm">
+            Soulful
+          </span>
+<button aria-label="Like Kesariya" class="like-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-on-surface/50 backdrop-blur-md text-surface flex items-center justify-center hover:bg-secondary-container hover:text-white transition-all active:scale-75">
+<span class="material-symbols-outlined text-[16px] like-icon">favorite_border</span>
+</button>
+<button aria-label="Play Kesariya" class="track-play-btn absolute bottom-2.5 right-2.5 w-10 h-10 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-lg active:scale-90 transition-transform hover:shadow-xl hover:scale-105">
+<span class="material-symbols-outlined text-[20px] play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors">
+            Kesariya
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+            Arijit Singh, Pritam • Brahmāstra
+          </p>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">4:28 mins</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recently Played with Tactile Wave & Audio State -->
+<section class="px-margin mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-6 rounded-full bg-primary"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recently Played</h3>
+</div>
+<button class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors active:scale-95" id="clear-history-btn">
+        Clear History
+      </button>
+</div>
+<div class="flex flex-col gap-space-xs" id="recent-tracks-container">
+<!-- Track Item 1 (Active / Now Playing feel) -->
+<div class="track-row flex items-center justify-between p-space-sm rounded-xl bg-surface-container-high/60 hover:bg-surface-container-high transition-colors group cursor-pointer active:scale-98" data-artist="Sid Sriram • Ala Vaikunthapurramuloo" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuD1YRagYFH4WjVIrlCgPpkAF_YM7suouUbHYdgGKU6gtLOYWtYEPXPwLGrwbLA2cl8C7_fMOVPpo94O0l7TC3ADCAx0mJljuCdv1LRhTZpeAirFcIe9k1KOaf2i3lTvbqn3c8e53cODnQ_O0bRWEM-2Ucev1lkGXbDTty_glQjv8_RYREy4FExV9ZvFuzZBqQlTQtzY8n_4Yk0CVPSpUc0z_Q0AnlA6LuQpwjqSf2FKy-iHTZmyrcNOJw" data-genre="telugu" data-id="5" data-title="Samajavaragamana">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Artistic album artwork of Telugu acoustic melody Samajavaragamana with gentle lilac lighting, microphone, and classical Indian instrument contours." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1YRagYFH4WjVIrlCgPpkAF_YM7suouUbHYdgGKU6gtLOYWtYEPXPwLGrwbLA2cl8C7_fMOVPpo94O0l7TC3ADCAx0mJljuCdv1LRhTZpeAirFcIe9k1KOaf2i3lTvbqn3c8e53cODnQ_O0bRWEM-2Ucev1lkGXbDTty_glQjv8_RYREy4FExV9ZvFuzZBqQlTQtzY8n_4Yk0CVPSpUc0z_Q0AnlA6LuQpwjqSf2FKy-iHTZmyrcNOJw"/>
+<!-- Animated Soundwave overlay -->
+<div class="eq-overlay absolute inset-0 bg-primary/40 flex items-center justify-center gap-0.5">
+<span class="w-0.5 h-4 bg-surface rounded-full eq-bar-1"></span>
+<span class="w-0.5 h-6 bg-surface rounded-full eq-bar-2"></span>
+<span class="w-0.5 h-3 bg-surface rounded-full eq-bar-3"></span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<h4 class="font-title-md text-title-md text-primary font-bold truncate row-title">Samajavaragamana</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Sid Sriram • Ala Vaikunthapurramuloo</p>
+<div class="flex items-center gap-1 mt-0.5 row-status">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container pulse-dot animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary-container status-text">Playing now • 1:45 remaining</span>
+</div>
+</div>
+</div>
+<button aria-label="Pause track" class="row-play-btn w-10 h-10 rounded-full bg-surface-container-lowest text-secondary-container flex items-center justify-center shadow-sm flex-shrink-0 group-hover:scale-105 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px] row-icon" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+</div>
+<!-- Track Item 2 -->
+<div class="track-row flex items-center justify-between p-space-sm rounded-xl hover:bg-surface-container transition-colors group cursor-pointer active:scale-98" data-artist="Anirudh Ravichander • Jawan" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuBOquY11bQIe5tJsGEcZJn9G4iv7keEtn2RKxRzbfg7AYYtMvrFD4zXdNIUVFXSSN6NX9rUiXy9Wo9tX2hV6Z_n96-tPuj8qeqlgqryFslRcWQjer6V7bfs9WJxm5xw5WNluE-yDqNqAzoWCZnoGOqFlt7W7xdJzkNMAM4ae7cmucZW5PFPKajkLHjLkfcP0Mqe_V_hdDSmNiFCvPJ1Y1C77acm3Ig42Ua-1mTqV_fXAJrjucoq-ipfsQ" data-genre="tamil" data-id="6" data-title="Jawan Title Track">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern album artwork of upbeat energetic Bollywood club track with bright orange and yellow radial soundwaves and celebratory silhouette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOquY11bQIe5tJsGEcZJn9G4iv7keEtn2RKxRzbfg7AYYtMvrFD4zXdNIUVFXSSN6NX9rUiXy9Wo9tX2hV6Z_n96-tPuj8qeqlgqryFslRcWQjer6V7bfs9WJxm5xw5WNluE-yDqNqAzoWCZnoGOqFlt7W7xdJzkNMAM4ae7cmucZW5PFPKajkLHjLkfcP0Mqe_V_hdDSmNiFCvPJ1Y1C77acm3Ig42Ua-1mTqV_fXAJrjucoq-ipfsQ"/>
+<div class="eq-overlay hidden absolute inset-0 bg-primary/40 flex items-center justify-center gap-0.5">
+<span class="w-0.5 h-4 bg-surface rounded-full eq-bar-1"></span>
+<span class="w-0.5 h-6 bg-surface rounded-full eq-bar-2"></span>
+<span class="w-0.5 h-3 bg-surface rounded-full eq-bar-3"></span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors row-title">Jawan Title Track</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Anirudh Ravichander • Jawan</p>
+<div class="flex items-center gap-1 mt-0.5 row-status">
+<span class="font-label-sm text-label-sm text-outline status-text">Finished • Played 2 hrs ago</span>
+</div>
+</div>
+</div>
+<button aria-label="Replay track" class="row-play-btn w-10 h-10 rounded-full bg-surface-container text-on-surface-variant hover:text-secondary-container hover:bg-surface-container-high flex items-center justify-center shadow-none flex-shrink-0 group-hover:scale-105 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px] row-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Track Item 3 -->
+<div class="track-row flex items-center justify-between p-space-sm rounded-xl hover:bg-surface-container transition-colors group cursor-pointer active:scale-98" data-artist="Sid Sriram, Gopi Sundar • Geetha Govindam" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuDmigC7mUDVEcBZRIhFoqZfBKpO-3ir9rAZ72Zlk11htbHZY6fQTS3QYbDQ0Vy9c9kkqivacTsedPMGEGreACQxn7n1e95-LsbsymUYyZT-WpTW9bR2wXTHhOLy8YewNEw5WfuDAaK8UHobRFx3U_k_A_D9WRSgwPU5EbJqqgxQfNUXHjQQutnEdyvNAoIaZh60sTlPzhTHkA3IXIiBuPh5vZ-OjNhlMawW8-g-1BoINYk_wJ6s5YXtHQ" data-genre="telugu" data-id="7" data-title="Inkem Inkem Inkem Kaavaale">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Soothing pastel green and cream aesthetic Indian classical fusion music album art with delicate tabla and flute motifs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmigC7mUDVEcBZRIhFoqZfBKpO-3ir9rAZ72Zlk11htbHZY6fQTS3QYbDQ0Vy9c9kkqivacTsedPMGEGreACQxn7n1e95-LsbsymUYyZT-WpTW9bR2wXTHhOLy8YewNEw5WfuDAaK8UHobRFx3U_k_A_D9WRSgwPU5EbJqqgxQfNUXHjQQutnEdyvNAoIaZh60sTlPzhTHkA3IXIiBuPh5vZ-OjNhlMawW8-g-1BoINYk_wJ6s5YXtHQ"/>
+<div class="eq-overlay hidden absolute inset-0 bg-primary/40 flex items-center justify-center gap-0.5">
+<span class="w-0.5 h-4 bg-surface rounded-full eq-bar-1"></span>
+<span class="w-0.5 h-6 bg-surface rounded-full eq-bar-2"></span>
+<span class="w-0.5 h-3 bg-surface rounded-full eq-bar-3"></span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<h4 class="font-title-md text-title-md text-on-surface truncate group-hover:text-primary transition-colors row-title">Inkem Inkem Inkem Kaavaale</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Sid Sriram, Gopi Sundar • Geetha Govindam</p>
+<div class="flex items-center gap-1 mt-0.5 row-status">
+<span class="font-label-sm text-label-sm text-outline status-text">2:14 remaining</span>
+</div>
+</div>
+</div>
+<button aria-label="Resume track" class="row-play-btn w-10 h-10 rounded-full bg-surface-container text-on-surface-variant hover:text-secondary-container hover:bg-surface-container-high flex items-center justify-center shadow-none flex-shrink-0 group-hover:scale-105 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px] row-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Recommended Artists & Curators (Doodle Halos & Cutout Style from Inspiration) -->
+<section class="mb-space-lg">
+<div class="px-margin flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-6 rounded-full bg-tertiary"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recommended Artists</h3>
+</div>
+<a class="font-label-md text-label-md text-primary font-bold hover:underline flex items-center gap-0.5 active:translate-x-0.5 transition-transform" href="#">
+        Explore All
+        <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+<div class="flex gap-space-md overflow-x-auto no-scrollbar px-margin pb-2">
+<!-- Artist 1: Sid Sriram (Mint & Sunny yellow background plate with cutout) -->
+<div class="flex-shrink-0 w-32 flex flex-col items-center text-center group cursor-pointer active:scale-98 transition-transform" data-genre="telugu">
+<div class="relative w-28 h-28 mb-space-xs">
+<!-- Playful retro background arch plate -->
+<div class="absolute inset-0 bg-tertiary-fixed rounded-full transform -rotate-3 group-hover:rotate-0 transition-transform"></div>
+<!-- Whimsical hand drawn doodle rings -->
+<svg class="absolute -top-1 -right-1 w-8 h-8 text-secondary-container pointer-events-none" viewbox="0 0 40 40">
+<path d="M5 20 Q 20 5, 35 20 Q 20 35, 5 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+<!-- Stylized duotone portrait -->
+<div class="relative w-full h-full rounded-full overflow-hidden flex items-end justify-center">
+<img class="w-24 h-24 object-cover object-top rounded-full" data-alt="Artistic high quality duotone portrait photo of South Indian singer Sid Sriram with expressive singing pose and studio microphone, warm retro tint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPQHlmtGP8nNqTZaSXp9acvc8Cni9JM9pYKDK2cv4MuGvPFU30JLP4O2Kq6tXjHNETiIay80MvYgPylhziJPL-W71EohGFnpQYjSuRWqLKhOlx9AWFTRVVliwMDlSte-0oBhljWCESk3a1QgLXWAxykYUpnQ4sSFOoZqVbYfGrYatjkjMUzhEf-cQaJrw5hlbAUUbdG7PtgSVu12Aw0oid-SYqrqY-4zSOfEz2lUNBIxOMoOly0cUBQg"/>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate w-full">Sid Sriram</h4>
+<p class="font-body-sm text-body-sm text-outline truncate w-full">Playback &amp; Carnatic</p>
+<button class="follow-btn mt-2 px-3.5 py-1 rounded-full bg-on-surface text-surface font-label-sm text-label-sm hover:bg-primary transition-colors active:scale-90" data-following="false">
+          Follow
+        </button>
+</div>
+<!-- Artist 2: Arijit Singh (Peach arch) -->
+<div class="flex-shrink-0 w-32 flex flex-col items-center text-center group cursor-pointer active:scale-98 transition-transform" data-genre="hindi">
+<div class="relative w-28 h-28 mb-space-xs">
+<div class="absolute inset-0 bg-secondary-fixed rounded-full transform rotate-3 group-hover:rotate-0 transition-transform"></div>
+<svg class="absolute -bottom-1 -left-1 w-7 h-7 text-primary pointer-events-none" viewbox="0 0 30 30">
+<circle cx="15" cy="15" fill="none" r="10" stroke="currentColor" stroke-dasharray="4 3" stroke-width="2"></circle>
+</svg>
+<div class="relative w-full h-full rounded-full overflow-hidden flex items-end justify-center">
+<img class="w-24 h-24 object-cover object-top rounded-full" data-alt="Warm portrait photograph of Indian singer Arijit Singh wearing spectacles and acoustic headphones in recording studio setting, soulful expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfUSvtRzkPeYHmd4rxAwHSu06XV4pOYjQYlizjsuIua6o9pMCEuJSzk6S9q3kejmC_6_mR0x0VzCD0fk86Fbx7VucXc_BSs6uWyEPeQQdk8LYUF_milIksiUeCdXTcKMttuO81TvMl5Np1l3sTL9_IlPvCNFss57d_057yVVa9AWOR_nD0m20lGxozyLRSASdUV1aoSbkjol9kHYDIqkaF0AQO5t-9IEMxgiCD3XvkFdREToT5s0fTxA"/>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate w-full">Arijit Singh</h4>
+<p class="font-body-sm text-body-sm text-outline truncate w-full">Bollywood Soul</p>
+<button class="follow-btn mt-2 px-3.5 py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-on-surface hover:text-surface transition-colors active:scale-90" data-following="true">
+          Following
+        </button>
+</div>
+<!-- Artist 3: Anirudh Ravichander (Lavender plate) -->
+<div class="flex-shrink-0 w-32 flex flex-col items-center text-center group cursor-pointer active:scale-98 transition-transform" data-genre="tamil">
+<div class="relative w-28 h-28 mb-space-xs">
+<div class="absolute inset-0 bg-primary-fixed rounded-full transform -rotate-6 group-hover:rotate-0 transition-transform"></div>
+<!-- Sparkle Doodle -->
+<div class="absolute top-0 right-1 w-4 h-4 text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">flare</span>
+</div>
+<div class="relative w-full h-full rounded-full overflow-hidden flex items-end justify-center">
+<img class="w-24 h-24 object-cover object-top rounded-full" data-alt="Dynamic portrait photo of music director Anirudh Ravichander with headphones and modern rock-electronic artist styling against warm vibrant studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_NGMLLyuoG3e9jU5pJQBg8eXV7iGwreWCJ19UIiBD6TRW9CbSJH5EkXUXSBVMMlVQ76Iwv8fMmwPhjSz9mEQrzYnEtvW3Sd5tlHHwDEI7hVYJoHeRMqnIN5LXOKw6MM1icpYJBBGfqeWLB_MKG4-z3nmo-Ym4bXZjnxaGggrF5Ju9AHncxvgvhRZBaqxaBCbXE5O3rxd-pDMzgREQnOkQdkxt7OG2FoZNS4v9cbwuF4FXGwFdW-WANg"/>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate w-full">Anirudh</h4>
+<p class="font-body-sm text-body-sm text-outline truncate w-full">Rockstar Beats</p>
+<button class="follow-btn mt-2 px-3.5 py-1 rounded-full bg-on-surface text-surface font-label-sm text-label-sm hover:bg-primary transition-colors active:scale-90" data-following="false">
+          Follow
+        </button>
+</div>
+<!-- Artist 4: Shreya Ghoshal (Canary Yellow Plate) -->
+<div class="flex-shrink-0 w-32 flex flex-col items-center text-center group cursor-pointer active:scale-98 transition-transform" data-genre="hindi">
+<div class="relative w-28 h-28 mb-space-xs">
+<div class="absolute inset-0 bg-[#FFE5B4] rounded-full transform rotate-4 group-hover:rotate-0 transition-transform"></div>
+<div class="relative w-full h-full rounded-full overflow-hidden flex items-end justify-center">
+<img class="w-24 h-24 object-cover object-top rounded-full" data-alt="Elegant joyful portrait of Indian playback singer Shreya Ghoshal smiling with studio condenser microphone, soft golden key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVcISLRM6TotRr-NaOBQMuaBteuCaHUoWA8T2v6tmM_uCX7bL4TYxKVzZRZPh_vIzKJ0CnD8iugJaziAxzuhNS19aVddv4e8H0F-7GKuaAxwshZYEYf_8E9cbIEzBERWrf0aH88zjeaZCyekgMo9S8YnAXb5NI_AnBgMTTDGniZi2TAPQseXK-CEqGX3A9j6vGWenkGdIQ6_IKFLkwjEX_es0ewy1HoumHdKyxZzAibvVjJRdt2s6GDQ"/>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate w-full">Shreya Ghoshal</h4>
+<p class="font-body-sm text-body-sm text-outline truncate w-full">Melody Queen</p>
+<button class="follow-btn mt-2 px-3.5 py-1 rounded-full bg-on-surface text-surface font-label-sm text-label-sm hover:bg-primary transition-colors active:scale-90" data-following="false">
+          Follow
+        </button>
+</div>
+<!-- Artist 5: Devi Sri Prasad (DSP) -->
+<div class="flex-shrink-0 w-32 flex flex-col items-center text-center group cursor-pointer active:scale-98 transition-transform" data-genre="telugu">
+<div class="relative w-28 h-28 mb-space-xs">
+<div class="absolute inset-0 bg-tertiary-fixed-dim rounded-full transform -rotate-2 group-hover:rotate-0 transition-transform"></div>
+<div class="relative w-full h-full rounded-full overflow-hidden flex items-end justify-center">
+<img class="w-24 h-24 object-cover object-top rounded-full" data-alt="High energy charismatic photo of Telugu music composer Devi Sri Prasad performing on stage with sunglasses and joyful smile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDWwak3Yn-E-wuUtmEV5RYEDCARYBfFPx-1wcKmp8djyGlqM0hGXwO6YQIaFwpQSIJxtZJaxEzBOZnAhIsAXUYDTC8WzFalD3WYEJumpMILAxVK_kk70mlX1RosNLPMif607fKnZofZ8sX8NXMFSL80uspebQ8aHJjSYBsIG7H6AZvUlTGF13ZSlNVX3V4Pjx1pKIX6kaxz8NMz1plPVo4rxagYV_5lFRj52tIMg9x2hSva8xSDiCuuA"/>
+</div>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface truncate w-full">Devi Sri Prasad</h4>
+<p class="font-body-sm text-body-sm text-outline truncate w-full">Mass Maestro</p>
+<button class="follow-btn mt-2 px-3.5 py-1 rounded-full bg-on-surface text-surface font-label-sm text-label-sm hover:bg-primary transition-colors active:scale-90" data-following="false">
+          Follow
+        </button>
+</div>
+</div>
+</section>
+<!-- Made For You: Curated Pastel Mood Mixes -->
+<section class="px-margin mb-space-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-6 rounded-full bg-secondary-container"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Made For You</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full">
+        Daily Personalized
+      </span>
+</div>
+<!-- 2-Card Asymmetric Bento Mix Grid -->
+<div class="grid grid-cols-2 gap-space-md">
+<!-- Bento Card 1: Acoustic Telugu Chill -->
+<div class="bento-card relative rounded-xl p-space-md bg-gradient-to-br from-tertiary-fixed via-surface-container to-surface-container-high overflow-hidden shadow-[0_8px_20px_rgba(21,85,68,0.08)] flex flex-col justify-between h-48 group cursor-pointer active:scale-98 transition-transform" data-artist="Sid Sriram, Anurag Kulkarni, Chinmayi" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuDmigC7mUDVEcBZRIhFoqZfBKpO-3ir9rAZ72Zlk11htbHZY6fQTS3QYbDQ0Vy9c9kkqivacTsedPMGEGreACQxn7n1e95-LsbsymUYyZT-WpTW9bR2wXTHhOLy8YewNEw5WfuDAaK8UHobRFx3U_k_A_D9WRSgwPU5EbJqqgxQfNUXHjQQutnEdyvNAoIaZh60sTlPzhTHkA3IXIiBuPh5vZ-OjNhlMawW8-g-1BoINYk_wJ6s5YXtHQ" data-genre="telugu" data-id="8" data-title="Acoustic Telugu Chill">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-tertiary/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex justify-between items-start">
+<span class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-tertiary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">spa</span>
+</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold bg-tertiary-fixed-dim/60 px-2 py-0.5 rounded-full">
+            Chillout
+          </span>
+</div>
+<div class="relative z-10">
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-snug group-hover:text-primary transition-colors">
+            Acoustic Telugu Chill
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+            Sid Sriram, Anurag Kulkarni, Chinmayi
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs border-t-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">28 Tracks • 1 hr 45m</span>
+<span class="bento-play-pill w-7 h-7 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center group-hover:scale-110 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[16px] bento-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+</div>
+<!-- Bento Card 2: Bollywood Lo-Fi Evenings -->
+<div class="bento-card relative rounded-xl p-space-md bg-gradient-to-br from-primary-fixed via-surface-container to-secondary-fixed overflow-hidden shadow-[0_8px_20px_rgba(91,66,243,0.08)] flex flex-col justify-between h-48 group cursor-pointer active:scale-98 transition-transform" data-artist="Arijit, Jasleen Royal, Prateek Kuhad" data-cover="https://lh3.googleusercontent.com/aida-public/AB6AXuBOquY11bQIe5tJsGEcZJn9G4iv7keEtn2RKxRzbfg7AYYtMvrFD4zXdNIUVFXSSN6NX9rUiXy9Wo9tX2hV6Z_n96-tPuj8qeqlgqryFslRcWQjer6V7bfs9WJxm5xw5WNluE-yDqNqAzoWCZnoGOqFlt7W7xdJzkNMAM4ae7cmucZW5PFPKajkLHjLkfcP0Mqe_V_hdDSmNiFCvPJ1Y1C77acm3Ig42Ua-1mTqV_fXAJrjucoq-ipfsQ" data-genre="hindi" data-id="9" data-title="Bollywood Lo-Fi Evenings">
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/10 rounded-full blur-xl group-hover:scale-125 transition-transform"></div>
+<div class="flex justify-between items-start">
+<span class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">nights_stay</span>
+</span>
+<span class="font-label-sm text-label-sm text-primary font-bold bg-primary-fixed-dim/50 px-2 py-0.5 rounded-full">
+            Lo-Fi
+          </span>
+</div>
+<div class="relative z-10">
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-snug group-hover:text-primary transition-colors">
+            Bollywood Lo-Fi Evenings
+          </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+            Arijit, Jasleen Royal, Prateek Kuhad
+          </p>
+</div>
+<div class="flex items-center justify-between mt-space-xs pt-space-xs border-t-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">32 Tracks • 2 hr 10m</span>
+<span class="bento-play-pill w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center group-hover:scale-110 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[16px] bento-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Persistent Floating Player & Tab Navigation Shell -->
+<div class="fixed bottom-0 w-full z-50 pointer-events-none"><div class="px-margin pb-space-xs pointer-events-auto"><div class="relative overflow-hidden rounded-xl bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_8px_20px_rgba(255,94,58,0.22)] flex items-center gap-space-sm p-space-xs pr-space-md transition-all duration-300" id="mini-player"><div class="w-10 h-10 rounded-default bg-surface-container-high flex-shrink-0 flex items-center justify-center overflow-hidden" id="mini-cover-box"><img alt="Album Art" class="w-full h-full object-cover hidden" id="mini-cover-img" src=""/><span class="material-symbols-outlined text-primary text-[22px]" id="mini-cover-fallback">music_note</span></div><div class="flex-1 min-w-0 flex flex-col justify-center cursor-pointer" id="mini-track-info"><p class="font-label-lg text-label-lg text-on-surface truncate" id="mini-track-title">Samajavaragamana</p><p class="font-body-sm text-body-sm text-on-surface-variant truncate" id="mini-track-artist">Sid Sriram • Ala Vaikunthapurramuloo</p></div><div class="flex items-center gap-space-xs"><button aria-label="Like Track" class="w-10 h-10 flex items-center justify-center text-outline hover:text-secondary-container transition-colors active:scale-75" id="mini-like-btn"><span class="material-symbols-outlined text-[20px]" id="mini-like-icon">favorite_border</span></button><button aria-label="Play or Pause" class="w-11 h-11 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary shadow-[0_4px_12px_rgba(254,93,57,0.3)] transition-transform active:scale-90 hover:scale-105" id="mini-play-btn"><span class="material-symbols-outlined text-[22px]" id="mini-play-icon" style="font-variation-settings: 'FILL' 1;">pause</span></button><button aria-label="Next Track" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors active:scale-90" id="mini-next-btn"><span class="material-symbols-outlined text-[24px]">skip_next</span></button></div><div class="absolute bottom-0 left-0 right-0 h-[3px] bg-surface-container-high cursor-pointer" id="mini-progress-container"><div class="h-full w-2/5 bg-secondary-container rounded-full transition-all duration-300" id="mini-progress-bar"></div></div></div></div><nav class="w-full pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(24,24,36,0.04)] pointer-events-auto" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 transition-colors text-primary font-bold active:scale-90" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a><a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors active:scale-90" data-path="search" href="#"><span class="material-symbols-outlined text-[24px]">search</span><span class="font-label-sm text-label-sm">Search</span></a><a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors active:scale-90" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">library_music</span><span class="font-label-sm text-label-sm">Library</span></a><a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors active:scale-90" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a></div></nav></div>
+<script>
+  // Comprehensive State & Interactions
+  const playlist = [
+    {
+      id: "samaja",
+      title: "Samajavaragamana",
+      artist: "Sid Sriram • Ala Vaikunthapurramuloo",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuD1YRagYFH4WjVIrlCgPpkAF_YM7suouUbHYdgGKU6gtLOYWtYEPXPwLGrwbLA2cl8C7_fMOVPpo94O0l7TC3ADCAx0mJljuCdv1LRhTZpeAirFcIe9k1KOaf2i3lTvbqn3c8e53cODnQ_O0bRWEM-2Ucev1lkGXbDTty_glQjv8_RYREy4FExV9ZvFuzZBqQlTQtzY8n_4Yk0CVPSpUc0z_Q0AnlA6LuQpwjqSf2FKy-iHTZmyrcNOJw",
+      genre: "telugu"
+    },
+    {
+      id: "kurchi",
+      title: "Kurchi Madathapetti",
+      artist: "Thaman S, Sri Krishna • Guntur Kaaram",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuDsY8F9Q-oqDxstZd09gLnDoG4whuaP-_DM_FDi9oOjNqGnTpg_-59mlgY3Kz7K1ZvT4YHB_eo0G1VPAnVEj0WviRSWZCB4wDDxLFl55l56nOcqjoo9-cXQnoSfsxfAgQ-_iWj1XNj4pE95CAGJ4gMZLTq-_dqoqhlzjx1SxHpX5VCsZT3lsBySkqH39QqG56SxOIZaxiOSmLxA-NgiLOj_Evid0ZAkuK87ucUPZ8WqtCJ41HK5pVVXDw",
+      genre: "telugu"
+    },
+    {
+      id: "chaleya",
+      title: "Chaleya",
+      artist: "Arijit Singh, Shilpa Rao • Jawan",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuCCHq9T7hVT0Z-VCjOYIF2uiyjLY7ORWcjcIT-gIGC1VgtfMX6R-abZdfwWosOtudIQe1qx6zpa1xIGSCOO7x27PGsQZCh1PPOAPPbLLWBNk3Tx9eO0dO5bHqGnGjH8Bktsk-uImaIfOvAb6pj86cdmzWB2GIZl36TIFZq9v-eZ_wX7yR2G0eHZnlM3z5IfUpILGMXTpAbyjlzNXyTEFm_nyzPuMLBFpvvbRyzTtTt66GzMGauR99XlCw",
+      genre: "hindi"
+    },
+    {
+      id: "tatakkara",
+      title: "Ta Takkara",
+      artist: "Santhosh Narayanan • Kalki 2898 AD",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuDWqXvrOtab-j0sC7hA09bgpwC7on6N3ls1sb7oN1YDOT9koiS52dKU2duMWFRkgSSxnTZn03tgiHYs5OUVqWGyI7cKLJx1RS31u52HmRmreNRcw5tGLyu7ROpSwVRGt4VldWc8k8X7PfmVKh7iGYiP3yCaBJ2AYj15I1oj75mS0Zw10-yVN12R7lIZCca23uIYPjb3kURP6Cm_H0DSEKAF2hlD9vxlnomXXwhN84Z46bWJhGgD3vAeag",
+      genre: "telugu"
+    },
+    {
+      id: "kesariya",
+      title: "Kesariya",
+      artist: "Arijit Singh, Pritam • Brahmāstra",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuC2RQqfWGJAWJe-4YLzjbmiK88zzdl0JS-Tcd4CpabaD30QmeibSxbNWigdzdYSTdKSo4QqPc6DezdDEFetfaw-9DDliC2ZcV0rZFbZiJIR0zMYUZqBwxZyCc3iGwNQ7O-yLe7yvy7mBUDx5XISGCxqlLyAYJ50sh7rYCMu_RmR5bylu1BAbEwvM_n5RWQI6nfO3dGPYCUk4FNicvqkcgx1BL_jO1SQEhogkqQONaI7eV3ucyjMMZRQjg",
+      genre: "hindi"
+    },
+    {
+      id: "jawan",
+      title: "Jawan Title Track",
+      artist: "Anirudh Ravichander • Jawan",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuBOquY11bQIe5tJsGEcZJn9G4iv7keEtn2RKxRzbfg7AYYtMvrFD4zXdNIUVFXSSN6NX9rUiXy9Wo9tX2hV6Z_n96-tPuj8qeqlgqryFslRcWQjer6V7bfs9WJxm5xw5WNluE-yDqNqAzoWCZnoGOqFlt7W7xdJzkNMAM4ae7cmucZW5PFPKajkLHjLkfcP0Mqe_V_hdDSmNiFCvPJ1Y1C77acm3Ig42Ua-1mTqV_fXAJrjucoq-ipfsQ",
+      genre: "tamil"
+    },
+    {
+      id: "inkem",
+      title: "Inkem Inkem Inkem Kaavaale",
+      artist: "Sid Sriram, Gopi Sundar • Geetha Govindam",
+      cover: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmigC7mUDVEcBZRIhFoqZfBKpO-3ir9rAZ72Zlk11htbHZY6fQTS3QYbDQ0Vy9c9kkqivacTsedPMGEGreACQxn7n1e95-LsbsymUYyZT-WpTW9bR2wXTHhOLy8YewNEw5WfuDAaK8UHobRFx3U_k_A_D9WRSgwPU5EbJqqgxQfNUXHjQQutnEdyvNAoIaZh60sTlPzhTHkA3IXIiBuPh5vZ-OjNhlMawW8-g-1BoINYk_wJ6s5YXtHQ",
+      genre: "telugu"
+    }
+  ];
+
+  let currentTrackIndex = 0;
+  let isPlaying = true;
+  let progressPercent = 42;
+  let progressInterval = null;
+
+  const miniPlayer = document.getElementById('mini-player');
+  const miniTitle = document.getElementById('mini-track-title');
+  const miniArtist = document.getElementById('mini-track-artist');
+  const miniCoverImg = document.getElementById('mini-cover-img');
+  const miniCoverFallback = document.getElementById('mini-cover-fallback');
+  const miniPlayBtn = document.getElementById('mini-play-btn');
+  const miniPlayIcon = document.getElementById('mini-play-icon');
+  const miniNextBtn = document.getElementById('mini-next-btn');
+  const miniProgressBar = document.getElementById('mini-progress-bar');
+  const miniProgressContainer = document.getElementById('mini-progress-container');
+  const miniLikeBtn = document.getElementById('mini-like-btn');
+  const miniLikeIcon = document.getElementById('mini-like-icon');
+  const heroPlayBtn = document.getElementById('hero-play-btn');
+
+  // Initialize playback progress ticker
+  function startProgressTicker() {
+    clearInterval(progressInterval);
+    progressInterval = setInterval(() => {
+      if (isPlaying) {
+        progressPercent += 0.8;
+        if (progressPercent >= 100) {
+          progressPercent = 0;
+          advanceTrack();
+        }
+        miniProgressBar.style.width = progressPercent + '%';
+      }
+    }, 500);
+  }
+  startProgressTicker();
+
+  function syncPlayerUI() {
+    const track = playlist[currentTrackIndex];
+    miniTitle.textContent = track.title;
+    miniArtist.textContent = track.artist;
+
+    if (track.cover) {
+      miniCoverImg.src = track.cover;
+      miniCoverImg.classList.remove('hidden');
+      miniCoverFallback.classList.add('hidden');
+    } else {
+      miniCoverImg.classList.add('hidden');
+      miniCoverFallback.classList.remove('hidden');
+    }
+
+    // Mini play icon
+    miniPlayIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+
+    // Sync Hero button if hero track matches
+    if (heroPlayBtn) {
+      const heroIcon = heroPlayBtn.querySelector('.hero-icon');
+      const heroText = heroPlayBtn.querySelector('.hero-text');
+      const isHeroCurrent = (track.title === 'Telugu Chartbusters');
+      if (isHeroCurrent && isPlaying) {
+        heroIcon.textContent = 'pause';
+        heroText.textContent = 'Pause';
+      } else {
+        heroIcon.textContent = 'play_arrow';
+        heroText.textContent = 'Play';
+      }
+    }
+
+    // Sync all track row items in Recently Played
+    document.querySelectorAll('.track-row').forEach(row => {
+      const rowTitle = row.getAttribute('data-title');
+      const isThis = rowTitle && rowTitle.toLowerCase() === track.title.toLowerCase();
+      const playBtn = row.querySelector('.row-play-btn');
+      const rowIcon = row.querySelector('.row-icon');
+      const eqOverlay = row.querySelector('.eq-overlay');
+      const titleElem = row.querySelector('.row-title');
+      const statusElem = row.querySelector('.row-status');
+
+      if (isThis) {
+        row.classList.add('bg-surface-container-high/60');
+        row.classList.remove('hover:bg-surface-container');
+        if (titleElem) {
+          titleElem.classList.add('text-primary', 'font-bold');
+          titleElem.classList.remove('text-on-surface');
+        }
+        if (eqOverlay) {
+          eqOverlay.classList.remove('hidden');
+          if (isPlaying) {
+            eqOverlay.classList.remove('eq-paused');
+          } else {
+            eqOverlay.classList.add('eq-paused');
+          }
+        }
+        if (rowIcon) rowIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+        if (statusElem) {
+          statusElem.innerHTML = `
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary-container ${isPlaying ? 'pulse-dot animate-pulse' : ''}"></span>
+            <span class="font-label-sm text-label-sm text-secondary-container status-text">${isPlaying ? 'Playing now • 1:45 remaining' : 'Paused'}</span>
+          `;
+        }
+      } else {
+        row.classList.remove('bg-surface-container-high/60');
+        row.classList.add('hover:bg-surface-container');
+        if (titleElem) {
+          titleElem.classList.remove('text-primary', 'font-bold');
+          titleElem.classList.add('text-on-surface');
+        }
+        if (eqOverlay) {
+          eqOverlay.classList.add('hidden');
+        }
+        if (rowIcon) rowIcon.textContent = 'play_arrow';
+        if (statusElem && !statusElem.textContent.includes('Finished') && !statusElem.textContent.includes('remaining')) {
+          statusElem.innerHTML = `<span class="font-label-sm text-label-sm text-outline status-text">Recently played</span>`;
+        }
+      }
+    });
+
+    // Sync horizontal cards
+    document.querySelectorAll('.song-card').forEach(card => {
+      const cardTitle = card.getAttribute('data-title');
+      const isThis = cardTitle && cardTitle.toLowerCase() === track.title.toLowerCase();
+      const icon = card.querySelector('.play-icon');
+      if (icon) {
+        icon.textContent = (isThis && isPlaying) ? 'pause' : 'play_arrow';
+      }
+    });
+
+    // Sync Bento cards
+    document.querySelectorAll('.bento-card').forEach(bento => {
+      const bTitle = bento.getAttribute('data-title');
+      const isThis = bTitle && bTitle.toLowerCase() === track.title.toLowerCase();
+      const icon = bento.querySelector('.bento-icon');
+      if (icon) {
+        icon.textContent = (isThis && isPlaying) ? 'pause' : 'play_arrow';
+      }
+    });
+  }
+
+  function togglePlayState() {
+    isPlaying = !isPlaying;
+    syncPlayerUI();
+  }
+
+  function advanceTrack() {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    progressPercent = 0;
+    miniProgressBar.style.width = '0%';
+    isPlaying = true;
+    syncPlayerUI();
+  }
+
+  function playSpecificSong(title, artist, cover) {
+    let idx = playlist.findIndex(p => p.title.toLowerCase() === title.toLowerCase());
+    if (idx !== -1) {
+      if (currentTrackIndex === idx) {
+        togglePlayState();
+        return;
+      }
+      currentTrackIndex = idx;
+    } else {
+      playlist.push({ id: 'custom_' + Date.now(), title, artist, cover });
+      currentTrackIndex = playlist.length - 1;
+    }
+    isPlaying = true;
+    progressPercent = 0;
+    miniProgressBar.style.width = '0%';
+    syncPlayerUI();
+  }
+
+  // Mini player controls
+  miniPlayBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlayState();
+  });
+
+  miniNextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    advanceTrack();
+  });
+
+  // Progress Bar click scrubber
+  miniProgressContainer.addEventListener('click', (e) => {
+    const rect = miniProgressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    progressPercent = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+    miniProgressBar.style.width = progressPercent + '%';
+  });
+
+  // Mini like toggle
+  miniLikeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isLiked = miniLikeIcon.textContent === 'favorite';
+    if (isLiked) {
+      miniLikeIcon.textContent = 'favorite_border';
+      miniLikeBtn.classList.remove('text-secondary-container');
+      miniLikeBtn.classList.add('text-outline');
+    } else {
+      miniLikeIcon.textContent = 'favorite';
+      miniLikeIcon.style.fontVariationSettings = "'FILL' 1";
+      miniLikeBtn.classList.add('text-secondary-container', 'pop-active');
+      miniLikeBtn.classList.remove('text-outline');
+      setTimeout(() => miniLikeBtn.classList.remove('pop-active'), 250);
+    }
+  });
+
+  // Hero Play button
+  if (heroPlayBtn) {
+    heroPlayBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const title = heroPlayBtn.getAttribute('data-title');
+      const artist = heroPlayBtn.getAttribute('data-artist');
+      const cover = heroPlayBtn.getAttribute('data-cover');
+      playSpecificSong(title, artist, cover);
+    });
+  }
+
+  // Trending Songs card click & track-play-btn
+  document.querySelectorAll('.song-card').forEach(card => {
+    const playBtn = card.querySelector('.track-play-btn');
+    const title = card.getAttribute('data-title');
+    const artist = card.getAttribute('data-artist');
+    const cover = card.getAttribute('data-cover');
+
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.like-btn')) return;
+      playSpecificSong(title, artist, cover);
+    });
+
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playSpecificSong(title, artist, cover);
+      });
+    }
+  });
+
+  // Like buttons on cards
+  document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const icon = btn.querySelector('.like-icon');
+      const isLiked = icon.textContent === 'favorite';
+      if (isLiked) {
+        icon.textContent = 'favorite_border';
+        icon.style.fontVariationSettings = "'FILL' 0";
+        btn.classList.remove('bg-secondary-container', 'text-white');
+        btn.classList.add('bg-on-surface/50', 'text-surface');
+      } else {
+        icon.textContent = 'favorite';
+        icon.style.fontVariationSettings = "'FILL' 1";
+        btn.classList.remove('bg-on-surface/50', 'text-surface');
+        btn.classList.add('bg-secondary-container', 'text-white', 'pop-active');
+        setTimeout(() => btn.classList.remove('pop-active'), 200);
+      }
+    });
+  });
+
+  // Recently played track rows
+  document.querySelectorAll('.track-row').forEach(row => {
+    const playBtn = row.querySelector('.row-play-btn');
+    const title = row.getAttribute('data-title');
+    const artist = row.getAttribute('data-artist');
+    const cover = row.getAttribute('data-cover');
+
+    row.addEventListener('click', () => {
+      playSpecificSong(title, artist, cover);
+    });
+
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playSpecificSong(title, artist, cover);
+      });
+    }
+  });
+
+  // Bento cards
+  document.querySelectorAll('.bento-card').forEach(bento => {
+    const title = bento.getAttribute('data-title');
+    const artist = bento.getAttribute('data-artist');
+    const cover = bento.getAttribute('data-cover');
+    const pill = bento.querySelector('.bento-play-pill');
+
+    bento.addEventListener('click', () => {
+      playSpecificSong(title, artist, cover);
+    });
+    if (pill) {
+      pill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playSpecificSong(title, artist, cover);
+      });
+    }
+  });
+
+  // 1. Language Pills Quick-Filter
+  const langChips = document.querySelectorAll('.lang-chip');
+  langChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      langChips.forEach(c => {
+        c.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+        c.classList.add('bg-surface-container', 'text-on-surface-variant');
+      });
+      this.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      this.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+
+      // Filter cards smoothly
+      const allFilterables = document.querySelectorAll('[data-genre]');
+      allFilterables.forEach(item => {
+        const itemGenre = item.getAttribute('data-genre');
+        if (lang === 'all' || itemGenre === lang) {
+          item.style.display = '';
+          item.classList.add('animate-fadeIn');
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // 4. Follow / Following buttons toggle state
+  document.querySelectorAll('.follow-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const isFollowing = this.getAttribute('data-following') === 'true';
+      if (isFollowing) {
+        this.setAttribute('data-following', 'false');
+        this.textContent = 'Follow';
+        this.className = 'follow-btn mt-2 px-3.5 py-1 rounded-full bg-on-surface text-surface font-label-sm text-label-sm hover:bg-primary transition-colors active:scale-90';
+      } else {
+        this.setAttribute('data-following', 'true');
+        this.textContent = 'Following';
+        this.className = 'follow-btn mt-2 px-3.5 py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-on-surface hover:text-surface transition-colors active:scale-90 ring-1 ring-outline/20';
+      }
+    });
+  });
+
+  // 6. Bottom Navigation Tabs active state switch
+  const navTabs = document.querySelectorAll('.nav-tab');
+  navTabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      navTabs.forEach(t => {
+        t.classList.remove('text-primary', 'font-bold');
+        t.classList.add('text-on-surface-variant');
+        t.removeAttribute('aria-current');
+      });
+      this.classList.remove('text-on-surface-variant');
+      this.classList.add('text-primary', 'font-bold');
+      this.setAttribute('aria-current', 'page');
+    });
+  });
+
+  // Clear History Interactive Reset
+  const clearHistoryBtn = document.getElementById('clear-history-btn');
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener('click', () => {
+      const container = document.getElementById('recent-tracks-container');
+      if (container) {
+        container.style.opacity = '0.5';
+        setTimeout(() => {
+          container.innerHTML = `
+            <div class="p-6 text-center rounded-xl bg-surface-container-high/40 flex flex-col items-center justify-center gap-2">
+              <span class="material-symbols-outlined text-[28px] text-outline">history</span>
+              <p class="font-body-md text-on-surface-variant">History cleared for today.</p>
+              <button onclick="location.reload()" class="mt-1 px-3 py-1 rounded-full bg-surface-container font-label-sm text-primary hover:bg-surface-container-highest transition-colors">Reset</button>
+            </div>
+          `;
+          container.style.opacity = '1';
+        }, 200);
+      }
+    });
+  }
+
+  // Wave emoji fun tactile wiggle
+  const waveEmoji = document.getElementById('wave-emoji');
+  if (waveEmoji) {
+    waveEmoji.addEventListener('click', () => {
+      waveEmoji.classList.add('rotate-45');
+      setTimeout(() => waveEmoji.classList.remove('rotate-45'), 300);
+    });
+  }
+
+  // Mood station sparkle button
+  const moodBtn = document.getElementById('mood-station-btn');
+  if (moodBtn) {
+    moodBtn.addEventListener('click', () => {
+      moodBtn.classList.toggle('text-secondary-container');
+      moodBtn.classList.toggle('bg-primary-fixed');
+    });
+  }
+
+  // Main search bar input filter
+  const searchInput = document.getElementById('main-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.song-card, .track-row').forEach(el => {
+        const title = (el.getAttribute('data-title') || '').toLowerCase();
+        const artist = (el.getAttribute('data-artist') || '').toLowerCase();
+        if (!query || title.includes(query) || artist.includes(query)) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  // Initial UI sync
+  syncPlayerUI();
+</script></body></html>

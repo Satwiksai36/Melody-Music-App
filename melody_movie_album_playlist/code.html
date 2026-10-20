@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.heart-pop{transform:scale(1.25);transition:transform 0.15s ease-in-out;}</style></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen">
+<!-- Interactive Toast Notification -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-[70] px-4 py-2.5 rounded-full bg-inverse-surface/90 backdrop-blur-md text-inverse-on-surface text-body-sm shadow-xl flex items-center gap-2 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300" id="toast-notify">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed" id="toast-icon">info</span>
+<span id="toast-message">Action successful</span>
+</div>
+<!-- Modal / Bottom Sheet for More Options -->
+<div class="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-end justify-center" id="options-sheet">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-t-3xl p-5 shadow-2xl transform translate-y-full transition-transform duration-300" id="sheet-content">
+<div class="w-12 h-1.5 bg-surface-variant rounded-full mx-auto mb-4"></div>
+<div class="flex items-center gap-3 pb-4 border-b border-surface-container">
+<img alt="Album Track" class="w-12 h-12 rounded-lg object-cover" id="sheet-track-img" src=""/>
+<div class="flex-1 min-w-0">
+<h4 class="font-title-md text-on-surface truncate" id="sheet-track-title">Track Title</h4>
+<p class="font-body-sm text-on-surface-variant truncate" id="sheet-track-artist">Artist info</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container text-on-surface flex items-center justify-center" id="sheet-close-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-1 pt-3">
+<button class="sheet-action flex items-center gap-3.5 py-3 px-2 rounded-xl hover:bg-surface-container text-left" data-action="Add to Queue">
+<span class="material-symbols-outlined text-primary text-[22px]">queue_music</span>
+<span class="font-body-md text-on-surface">Play Next / Add to Queue</span>
+</button>
+<button class="sheet-action flex items-center gap-3.5 py-3 px-2 rounded-xl hover:bg-surface-container text-left" data-action="Save to Playlist">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">playlist_add</span>
+<span class="font-body-md text-on-surface">Add to Custom Playlist</span>
+</button>
+<button class="sheet-action flex items-center gap-3.5 py-3 px-2 rounded-xl hover:bg-surface-container text-left" data-action="Share Track">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">share</span>
+<span class="font-body-md text-on-surface">Share Song Link</span>
+</button>
+<button class="sheet-action flex items-center gap-3.5 py-3 px-2 rounded-xl hover:bg-surface-container text-left" data-action="View Artist DSP">
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">person</span>
+<span class="font-body-md text-on-surface">View Artist &amp; Credits</span>
+</button>
+</div>
+</div>
+</div>
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><div class="relative w-9 h-9 flex items-center justify-center flex-shrink-0 cursor-pointer active:scale-95 transition-transform" id="logo-branding-btn"><div class="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-[0_2px_8px_rgba(66,29,219,0.15)]"><div class="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center gap-[2.5px]"><span class="w-[2.5px] h-3 rounded-full bg-[#ff5e3a]"></span><span class="w-[2.5px] h-4.5 rounded-full bg-[#ff453a]"></span><span class="w-[2.5px] h-5.5 h-5 rounded-full bg-[#5b42f3]"></span><span class="w-[2.5px] h-4 rounded-full bg-[#3830a3]"></span><span class="w-[2.5px] h-2.5 rounded-full bg-[#0d9488]"></span></div></div><div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary shadow-sm ring-1 ring-surface"><span class="material-symbols-outlined text-[10px] leading-none" style="font-variation-settings: 'FILL' 1;">bolt</span></div></div><img alt="Melody" class="h-6 w-auto object-contain cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFSsgxNWvnlPeDVdsVSR8JbeksMtnOhC8ttYMVd-fDhJeETOZzt3Z2MSgw9ft02AYlpei4yHnCAhS-2nwfgQsaAFKjEACWS38t3pKz07AUpYqp3ctJSIrfrpD9ys_Kb-XeNIVLYandWbxnsD__5SdBcQHE_bHnBnDzDyRxjX5K_lVtyi6-KJjOe8PonjLG25r8LWEx14F9cZ7Ctp6oX0l97RWAAZ2MGelQz-7YkD-wMUNRPQIyg4t_wgefVXrFUVNyjCo"/><span class="font-title-md text-title-md text-on-surface-variant hidden">Library</span></div><div class="flex items-center gap-space-xs"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95" id="header-search-btn"><span class="material-symbols-outlined text-[24px]">search</span></button><div class="w-11 h-11 flex items-center justify-center cursor-pointer active:scale-95 transition-transform" id="header-profile-btn"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-[140px] bg-surface"><div class="flex flex-col w-full">
+<!-- Dynamic Gradient Glow Canvas Behind Header -->
+<div class="relative w-full overflow-hidden pb-4"><div class="absolute -top-20 -left-12 w-80 h-80 rounded-full bg-primary-container/20 blur-3xl pointer-events-none"></div><div class="absolute top-10 -right-16 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div><div class="px-margin pt-2"><div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden shadow-[0_16px_36px_rgba(91,66,243,0.18)] bg-surface-container-high group"><img class="w-full h-full object-cover" data-alt="Intense cinematic movie poster artwork for Telugu blockbuster Pushpa 2: The Rule, featuring rugged hero in saffron red and deep gold hues, dust and rustic Indian woodland ambiance, cinematic editorial composition with bold stylized typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDe3zH4ND4-bZ3Z-ZhSrNzgGBZtjwWA3tIYl_G1LeN5nOmOjMIMJN045Km6zBT4x7Rh1-GN0sLoZwkcH_tsniD6eQVAixXwf_tr43DrCmks_2fw6FGEocjC2N8YXzfKGIvVVsiJzeZZw9SK86EQFXML719edvd8AQm74H5ysFgtP7v_Ki5TeSHwJE2gIvr38i9CzqpCVe2u9d9Uw1l6i4aZuSI9jEGWJfS8y0GP1mR2gbVSfIIBIdmnHQ"/><div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-inverse-surface/40"></div><div class="absolute top-3 left-3 right-3 flex items-center justify-between z-20"><button aria-label="Go back" class="w-10 h-10 rounded-full bg-inverse-surface/60 backdrop-blur-md text-surface flex items-center justify-center border border-surface/20 shadow-[0_2px_10px_rgba(26,26,39,0.06)] active:scale-90 transition-transform" id="nav-back-btn" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><div class="flex items-center gap-2"><button aria-label="Share album" class="w-10 h-10 rounded-full bg-inverse-surface/60 backdrop-blur-md text-surface flex items-center justify-center border border-surface/20 shadow-[0_2px_10px_rgba(26,26,39,0.06)] active:scale-90 transition-transform" id="album-share-btn" type="button"><span class="material-symbols-outlined text-[20px]">share</span></button><button aria-label="More options" class="w-10 h-10 rounded-full bg-inverse-surface/60 backdrop-blur-md text-surface flex items-center justify-center border border-surface/20 shadow-[0_2px_10px_rgba(26,26,39,0.06)] active:scale-90 transition-transform" id="album-more-btn" type="button"><span class="material-symbols-outlined text-[20px]">more_vert</span></button></div></div><div class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-inverse-surface/60 backdrop-blur-md text-surface flex items-center gap-1.5 border border-surface/20 shadow-sm z-10"><span class="material-symbols-outlined text-secondary-fixed text-[15px]" style="font-variation-settings: 'FILL' 1;">graphic_eq</span><span class="font-label-sm text-[11px] font-semibold tracking-wider uppercase text-surface">Dolby Atmos</span></div></div></div><div class="px-margin w-full mt-4 text-left"><div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[11px] uppercase tracking-wider font-bold">Original Motion Picture Soundtrack</span><span class="font-body-sm text-body-sm text-on-surface-variant">• 2024</span></div><h1 class="font-headline-lg text-headline-lg text-on-surface mt-1 leading-tight tracking-tight">Pushpa 2: The Rule</h1><p class="font-body-md text-body-md text-on-surface-variant mt-1">Telugu • 6 Tracks • 24 mins • Mythri Movie Makers</p><p class="font-body-sm text-body-sm text-on-surface-variant/80 mt-1 line-clamp-2">Music: <span class="font-semibold text-on-surface">Devi Sri Prasad (DSP)</span> • Starring: Allu Arjun, Rashmika Mandanna, Fahadh Faasil • Dir: Sukumar</p><div class="flex items-center justify-between mt-space-sm pt-space-xs"><div class="flex items-center gap-space-xs"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface active:scale-95 transition-all" id="btn-download-album" type="button"><span class="material-symbols-outlined text-[18px]" id="download-icon">download_for_offline</span><span class="font-label-md text-label-md" id="download-label">Download</span></button><button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant hover:text-primary active:scale-95 transition-all" id="btn-library-album" type="button"><span class="material-symbols-outlined text-[18px]" id="library-icon">playlist_add</span><span class="font-label-md text-label-md" id="library-label">Library</span></button><button aria-label="Cast audio" class="w-8 h-8 rounded-full bg-surface-container-low text-on-surface-variant flex items-center justify-center active:scale-95 transition-all" id="btn-cast-album" type="button"><span class="material-symbols-outlined text-[18px]" id="cast-icon">cast</span></button></div><div class="flex items-center gap-1 text-tertiary"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">trending_up</span><span class="font-label-sm text-label-sm font-semibold">18.4M Plays</span></div></div><div class="flex items-center gap-2 mt-3 overflow-x-auto no-scrollbar py-0.5"><span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 whitespace-nowrap"><span class="material-symbols-outlined text-[14px] text-primary">verified</span>Official OST</span><span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 whitespace-nowrap"><span class="material-symbols-outlined text-[14px] text-tertiary">high_quality</span>24-bit / 96kHz Lossless</span><span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 whitespace-nowrap"><span class="material-symbols-outlined text-[14px]">subtitles</span>Live Telugu &amp; Hindi Lyrics</span></div></div></div>
+<!-- Songs & Soundtracks List Section -->
+<div class="px-margin mt-space-xs flex flex-col">
+<div class="flex items-center justify-between py-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Album Songs</h2>
+<button class="font-label-md text-label-md text-primary flex items-center gap-0.5 active:scale-95 transition-transform" id="sort-tracks-btn" type="button">
+<span id="sort-label">Sort</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+<!-- Tracklist Items -->
+<div class="flex flex-col gap-1.5 mt-1" id="track-container">
+<!-- Track 1: Now Playing Row with Soundwave -->
+<div class="track-row p-space-xs rounded-xl bg-primary-fixed/30 flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Nakash Aziz, Deepak Blue, DSP" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuA80WV2wKezv6XAwcPqVilFr60vMGJ6-h0xzilWTSO1IwOlYqrFvu_xjy4iJ1OdtEMH44wsA-QrFy7oNmNYSKnOZl87MNilwMNCv_jpOFrNMoroHbTZLROKX_qK7Y60xwMr9XyQDIuWtqNS1SOCXtvPJPb9D4H3ovTQuU_iIy7TqOt9BkhwRiZYczZNCuO13PPVDHksJt28w_vZTE0Ri73r5o4ogBHKiqAh4djMnfJoq_be52gSXc4Pcg" data-track-index="0" data-track-title="Pushpa Pushpa">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Close up dynamic shot of vibrant dancer feet with ghungroo bells in red festive dust from Indian mass movie song Pushpa Pushpa" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA80WV2wKezv6XAwcPqVilFr60vMGJ6-h0xzilWTSO1IwOlYqrFvu_xjy4iJ1OdtEMH44wsA-QrFy7oNmNYSKnOZl87MNilwMNCv_jpOFrNMoroHbTZLROKX_qK7Y60xwMr9XyQDIuWtqNS1SOCXtvPJPb9D4H3ovTQuU_iIy7TqOt9BkhwRiZYczZNCuO13PPVDHksJt28w_vZTE0Ri73r5o4ogBHKiqAh4djMnfJoq_be52gSXc4Pcg"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 flex items-center justify-center">
+<!-- Animated Sound Waveform Indicator -->
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5"><span class="track-title-text font-title-md text-title-md text-primary font-bold truncate">Pushpa Pushpa</span><span class="playing-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Nakash Aziz, Deepak Blue, DSP</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-tertiary font-semibold">Lossless</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">4:18</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Song lyrics" class="lyrics-btn w-8 h-8 rounded-full text-primary flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">lyrics</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Track 2 -->
+<div class="track-row p-space-xs rounded-xl hover:bg-surface-container flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Shreya Ghoshal, Devi Sri Prasad" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuDsPiVeegk3_Jk9x0qIRtjX2mIIziqmpwo8eg0uEYIrT_ixDwxv-2jnl2i0Jl6g89e3xDeSVCrXQDIcRjeGOgf0wPQ0uKA0m74G6JTwWte4n0nKF9ZAsRPGbzFtdMupeZquu6eQx37hOk7sAOyxMdeZlhLO0pCtru3FF0y8wVMR922z009U-7-rn27fjJf8gBnBy9r3t1rGYbSbyZiiLAyvp3gZ5EVFNtVHmQo0CMVuLFq1zEoUkb-lNQ" data-track-index="1" data-track-title="Sooseki (The Couple Song)">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Romantic cinematic couple portrait with warm sunset sunlight in rustic scenic village courtyard from Telugu movie song Sooseki" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsPiVeegk3_Jk9x0qIRtjX2mIIziqmpwo8eg0uEYIrT_ixDwxv-2jnl2i0Jl6g89e3xDeSVCrXQDIcRjeGOgf0wPQ0uKA0m74G6JTwWte4n0nKF9ZAsRPGbzFtdMupeZquu6eQx37hOk7sAOyxMdeZlhLO0pCtru3FF0y8wVMR922z009U-7-rn27fjJf8gBnBy9r3t1rGYbSbyZiiLAyvp3gZ5EVFNtVHmQo0CMVuLFq1zEoUkb-lNQ"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 hidden items-center justify-center">
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="track-title-text font-title-md text-title-md text-on-surface font-semibold truncate">Sooseki (The Couple Song)</span>
+<span class="playing-badge hidden items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Shreya Ghoshal, Devi Sri Prasad</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-secondary-container font-semibold">MelodyTune</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">4:21</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Like song" class="song-heart-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-secondary-container flex items-center justify-center active:scale-125 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Track 3 -->
+<div class="track-row p-space-xs rounded-xl hover:bg-surface-container flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Devi Sri Prasad, Laxmi Dasi" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuAsd_MxB2Oa2JBBVtrGrNGkH6qd76EPWCSi1fS3HzPgz2Q9SgkyLIqL0d9-L2nRzFuJwDrDHbI9tr4Ogx6rp9vs6Anlj_a_5h173-u2l5-RqKF4YTfWcbAOZ2uKBJB-V63aesaVKm7rPa8aC-HWjyc6VwW_fzLgikqdD8LfaMQz4d5jzJ2pE57eFikjeQwrCuVzig8QkRP_2NErp3wcEBpJCloYMiN4upo_CiFDffLbHxUxBhHdpBQzwQ" data-track-index="2" data-track-title="Peelings">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Festive dance celebration with bright marigold decorations and colorful ethnic attire in Telugu motion picture style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsd_MxB2Oa2JBBVtrGrNGkH6qd76EPWCSi1fS3HzPgz2Q9SgkyLIqL0d9-L2nRzFuJwDrDHbI9tr4Ogx6rp9vs6Anlj_a_5h173-u2l5-RqKF4YTfWcbAOZ2uKBJB-V63aesaVKm7rPa8aC-HWjyc6VwW_fzLgikqdD8LfaMQz4d5jzJ2pE57eFikjeQwrCuVzig8QkRP_2NErp3wcEBpJCloYMiN4upo_CiFDffLbHxUxBhHdpBQzwQ"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 hidden items-center justify-center">
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="track-title-text font-title-md text-title-md text-on-surface font-semibold truncate">Peelings</span>
+<span class="playing-badge hidden items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Devi Sri Prasad, Laxmi Dasi</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-tertiary font-semibold">Lossless</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">3:45</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Like song" class="song-heart-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-secondary-container flex items-center justify-center active:scale-125 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Track 4: Special Jaathara Theme -->
+<div class="track-row p-space-xs rounded-xl hover:bg-surface-container flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Instrumental • DSP Brass &amp; Percussion Ensemble" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuBhQ6kwTV5rw6g9FJCOt58AtSJlHtTgJ-_pBBms8NIRsF0ymKTdDkKJTKjMoeHvUbfxaoN4uBuzvoMh3fs74YLhfv-lMS6AzHNp3RXACUARH088ocrq1KMFJKrHe972hXA_JyBR3wuDzWWNU0CzNxIPiFGzbszL-G9MmxSBV1VeHMiO9Xk3NoicKg3z2Vp5-cqFanHtimODwKxZ3ilCSzVyM9XdumBfGARKQ9V7EWGTWq-cZ8pgC1SEHw" data-track-index="3" data-track-title="Jaathara Theme (Blood &amp; Sand)">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Intense tribal festival ritual with blue body paint and vermilion red powder swirls in dramatic cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhQ6kwTV5rw6g9FJCOt58AtSJlHtTgJ-_pBBms8NIRsF0ymKTdDkKJTKjMoeHvUbfxaoN4uBuzvoMh3fs74YLhfv-lMS6AzHNp3RXACUARH088ocrq1KMFJKrHe972hXA_JyBR3wuDzWWNU0CzNxIPiFGzbszL-G9MmxSBV1VeHMiO9Xk3NoicKg3z2Vp5-cqFanHtimODwKxZ3ilCSzVyM9XdumBfGARKQ9V7EWGTWq-cZ8pgC1SEHw"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 hidden items-center justify-center">
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="track-title-text font-title-md text-title-md text-on-surface font-semibold truncate">Jaathara Theme (Blood &amp; Sand)</span>
+<span class="playing-badge hidden items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Instrumental • DSP Brass &amp; Percussion Ensemble</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-primary font-semibold">Dolby Atmos</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">3:12</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Like song" class="song-heart-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-secondary-container flex items-center justify-center active:scale-125 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Track 5 -->
+<div class="track-row p-space-xs rounded-xl hover:bg-surface-container flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Anurag Kulkarni, Chandrabose" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuB_ikTLU-FhaaKhHMHbw9--9Uy0bOmwc7Hk-xTxKBVCroIhDHNHM7wPbX0HahasxGL1D_qiVGhwYzsBg-5cRkKbNDGmKhKQi_W9SySJGQwK_xswxmGWeXkNF3ZVCtzg7rfdep_XqlZST8iVOUC-wCWWWCjFRljeNXihTzlfO4ylT3alJmvdXciOnuDhmfgMMsp-pvTi-JDvdR4MsOMUw2h-XrvtqOfJEtw2GN-2PxT0BnbQzXKmXTBLWA" data-track-index="4" data-track-title="Dhammu Choopina Gunde">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Moody cinematic portrait of heroic silhouette against deep crimson mountain forest sunrise" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_ikTLU-FhaaKhHMHbw9--9Uy0bOmwc7Hk-xTxKBVCroIhDHNHM7wPbX0HahasxGL1D_qiVGhwYzsBg-5cRkKbNDGmKhKQi_W9SySJGQwK_xswxmGWeXkNF3ZVCtzg7rfdep_XqlZST8iVOUC-wCWWWCjFRljeNXihTzlfO4ylT3alJmvdXciOnuDhmfgMMsp-pvTi-JDvdR4MsOMUw2h-XrvtqOfJEtw2GN-2PxT0BnbQzXKmXTBLWA"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 hidden items-center justify-center">
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="track-title-text font-title-md text-title-md text-on-surface font-semibold truncate block">Dhammu Choopina Gunde</span>
+<span class="playing-badge hidden items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Anurag Kulkarni, Chandrabose</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-tertiary font-semibold">Lossless</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">4:05</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Like song" class="song-heart-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-secondary-container flex items-center justify-center active:scale-125 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Track 6 -->
+<div class="track-row p-space-xs rounded-xl hover:bg-surface-container flex items-center gap-3 transition-all cursor-pointer" data-track-artist="Devi Sri Prasad, Budapest Scoring Symphony" data-track-img="https://lh3.googleusercontent.com/aida-public/AB6AXuA3l8roofpTHxcxRHEnpIu04zMV8VHlUbLDhIma8KoyigPkERbrK9NwCW48ZaS5bkqzQSsE2JaE1ZHQzVRvAEnVAVi9YlwyLWx6U4kQmGp7iR0B2umaGQPVuuQSFcqT0o1TB4Dk0u3KLgWcxJq4C8bfwhfaPoIVy2YTa3kg-U8DaX1bOtsg8nvpnZJVQBXQROZskwxdWfKWiKf8Eu31QwhH-q0yk6qOPfZJAG3ln-efTtv0qOey8vMV5Q" data-track-index="5" data-track-title="The Rule Climax OST">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="track-thumb w-full h-full object-cover" data-alt="Grand orchestra soundstage recording with conductor and live strings section bathed in golden stage spotlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3l8roofpTHxcxRHEnpIu04zMV8VHlUbLDhIma8KoyigPkERbrK9NwCW48ZaS5bkqzQSsE2JaE1ZHQzVRvAEnVAVi9YlwyLWx6U4kQmGp7iR0B2umaGQPVuuQSFcqT0o1TB4Dk0u3KLgWcxJq4C8bfwhfaPoIVy2YTa3kg-U8DaX1bOtsg8nvpnZJVQBXQROZskwxdWfKWiKf8Eu31QwhH-q0yk6qOPfZJAG3ln-efTtv0qOey8vMV5Q"/>
+<div class="soundwave-overlay absolute inset-0 bg-primary/40 hidden items-center justify-center">
+<div class="flex items-end justify-center gap-[2.5px] h-4">
+<span class="w-[2.5px] h-4 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-2 bg-on-primary rounded-full animate-bounce"></span>
+<span class="w-[2.5px] h-3 bg-on-primary rounded-full animate-pulse"></span>
+<span class="w-[2.5px] h-1.5 bg-on-primary rounded-full"></span>
+</div>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="track-title-text font-title-md text-title-md text-on-surface font-semibold truncate block">The Rule Climax OST</span>
+<span class="playing-badge hidden items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[10px] font-semibold tracking-wider whitespace-nowrap uppercase leading-none"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>Playing</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Devi Sri Prasad, Budapest Scoring Symphony</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-sm text-[10px] text-primary font-semibold">Dolby Atmos</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">4:40</span>
+</div>
+</div>
+<div class="flex items-center gap-1" onclick="event.stopPropagation()">
+<button aria-label="Like song" class="song-heart-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-secondary-container flex items-center justify-center active:scale-125 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite_border</span>
+</button>
+<button aria-label="Track options" class="track-options-btn w-8 h-8 rounded-full text-on-surface-variant hover:text-on-surface flex items-center justify-center active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Music Director & Cast Spotlight Card -->
+<div class="px-margin mt-space-lg">
+<div class="relative rounded-2xl p-space-md bg-gradient-to-br from-surface-container to-surface-container-high overflow-hidden shadow-[0_4px_16px_rgba(91,66,243,0.06)]">
+<div class="relative z-10 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+<img class="w-full h-full object-cover" data-alt="Stylized portrait cutout of music director Devi Sri Prasad DSP wearing sunglasses and smile with violet and mint ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_d1gpVAg8TQiMJyOE1uRC_Ipvc2HGexdxhjKXRcaEAyzz2c0NQdf0qfNJARBSWMSQyhFdUa1Ojoi3nMMfZtYUzM7PN_1dxNvVBdVsbX1FfLgK_N15MD9VstVSr4LVABQF0JQrUk_jBQDeS3IMcULa_-pSXvNMFJGnY_SpacYtKEjmBSHHKjVEVhZHLtHD1BuhGjZOlBFomZnxRd4-8-1XMa0NUZYHFqY9huQF3-mT5FEYPDbjXvzRXA"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Music Director</span>
+<h3 class="font-title-md text-title-md text-on-surface font-bold truncate">Devi Sri Prasad</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="dsp-listeners">Rockstar DSP • 14.8M Monthly Listeners</p>
+</div>
+<button class="px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md font-semibold active:scale-95 transition-all shadow-sm" id="artist-follow-btn" type="button">
+          Follow
+        </button>
+</div>
+</div>
+</div>
+<!-- More OST Soundtracks by Devi Sri Prasad -->
+<div class="mt-space-lg flex flex-col">
+<div class="px-margin flex items-center justify-between pb-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">More Blockbusters by DSP</h2>
+<a class="font-label-md text-label-md text-primary font-semibold hover:underline" href="#" id="view-all-dsp-btn">View All</a>
+</div>
+<!-- Horizontal Swipeable Discography Carousel -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar px-margin pt-1 pb-space-sm">
+<!-- OST Card 1 -->
+<div class="album-card flex flex-col w-36 flex-shrink-0 cursor-pointer group active:scale-95 transition-transform" data-album="Pushpa: The Rise" data-artist="Devi Sri Prasad • 2021" data-first-track="Oo Antava Oo Oo Antava">
+<div class="w-36 h-36 rounded-xl overflow-hidden bg-surface-container-high shadow-[0_4px_14px_rgba(26,26,39,0.08)] relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Movie poster artwork for Pushpa The Rise part 1 featuring Allu Arjun in red sandalwood forest with vintage rustic tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9Fzy8Z931CZQLvqsPoCVolou0NR3pm-57GPRsUPQVCqHXXBDF-UEgETiPV6uXKUsE2pyagl8GN986mwZDFnZEcGfGrKcvfUMEee3bSPQeu9DI7IptiORGIKLZci443h7XZBft94vLkz6AatpHzISVXFlYLG8TulT17owdb0ly8szzBN5fGfhq_pq0G4fT_dwVKXkPTWpANQdK8MVWodyCFQiUnYDEEHvG4yb2INp_v0p3GvqEvFn0Zg"/>
+<span class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-surface-container-lowest/90 text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+<span class="font-title-md text-[14px] leading-tight text-on-surface font-semibold mt-2 truncate">Pushpa: The Rise</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant truncate">2021 • 5 Tracks</span>
+</div>
+<!-- OST Card 2 -->
+<div class="album-card flex flex-col w-36 flex-shrink-0 cursor-pointer group active:scale-95 transition-transform" data-album="Rangasthalam" data-artist="Devi Sri Prasad • 2018" data-first-track="Rangamma Mangamma">
+<div class="w-36 h-36 rounded-xl overflow-hidden bg-surface-container-high shadow-[0_4px_14px_rgba(26,26,39,0.08)] relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Album artwork of Telugu village drama Rangasthalam with Ram Charan in rustic rural 1980s retro aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfatw--MWmNnzjuQNoBHKYOwRXtwOFw5jyOBjyqVz-0tdLnvDogzPjoINSDHqn2CaVtuVGSRj2D3WldEbfvLXhSrc9kAWNjL6fWU9d1qj1ufCapDvrSEaALH443USLEN5O9N9zfGtePimhQLacSjI__TzEulvyQNtpGNxGwW3AefAZmwaP8Uh3KeDRt1x5IJBP67jU2ZaNKdq9rybQ1ozOLlV7DHDO4WybrZPBCzBNwUBlVg6zCjUcRQ"/>
+<span class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-surface-container-lowest/90 text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+<span class="font-title-md text-[14px] leading-tight text-on-surface font-semibold mt-2 truncate">Rangasthalam</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant truncate">2018 • 6 Tracks</span>
+</div>
+<!-- OST Card 3 -->
+<div class="album-card flex flex-col w-36 flex-shrink-0 cursor-pointer group active:scale-95 transition-transform" data-album="Arya 2" data-artist="Devi Sri Prasad • 2009" data-first-track="Uppenantha Ee Premaki">
+<div class="w-36 h-36 rounded-xl overflow-hidden bg-surface-container-high shadow-[0_4px_14px_rgba(26,26,39,0.08)] relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Cult romantic Telugu movie album poster Arya 2 with youth rock and energetic dance themes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsmpKGGw6KUuaoYP0M2pzC-SNpdpymsqpB0q0r8HPuTVwznaI9qk8Zpgbr16TfhtDfb26pmdV2TxxHuGjDSNlS6wIWtVMQvEuHhR7mRjcy_Fxy5MfzpKCIQ0f-kNJInIVSnUxZ-CFgQn4TmSt6-pRjN40CjFzbt8Z9zmIgD9IbKV81YaB4dRQu5F1NaEWpp4q71tMbfFEoNoB8gWZxsZixNyMdqWWLz5auk7lheTkkXCQC6_hCIOB0wQ"/>
+<span class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-surface-container-lowest/90 text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+<span class="font-title-md text-[14px] leading-tight text-on-surface font-semibold mt-2 truncate">Arya 2</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant truncate">2009 • 8 Tracks</span>
+</div>
+<!-- OST Card 4 -->
+<div class="album-card flex flex-col w-36 flex-shrink-0 cursor-pointer group active:scale-95 transition-transform" data-album="Srimanthudu" data-artist="Devi Sri Prasad • 2015" data-first-track="Jaago Mohanaranga">
+<div class="w-36 h-36 rounded-xl overflow-hidden bg-surface-container-high shadow-[0_4px_14px_rgba(26,26,39,0.08)] relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Blockbuster film soundtrack poster Srimanthudu featuring Mahesh Babu in clean royal contemporary theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGM8OdaDJfDVTk6gpFs2_1kXRMLhvl1luRsAOUc08ypbIAcZDnMDj0pFE8bF2TXUquGJSzCDKq7t-Xcv9UPq1ZLRgEUOtJoon5u8WzI2cO3hpcDG9dmiWZ5fegP8MYKBmXbHOWnCZmzxtmkpjpq4dGEGOCiM3q1dFVffR1EOjSJ0tocdBKg9RDQXtbqFekda0rxavSeeJh9l5rR-EanjOixe3p116VQ2UZm7Rqm-KrHEFvd_9C-dXDIA"/>
+<span class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-surface-container-lowest/90 text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</span>
+</div>
+<span class="font-title-md text-[14px] leading-tight text-on-surface font-semibold mt-2 truncate">Srimanthudu</span>
+<span class="font-body-sm text-[12px] text-on-surface-variant truncate">2015 • 6 Tracks</span>
+</div>
+</div>
+</div>
+<!-- Copyright, Producer Info & Legal Note -->
+<div class="px-margin mt-space-md mb-space-md text-left text-on-surface-variant/70">
+<p class="font-label-sm text-[11px] leading-relaxed">
+      ℗ 2024 Mythri Movie Makers &amp; T-Series under exclusive license to Melody SoundCore™. All rights reserved. Mastered in 96kHz 24-bit Lossless Studio Audio.
+    </p>
+</div>
+</div>
+</main>
+<!-- Bottom Sticky Bar Container -->
+<div class="fixed bottom-0 w-full z-50 pointer-events-none"><div class="px-margin pb-space-xs pointer-events-auto">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_8px_20px_rgba(255,94,58,0.22)] flex items-center gap-space-sm p-space-xs pr-space-md transition-all active:brightness-98 cursor-pointer" id="mini-player">
+<div class="w-10 h-10 rounded-default bg-surface-container-high flex-shrink-0 flex items-center justify-center overflow-hidden">
+<img alt="Now Playing" class="w-full h-full object-cover hidden" id="mini-player-img" src=""/>
+<span class="material-symbols-outlined text-primary text-[22px]" id="mini-player-icon">music_note</span>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<p class="font-label-lg text-label-lg text-on-surface truncate" id="mini-player-title">Pushpa Pushpa</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate" id="mini-player-artist">Nakash Aziz, Deepak Blue • Pushpa 2</p>
+</div>
+<div class="flex items-center gap-space-xs" onclick="event.stopPropagation()">
+<button aria-label="Play or Pause" class="w-11 h-11 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary shadow-[0_4px_12px_rgba(254,93,57,0.3)] transition-transform active:scale-95" id="mini-play-btn">
+<span class="material-symbols-outlined text-[22px]" id="mini-play-icon">pause</span>
+</button>
+<button aria-label="Next Track" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-90 transition-transform" id="mini-next-btn">
+<span class="material-symbols-outlined text-[24px]">skip_next</span>
+</button>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-[3px] bg-surface-container-high">
+<div class="h-full w-2/5 bg-secondary-container rounded-full transition-all duration-300" id="mini-player-progress"></div>
+</div>
+</div>
+</div>
+<nav class="w-full pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(24,24,36,0.04)] pointer-events-auto" data-active-classes="text-primary font-bold" id="bottom-navbar">
+<div class="flex justify-around items-center h-16 px-space-xs">
+<a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="home" href="#home"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a>
+<a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="search" href="#search"><span class="material-symbols-outlined text-[24px]">search</span><span class="font-label-sm text-label-sm">Search</span></a>
+<a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-primary font-bold transition-colors" data-path="library" href="#library"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">library_music</span><span class="font-label-sm text-label-sm">Library</span></a>
+<a class="nav-tab flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="profile" href="#profile"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a>
+</div>
+</nav>
+</div>
+<script>
+  // Toast Helper
+  const toast = document.getElementById('toast-notify');
+  const toastMsg = document.getElementById('toast-message');
+  const toastIcon = document.getElementById('toast-icon');
+  let toastTimer = null;
+
+  function showToast(message, iconName = 'check_circle') {
+    if (!toast) return;
+    toastMsg.textContent = message;
+    toastIcon.textContent = iconName;
+    toast.classList.remove('opacity-0', 'translate-y-[-10px]');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-[-10px]');
+    }, 2400);
+  }
+
+  // Top header and poster actions
+  document.getElementById('nav-back-btn')?.addEventListener('click', () => {
+    showToast('Navigating back to Library...', 'arrow_back');
+  });
+
+  document.getElementById('album-share-btn')?.addEventListener('click', () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Pushpa 2: The Rule OST',
+        text: 'Listen to Pushpa 2: The Rule on Melody!',
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      showToast('Album link copied to clipboard!', 'share');
+    }
+  });
+
+  document.getElementById('album-more-btn')?.addEventListener('click', () => {
+    openOptionsSheet('Pushpa 2: The Rule', 'Mythri Movie Makers • Devi Sri Prasad', 'https://lh3.googleusercontent.com/aida-public/AB6AXuDe3zH4ND4-bZ3Z-ZhSrNzgGBZtjwWA3tIYl_G1LeN5nOmOjMIMJN045Km6zBT4x7Rh1-GN0sLoZwkcH_tsniD6eQVAixXwf_tr43DrCmks_2fw6FGEocjC2N8YXzfKGIvVVsiJzeZZw9SK86EQFXML719edvd8AQm74H5ysFgtP7v_Ki5TeSHwJE2gIvr38i9CzqpCVe2u9d9Uw1l6i4aZuSI9jEGWJfS8y0GP1mR2gbVSfIIBIdmnHQ');
+  });
+
+  document.getElementById('header-search-btn')?.addEventListener('click', () => {
+    showToast('Opening search...', 'search');
+  });
+
+  document.getElementById('header-profile-btn')?.addEventListener('click', () => {
+    showToast('Opening listener profile...', 'account_circle');
+  });
+
+  // Action chips functionality
+  const downloadBtn = document.getElementById('btn-download-album');
+  const downloadIcon = document.getElementById('download-icon');
+  const downloadLabel = document.getElementById('download-label');
+  let downloadState = 0; // 0: Idle, 1: Downloading, 2: Downloaded
+
+  downloadBtn?.addEventListener('click', () => {
+    if (downloadState === 0) {
+      downloadState = 1;
+      downloadIcon.textContent = 'progress_activity';
+      downloadIcon.classList.add('animate-spin');
+      downloadLabel.textContent = 'Saving...';
+      showToast('Downloading 6 Lossless tracks...', 'cloud_download');
+      
+      setTimeout(() => {
+        downloadState = 2;
+        downloadIcon.classList.remove('animate-spin');
+        downloadIcon.textContent = 'download_done';
+        downloadLabel.textContent = 'Downloaded';
+        downloadBtn.classList.add('bg-tertiary-fixed', 'text-on-tertiary-fixed');
+        downloadBtn.classList.remove('bg-surface-container-high', 'text-on-surface');
+        showToast('Album saved offline for Lossless playback!', 'check_circle');
+      }, 1400);
+    } else if (downloadState === 2) {
+      downloadState = 0;
+      downloadIcon.textContent = 'download_for_offline';
+      downloadLabel.textContent = 'Download';
+      downloadBtn.classList.remove('bg-tertiary-fixed', 'text-on-tertiary-fixed');
+      downloadBtn.classList.add('bg-surface-container-high', 'text-on-surface');
+      showToast('Removed downloads from device storage', 'delete');
+    }
+  });
+
+  const libraryBtn = document.getElementById('btn-library-album');
+  const libraryIcon = document.getElementById('library-icon');
+  const libraryLabel = document.getElementById('library-label');
+  let inLibrary = false;
+
+  libraryBtn?.addEventListener('click', () => {
+    inLibrary = !inLibrary;
+    if (inLibrary) {
+      libraryIcon.textContent = 'bookmark_added';
+      libraryLabel.textContent = 'Added';
+      libraryBtn.classList.add('text-primary', 'font-semibold', 'bg-primary-fixed/40');
+      libraryBtn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+      showToast('Saved Pushpa 2 to your Library!', 'bookmark_added');
+    } else {
+      libraryIcon.textContent = 'playlist_add';
+      libraryLabel.textContent = 'Library';
+      libraryBtn.classList.remove('text-primary', 'font-semibold', 'bg-primary-fixed/40');
+      libraryBtn.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+      showToast('Removed from Library', 'bookmark_remove');
+    }
+  });
+
+  const castBtn = document.getElementById('btn-cast-album');
+  const castIcon = document.getElementById('cast-icon');
+  let isCasting = false;
+
+  castBtn?.addEventListener('click', () => {
+    isCasting = !isCasting;
+    if (isCasting) {
+      castIcon.textContent = 'cast_connected';
+      castBtn.classList.add('text-secondary-container', 'bg-secondary-fixed/50');
+      castBtn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+      showToast('Streaming in Dolby Atmos to Living Room Soundbar', 'cast_connected');
+    } else {
+      castIcon.textContent = 'cast';
+      castBtn.classList.remove('text-secondary-container', 'bg-secondary-fixed/50');
+      castBtn.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+      showToast('Cast disconnected. Playing on iPhone speakers', 'speaker');
+    }
+  });
+
+  // Tracklist State and Interactive Playback
+  const tracks = [
+    { title: "Pushpa Pushpa", artist: "Nakash Aziz, Deepak Blue, DSP", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA80WV2wKezv6XAwcPqVilFr60vMGJ6-h0xzilWTSO1IwOlYqrFvu_xjy4iJ1OdtEMH44wsA-QrFy7oNmNYSKnOZl87MNilwMNCv_jpOFrNMoroHbTZLROKX_qK7Y60xwMr9XyQDIuWtqNS1SOCXtvPJPb9D4H3ovTQuU_iIy7TqOt9BkhwRiZYczZNCuO13PPVDHksJt28w_vZTE0Ri73r5o4ogBHKiqAh4djMnfJoq_be52gSXc4Pcg", duration: "4:18" },
+    { title: "Sooseki (The Couple Song)", artist: "Shreya Ghoshal, Devi Sri Prasad", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDsPiVeegk3_Jk9x0qIRtjX2mIIziqmpwo8eg0uEYIrT_ixDwxv-2jnl2i0Jl6g89e3xDeSVCrXQDIcRjeGOgf0wPQ0uKA0m74G6JTwWte4n0nKF9ZAsRPGbzFtdMupeZquu6eQx37hOk7sAOyxMdeZlhLO0pCtru3FF0y8wVMR922z009U-7-rn27fjJf8gBnBy9r3t1rGYbSbyZiiLAyvp3gZ5EVFNtVHmQo0CMVuLFq1zEoUkb-lNQ", duration: "4:21" },
+    { title: "Peelings", artist: "Devi Sri Prasad, Laxmi Dasi", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAsd_MxB2Oa2JBBVtrGrNGkH6qd76EPWCSi1fS3HzPgz2Q9SgkyLIqL0d9-L2nRzFuJwDrDHbI9tr4Ogx6rp9vs6Anlj_a_5h173-u2l5-RqKF4YTfWcbAOZ2uKBJB-V63aesaVKm7rPa8aC-HWjyc6VwW_fzLgikqdD8LfaMQz4d5jzJ2pE57eFikjeQwrCuVzig8QkRP_2NErp3wcEBpJCloYMiN4upo_CiFDffLbHxUxBhHdpBQzwQ", duration: "3:45" },
+    { title: "Jaathara Theme (Blood & Sand)", artist: "Instrumental • DSP Brass & Percussion Ensemble", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhQ6kwTV5rw6g9FJCOt58AtSJlHtTgJ-_pBBms8NIRsF0ymKTdDkKJTKjMoeHvUbfxaoN4uBuzvoMh3fs74YLhfv-lMS6AzHNp3RXACUARH088ocrq1KMFJKrHe972hXA_JyBR3wuDzWWNU0CzNxIPiFGzbszL-G9MmxSBV1VeHMiO9Xk3NoicKg3z2Vp5-cqFanHtimODwKxZ3ilCSzVyM9XdumBfGARKQ9V7EWGTWq-cZ8pgC1SEHw", duration: "3:12" },
+    { title: "Dhammu Choopina Gunde", artist: "Anurag Kulkarni, Chandrabose", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_ikTLU-FhaaKhHMHbw9--9Uy0bOmwc7Hk-xTxKBVCroIhDHNHM7wPbX0HahasxGL1D_qiVGhwYzsBg-5cRkKbNDGmKhKQi_W9SySJGQwK_xswxmGWeXkNF3ZVCtzg7rfdep_XqlZST8iVOUC-wCWWWCjFRljeNXihTzlfO4ylT3alJmvdXciOnuDhmfgMMsp-pvTi-JDvdR4MsOMUw2h-XrvtqOfJEtw2GN-2PxT0BnbQzXKmXTBLWA", duration: "4:05" },
+    { title: "The Rule Climax OST", artist: "Devi Sri Prasad, Budapest Scoring Symphony", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA3l8roofpTHxcxRHEnpIu04zMV8VHlUbLDhIma8KoyigPkERbrK9NwCW48ZaS5bkqzQSsE2JaE1ZHQzVRvAEnVAVi9YlwyLWx6U4kQmGp7iR0B2umaGQPVuuQSFcqT0o1TB4Dk0u3KLgWcxJq4C8bfwhfaPoIVy2YTa3kg-U8DaX1bOtsg8nvpnZJVQBXQROZskwxdWfKWiKf8Eu31QwhH-q0yk6qOPfZJAG3ln-efTtv0qOey8vMV5Q", duration: "4:40" }
+  ];
+
+  let currentTrackIdx = 0;
+  let isPlaying = true;
+
+  const trackElements = document.querySelectorAll('.track-row');
+  const miniTitle = document.getElementById('mini-player-title');
+  const miniArtist = document.getElementById('mini-player-artist');
+  const miniPlayIcon = document.getElementById('mini-play-icon');
+  const miniPlayBtn = document.getElementById('mini-play-btn');
+  const miniNextBtn = document.getElementById('mini-next-btn');
+  const miniProgress = document.getElementById('mini-player-progress');
+  const miniImg = document.getElementById('mini-player-img');
+  const miniIcon = document.getElementById('mini-player-icon');
+
+  function updateTrackUI() {
+    trackElements.forEach((el, index) => {
+      const isCurrent = index === currentTrackIdx;
+      const soundwave = el.querySelector('.soundwave-overlay');
+      const badge = el.querySelector('.playing-badge');
+      const titleText = el.querySelector('.track-title-text');
+
+      if (isCurrent) {
+        el.classList.add('bg-primary-fixed/30');
+        el.classList.remove('hover:bg-surface-container');
+        if (titleText) {
+          titleText.classList.add('text-primary', 'font-bold');
+          titleText.classList.remove('text-on-surface', 'font-semibold');
+        }
+        if (soundwave) {
+          soundwave.classList.remove('hidden');
+          soundwave.classList.add('flex');
+          // Update animations state
+          const bars = soundwave.querySelectorAll('span');
+          bars.forEach(b => {
+            if (isPlaying) {
+              b.classList.remove('opacity-60');
+            } else {
+              b.classList.add('opacity-60');
+            }
+          });
+        }
+        if (badge) {
+          badge.classList.remove('hidden');
+          badge.classList.add('inline-flex');
+        }
+      } else {
+        el.classList.remove('bg-primary-fixed/30');
+        el.classList.add('hover:bg-surface-container');
+        if (titleText) {
+          titleText.classList.remove('text-primary', 'font-bold');
+          titleText.classList.add('text-on-surface', 'font-semibold');
+        }
+        if (soundwave) {
+          soundwave.classList.add('hidden');
+          soundwave.classList.remove('flex');
+        }
+        if (badge) {
+          badge.classList.add('hidden');
+          badge.classList.remove('inline-flex');
+        }
+      }
+    });
+
+    // Update Mini player
+    const curr = tracks[currentTrackIdx];
+    if (curr) {
+      if (miniTitle) miniTitle.textContent = curr.title;
+      if (miniArtist) miniArtist.textContent = `${curr.artist} • Pushpa 2`;
+      if (miniImg) {
+        miniImg.src = curr.img;
+        miniImg.classList.remove('hidden');
+        if (miniIcon) miniIcon.classList.add('hidden');
+      }
+      if (miniProgress) {
+        const progresses = ['35%', '60%', '15%', '80%', '45%', '25%'];
+        miniProgress.style.width = progresses[currentTrackIdx % progresses.length];
+      }
+    }
+
+    if (miniPlayIcon) {
+      miniPlayIcon.textContent = isPlaying ? 'pause' : 'play_arrow';
+    }
+  }
+
+  // Row clicks
+  trackElements.forEach((el, index) => {
+    el.addEventListener('click', (e) => {
+      if (currentTrackIdx === index) {
+        isPlaying = !isPlaying;
+      } else {
+        currentTrackIdx = index;
+        isPlaying = true;
+      }
+      updateTrackUI();
+      const curr = tracks[currentTrackIdx];
+      showToast(`${isPlaying ? 'Playing' : 'Paused'}: ${curr.title}`, isPlaying ? 'play_arrow' : 'pause');
+    });
+  });
+
+  // Mini Player Controls
+  miniPlayBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isPlaying = !isPlaying;
+    updateTrackUI();
+    showToast(isPlaying ? `Resumed: ${tracks[currentTrackIdx].title}` : 'Playback Paused', isPlaying ? 'play_arrow' : 'pause');
+  });
+
+  miniNextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    currentTrackIdx = (currentTrackIdx + 1) % tracks.length;
+    isPlaying = true;
+    updateTrackUI();
+    showToast(`Next Track: ${tracks[currentTrackIdx].title}`, 'skip_next');
+  });
+
+  document.getElementById('mini-player')?.addEventListener('click', () => {
+    showToast(`Now Playing: ${tracks[currentTrackIdx].title} (Lossless Dolby Atmos)`, 'graphic_eq');
+  });
+
+  // Hearts / Favorite Toggles
+  document.querySelectorAll('.song-heart-btn').forEach((btn) => {
+    let liked = false;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      liked = !liked;
+      const icon = btn.querySelector('.material-symbols-outlined');
+      btn.classList.add('heart-pop');
+      setTimeout(() => btn.classList.remove('heart-pop'), 200);
+
+      if (liked) {
+        icon.textContent = 'favorite';
+        icon.style.fontVariationSettings = "'FILL' 1";
+        btn.classList.add('text-secondary-container');
+        btn.classList.remove('text-on-surface-variant');
+        showToast('Added to Liked Songs ❤️', 'favorite');
+      } else {
+        icon.textContent = 'favorite_border';
+        icon.style.fontVariationSettings = "'FILL' 0";
+        btn.classList.remove('text-secondary-container');
+        btn.classList.add('text-on-surface-variant');
+        showToast('Removed from Liked Songs', 'heart_broken');
+      }
+    });
+  });
+
+  // Lyrics Buttons
+  document.querySelectorAll('.lyrics-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast('Opening Live Synchronized Lyrics...', 'lyrics');
+    });
+  });
+
+  // Options Sheet Logic
+  const optionsSheet = document.getElementById('options-sheet');
+  const sheetContent = document.getElementById('sheet-content');
+  const sheetTitle = document.getElementById('sheet-track-title');
+  const sheetArtist = document.getElementById('sheet-track-artist');
+  const sheetImg = document.getElementById('sheet-track-img');
+  const sheetClose = document.getElementById('sheet-close-btn');
+
+  function openOptionsSheet(title, artist, imgUrl) {
+    if (!optionsSheet || !sheetContent) return;
+    sheetTitle.textContent = title;
+    sheetArtist.textContent = artist;
+    sheetImg.src = imgUrl;
+
+    optionsSheet.classList.remove('pointer-events-none', 'opacity-0');
+    optionsSheet.classList.add('pointer-events-auto', 'opacity-100');
+    sheetContent.classList.remove('translate-y-full');
+    sheetContent.classList.add('translate-y-0');
+  }
+
+  function closeOptionsSheet() {
+    if (!optionsSheet || !sheetContent) return;
+    optionsSheet.classList.remove('pointer-events-auto', 'opacity-100');
+    optionsSheet.classList.add('pointer-events-none', 'opacity-0');
+    sheetContent.classList.remove('translate-y-0');
+    sheetContent.classList.add('translate-y-full');
+  }
+
+  sheetClose?.addEventListener('click', closeOptionsSheet);
+  optionsSheet?.addEventListener('click', (e) => {
+    if (e.target === optionsSheet) closeOptionsSheet();
+  });
+
+  document.querySelectorAll('.sheet-action').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const act = btn.getAttribute('data-action');
+      closeOptionsSheet();
+      showToast(`${act} completed!`, 'check');
+    });
+  });
+
+  document.querySelectorAll('.track-options-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const row = btn.closest('.track-row');
+      const idx = parseInt(row.getAttribute('data-track-index') || '0', 10);
+      const t = tracks[idx] || tracks[0];
+      openOptionsSheet(t.title, t.artist, t.img);
+    });
+  });
+
+  // Sort Tracks Functionality
+  const sortBtn = document.getElementById('sort-tracks-btn');
+  const sortLabel = document.getElementById('sort-label');
+  const sortOptions = ['Default', 'Duration', 'Popular'];
+  let sortIdx = 0;
+
+  sortBtn?.addEventListener('click', () => {
+    sortIdx = (sortIdx + 1) % sortOptions.length;
+    sortLabel.textContent = `Sort: ${sortOptions[sortIdx]}`;
+    showToast(`Tracks sorted by ${sortOptions[sortIdx]}`, 'sort');
+  });
+
+  // Artist Follow Button Toggle
+  const followBtn = document.getElementById('artist-follow-btn');
+  const dspListeners = document.getElementById('dsp-listeners');
+  let isFollowing = false;
+
+  followBtn?.addEventListener('click', () => {
+    isFollowing = !isFollowing;
+    if (isFollowing) {
+      followBtn.textContent = 'Following';
+      followBtn.classList.remove('bg-primary', 'text-on-primary');
+      followBtn.classList.add('bg-surface-container-highest', 'text-on-surface', 'border', 'border-outline-variant');
+      dspListeners.textContent = 'Rockstar DSP • 14,800,001 Monthly Listeners';
+      showToast('Following Devi Sri Prasad!', 'person_add');
+    } else {
+      followBtn.textContent = 'Follow';
+      followBtn.classList.add('bg-primary', 'text-on-primary');
+      followBtn.classList.remove('bg-surface-container-highest', 'text-on-surface', 'border', 'border-outline-variant');
+      dspListeners.textContent = 'Rockstar DSP • 14.8M Monthly Listeners';
+      showToast('Unfollowed Devi Sri Prasad', 'person_remove');
+    }
+  });
+
+  // More Albums by DSP click actions
+  document.querySelectorAll('.album-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const album = card.getAttribute('data-album');
+      const artist = card.getAttribute('data-artist');
+      const firstTrack = card.getAttribute('data-first-track');
+      const img = card.querySelector('img').src;
+
+      // Update sticky player to play this soundtrack preview
+      if (miniTitle) miniTitle.textContent = firstTrack;
+      if (miniArtist) miniArtist.textContent = `${album} • ${artist}`;
+      if (miniImg) {
+        miniImg.src = img;
+        miniImg.classList.remove('hidden');
+        if (miniIcon) miniIcon.classList.add('hidden');
+      }
+      isPlaying = true;
+      if (miniPlayIcon) miniPlayIcon.textContent = 'pause';
+      showToast(`Playing OST: ${album} (${firstTrack})`, 'album');
+    });
+  });
+
+  document.getElementById('view-all-dsp-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showToast('Viewing Devi Sri Prasad complete discography', 'library_music');
+  });
+
+  // Bottom Navigation Switcher
+  const navTabs = document.querySelectorAll('.nav-tab');
+  navTabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      navTabs.forEach((t) => {
+        t.classList.remove('text-primary', 'font-bold');
+        t.classList.add('text-on-surface-variant');
+        const icon = t.querySelector('.material-symbols-outlined');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+      });
+
+      tab.classList.remove('text-on-surface-variant');
+      tab.classList.add('text-primary', 'font-bold');
+      const activeIcon = tab.querySelector('.material-symbols-outlined');
+      if (activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+
+      const path = tab.getAttribute('data-path');
+      showToast(`Switched to ${path.toUpperCase()} tab`, path === 'library' ? 'library_music' : path);
+    });
+  });
+
+  // Initialize UI
+  updateTrackUI();
+</script></body></html>

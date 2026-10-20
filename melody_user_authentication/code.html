@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><main class="flex-1 flex flex-col relative w-full pb-safe bg-surface pt-safe"><div class="flex flex-col w-full px-margin pb-space-xl">
+<!-- Interactive Visual Hero & Soundmark Banner -->
+<div class="relative w-full pb-space-md flex flex-col items-center text-center pt-12">
+<!-- Playful Ambient Graphic Accent -->
+<div class="relative mb-space-sm flex items-center justify-center">
+<div class="w-20 h-20 rounded-full bg-gradient-to-tr from-primary-container via-primary to-secondary-container p-1 shadow-[0_12px_28px_rgba(91,66,243,0.28)] flex items-center justify-center transform active:scale-95 transition-transform duration-300">
+<div class="w-full h-full rounded-full bg-surface-container-lowest flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-secondary/10 pointer-events-none"></div>
+<!-- Animated Sound Waveform Icon -->
+<div class="flex items-end gap-1 h-8 z-10">
+<span class="w-1.5 h-4 bg-primary rounded-full animate-pulse"></span>
+<span class="w-1.5 h-7 bg-secondary-container rounded-full animate-bounce"></span>
+<span class="w-1.5 h-5 bg-primary-container rounded-full animate-pulse"></span>
+<span class="w-1.5 h-8 bg-secondary rounded-full animate-bounce"></span>
+<span class="w-1.5 h-3 bg-tertiary rounded-full animate-pulse"></span>
+</div>
+</div>
+</div>
+<!-- Tiny Playful Music Sparkle Badges -->
+<div class="absolute -top-1 -right-2 bg-tertiary-fixed text-on-tertiary-fixed px-space-xs py-0.5 rounded-full shadow-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+<span class="font-label-sm text-label-sm">Lossless</span>
+</div>
+</div>
+<!-- Punchy Headings -->
+<div class="space-y-space-xs max-w-xs">
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Feel the Beat.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Your vibrant gateway to Telugu, Bollywood, and authentic Indian indie soundscapes.
+      </p>
+</div>
+</div>
+<!-- Segmented Pill Auth Mode Switcher -->
+<div class="w-full bg-surface-container-high p-1 rounded-full flex items-center relative mb-space-lg shadow-inner">
+<button class="flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-primary bg-primary shadow-[0_4px_14px_rgba(66,29,219,0.3)] flex items-center justify-center gap-1.5" id="tab-signin" onclick="switchAuthTab('signin')">
+<span class="">Sign In</span>
+</button>
+<button class="flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5" id="tab-signup" onclick="switchAuthTab('signup')">
+<span class="">Create Account</span>
+</button>
+</div>
+<!-- Primary Interactive Credentials Form Card -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-md shadow-[0_10px_26px_rgba(91,66,243,0.06)] mb-space-lg">
+<form class="flex flex-col gap-space-md" id="auth-form" onsubmit="event.preventDefault();">
+<!-- Email or Phone Input -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="auth-identifier">
+<span class="">EMAIL OR MOBILE NUMBER</span>
+<span class="text-primary font-body-sm text-body-sm cursor-pointer hover:underline" onclick="fillDemoPhone()">Use Demo</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">mail</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-DEFAULT py-space-sm pl-11 pr-space-md outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary-container/40 transition-all placeholder:text-outline/60" id="auth-identifier" placeholder="arjun.reddy@melody.in" type="text">
+</div>
+</div>
+<!-- Password Input with Interactive Toggle -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant" for="auth-password">PASSWORD</label>
+<button class="font-body-sm text-body-sm text-secondary hover:text-secondary-container transition-colors font-medium" type="button">Forgot?</button>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">lock</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-DEFAULT py-space-sm pl-11 pr-11 outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary-container/40 transition-all placeholder:text-outline/60" id="auth-password" placeholder="Enter secure password" type="password">
+<button aria-label="Toggle password visibility" class="absolute right-space-md text-outline hover:text-on-surface flex items-center justify-center" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary Action Button -->
+<div id="auth-feedback-banner" class="hidden rounded-DEFAULT p-space-sm font-body-sm text-body-sm transition-all duration-300 flex items-center gap-2"></div><button class="w-full py-space-md px-space-lg rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg tracking-wide shadow-[0_8px_20px_rgba(91,66,243,0.35)] flex items-center justify-center gap-2 transform active:scale-[0.98] transition-all hover:brightness-105" type="submit" id="submit-btn"><span id="btn-spinner" class="hidden animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span><span id="submit-text" class="">Sign In to Melody</span><span id="btn-arrow" class="material-symbols-outlined text-[20px] transition-transform">arrow_forward</span></button>
+</form>
+</div>
+<!-- Regional Sound Discovery Chips (Taste Onboarding Preview) -->
+
+<!-- Divider Section -->
+<div class="relative w-full flex items-center justify-center my-space-xs">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full bg-outline-variant/50 h-px"></div>
+</div>
+<div class="relative px-space-md bg-surface text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+      or continue with
+    </div>
+</div>
+<!-- Social & Fast Authorization Grid -->
+<div class="grid grid-cols-3 gap-space-sm mt-space-md mb-space-md">
+<!-- Google Auth -->
+<button aria-label="Continue with Google" class="flex flex-col items-center justify-center p-space-sm bg-surface-container-lowest hover:bg-surface-container rounded-DEFAULT shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-95 transition-all text-on-surface" type="button" onclick="handleSocialAuth('Google', event)">
+<svg class="w-6 h-6 mb-1" viewBox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-sm text-label-sm font-semibold">Google</span>
+</button>
+<!-- Apple Auth -->
+<button aria-label="Continue with Apple" class="flex flex-col items-center justify-center p-space-sm bg-surface-container-lowest hover:bg-surface-container rounded-DEFAULT shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-95 transition-all text-on-surface" type="button" onclick="handleSocialAuth('Apple', event)">
+<svg class="w-6 h-6 mb-1 fill-current text-on-surface" viewBox="0 0 24 24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.9.04-2.02.6-2.66 1.34-.56.64-1.06 1.71-.92 2.74 1.01.08 2.05-.48 2.66-1.23z"></path>
+</svg>
+<span class="font-label-sm text-label-sm font-semibold">Apple</span>
+</button>
+<!-- Mobile OTP Quick -->
+<button aria-label="Instant Phone OTP" class="flex flex-col items-center justify-center p-space-sm bg-surface-container-lowest hover:bg-surface-container rounded-DEFAULT shadow-[0_2px_8px_rgba(0,0,0,0.04)] active:scale-95 transition-all text-on-surface" type="button" onclick="handleFastOTP(event)">
+<span class="material-symbols-outlined text-[24px] text-secondary-container mb-1">sms</span>
+<span class="font-label-sm text-label-sm font-semibold">Fast OTP</span>
+</button>
+</div>
+<!-- Music Cloud Seamless Sync Callout -->
+<div class="w-full bg-tertiary-fixed text-on-tertiary-fixed p-space-sm rounded-DEFAULT flex items-center gap-space-sm mb-space-lg shadow-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[18px] text-tertiary">cloud_sync</span>
+</div>
+<p class="font-body-sm text-body-sm leading-tight text-on-tertiary-fixed">
+<strong>Instant Library Sync:</strong> Imports your liked tracks, regional playlists &amp; daily mixes automatically.
+    </p>
+</div>
+<!-- Dynamic Alternate Prompt Footer -->
+<div class="flex flex-col items-center text-center gap-space-xs mt-auto">
+<div class="font-body-md text-body-md text-on-surface-variant" id="switch-prompt-container">
+<span class="">Don't have an account yet?</span>
+<button class="font-title-md text-title-md text-secondary ml-1 hover:underline" onclick="switchAuthTab('signup')" type="button">
+        Sign Up Free
+      </button>
+</div>
+<!-- Legal Terms -->
+<p class="font-body-sm text-body-sm text-outline max-w-xs mt-space-sm leading-normal">By signing in, you agree to Melody's <a class="underline hover:text-on-surface cursor-pointer" onclick="showToast('info', 'Opening Terms of Service...')">Terms of Service</a> &amp; <a class="underline hover:text-on-surface cursor-pointer" onclick="showToast('info', 'Opening Privacy Policy...')">Privacy Policy</a>.</p>
+</div><script id="interactive-auth-handler">
+let currentAuthMode = 'signin';
+let isSubmitting = false;
+
+function showToast(type, msg) {
+  const container = document.getElementById('toast-container');
+  const icon = document.getElementById('toast-icon');
+  const text = document.getElementById('toast-msg');
+  if (!container) return;
+  
+  if (type === 'error') {
+    icon.textContent = 'error';
+    icon.className = 'material-symbols-outlined text-[18px] text-error';
+  } else if (type === 'success') {
+    icon.textContent = 'check_circle';
+    icon.className = 'material-symbols-outlined text-[18px] text-tertiary-fixed';
+  } else {
+    icon.textContent = 'info';
+    icon.className = 'material-symbols-outlined text-[18px] text-primary-fixed';
+  }
+  text.textContent = msg;
+  container.classList.remove('opacity-0', '-translate-y-2');
+  container.classList.add('opacity-100', 'translate-y-0');
+  
+  clearTimeout(window.__toastTimeout);
+  window.__toastTimeout = setTimeout(() => {
+    container.classList.add('opacity-0', '-translate-y-2');
+    container.classList.remove('opacity-100', 'translate-y-0');
+  }, 2800);
+}
+
+function switchAuthTab(mode) {
+  if (isSubmitting) return;
+  currentAuthMode = mode;
+  const tabSignIn = document.getElementById('tab-signin');
+  const tabSignUp = document.getElementById('tab-signup');
+  const submitText = document.getElementById('submit-text');
+  const promptContainer = document.getElementById('switch-prompt-container');
+  const feedbackBanner = document.getElementById('auth-feedback-banner');
+  
+  if (feedbackBanner) feedbackBanner.classList.add('hidden');
+
+  if (mode === 'signin') {
+    tabSignIn.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-primary bg-primary shadow-[0_4px_14px_rgba(66,29,219,0.3)] flex items-center justify-center gap-1.5 cursor-pointer active:scale-95";
+    tabSignUp.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 cursor-pointer active:scale-95";
+    submitText.textContent = "Sign In to Melody";
+    promptContainer.innerHTML = '<span>Don\'t have an account yet?</span> <button type="button" onclick="switchAuthTab(\'signup\')" class="font-title-md text-title-md text-secondary ml-1 hover:underline active:scale-95 transition-transform">Sign Up Free</button>';
+    showToast('info', 'Switched to Sign In');
+  } else {
+    tabSignUp.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-primary bg-primary shadow-[0_4px_14px_rgba(66,29,219,0.3)] flex items-center justify-center gap-1.5 cursor-pointer active:scale-95";
+    tabSignIn.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5 cursor-pointer active:scale-95";
+    submitText.textContent = "Create Free Account";
+    promptContainer.innerHTML = '<span>Already have a Melody profile?</span> <button type="button" onclick="switchAuthTab(\'signin\')" class="font-title-md text-title-md text-secondary ml-1 hover:underline active:scale-95 transition-transform">Sign In</button>';
+    showToast('info', 'Switched to Create Account');
+  }
+}
+
+function togglePasswordVisibility() {
+  const input = document.getElementById('auth-password');
+  const icon = document.getElementById('eye-icon');
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) icon.textContent = 'visibility_off';
+  } else {
+    input.type = 'password';
+    if (icon) icon.textContent = 'visibility';
+  }
+}
+
+function fillDemoPhone() {
+  const idInput = document.getElementById('auth-identifier');
+  const passInput = document.getElementById('auth-password');
+  if (idInput) {
+    idInput.value = "+91 98490 12345";
+    idInput.classList.add('ring-2', 'ring-primary-container');
+    setTimeout(() => idInput.classList.remove('ring-2', 'ring-primary-container'), 1000);
+  }
+  if (passInput && (!passInput.value || passInput.value.trim() === '')) {
+    passInput.value = "MelodyBeat2025!";
+  }
+  showToast('success', 'Demo credentials loaded!');
+}
+
+function handleSocialAuth(provider, evt) {
+  if (evt) evt.preventDefault();
+  showToast('info', 'Connecting to ' + provider + '...');
+  setTimeout(() => {
+    showToast('success', provider + ' connected successfully!');
+  }, 900);
+}
+
+function handleFastOTP(evt) {
+  if (evt) evt.preventDefault();
+  const idInput = document.getElementById('auth-identifier');
+  if (idInput && !idInput.value.trim()) {
+    idInput.value = "+91 98490 12345";
+  }
+  showToast('info', 'Sending 6-digit OTP code to mobile...');
+  setTimeout(() => {
+    showToast('success', 'OTP sent: 482910');
+  }, 1000);
+}
+
+function setupFormSubmission() {
+  const form = document.getElementById('auth-form');
+  if (!form) return;
+  
+  form.onsubmit = function(e) {
+    e.preventDefault();
+    if (isSubmitting) return;
+    
+    const idInput = document.getElementById('auth-identifier');
+    const passInput = document.getElementById('auth-password');
+    const feedback = document.getElementById('auth-feedback-banner');
+    const submitBtn = document.getElementById('submit-btn');
+    const spinner = document.getElementById('btn-spinner');
+    const arrow = document.getElementById('btn-arrow');
+    const submitText = document.getElementById('submit-text');
+    
+    const idVal = idInput ? idInput.value.trim() : '';
+    const passVal = passInput ? passInput.value.trim() : '';
+    
+    if (!idVal) {
+      if (feedback) {
+        feedback.className = 'rounded-DEFAULT p-space-sm font-body-sm text-body-sm transition-all duration-300 flex items-center gap-2 bg-error-container text-on-error-container';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[18px]">warning</span><span>Please enter your email or mobile number.</span>';
+        feedback.classList.remove('hidden');
+      }
+      if (idInput) idInput.focus();
+      return;
+    }
+    
+    if (!passVal || passVal.length < 6) {
+      if (feedback) {
+        feedback.className = 'rounded-DEFAULT p-space-sm font-body-sm text-body-sm transition-all duration-300 flex items-center gap-2 bg-error-container text-on-error-container';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[18px]">warning</span><span>Password must be at least 6 characters.</span>';
+        feedback.classList.remove('hidden');
+      }
+      if (passInput) passInput.focus();
+      return;
+    }
+    
+    if (feedback) feedback.classList.add('hidden');
+    isSubmitting = true;
+    if (spinner) spinner.classList.remove('hidden');
+    if (arrow) arrow.classList.add('hidden');
+    if (submitText) submitText.textContent = currentAuthMode === 'signin' ? 'Authenticating...' : 'Creating Account...';
+    if (submitBtn) submitBtn.classList.add('opacity-90', 'cursor-not-allowed');
+    
+    setTimeout(() => {
+      isSubmitting = false;
+      if (spinner) spinner.classList.add('hidden');
+      if (arrow) arrow.classList.remove('hidden');
+      if (submitBtn) submitBtn.classList.remove('opacity-90', 'cursor-not-allowed');
+      if (submitText) submitText.textContent = currentAuthMode === 'signin' ? 'Sign In to Melody' : 'Create Free Account';
+      
+      if (feedback) {
+        feedback.className = 'rounded-DEFAULT p-space-sm font-body-sm text-body-sm transition-all duration-300 flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed';
+        feedback.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Welcome back! Synchronizing your playlists...</span>';
+        feedback.classList.remove('hidden');
+      }
+      showToast('success', currentAuthMode === 'signin' ? 'Signed in successfully!' : 'Account created successfully!');
+    }, 1200);
+  };
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupFormSubmission);
+} else {
+  setupFormSubmission();
+}
+</script>
+</div>
+<script>
+  let currentAuthMode = 'signin';
+
+  function switchAuthTab(mode) {
+    currentAuthMode = mode;
+    const tabSignIn = document.getElementById('tab-signin');
+    const tabSignUp = document.getElementById('tab-signup');
+    const submitText = document.getElementById('submit-text');
+    const promptContainer = document.getElementById('switch-prompt-container');
+
+    if (mode === 'signin') {
+      tabSignIn.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-primary bg-primary shadow-[0_4px_14px_rgba(66,29,219,0.3)] flex items-center justify-center gap-1.5";
+      tabSignUp.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5";
+      submitText.textContent = "Sign In to Melody";
+      promptContainer.innerHTML = '<span>Don&apos;t have an account yet?</span> <button type="button" onclick="switchAuthTab(\'signup\')" class="font-title-md text-title-md text-secondary ml-1 hover:underline">Sign Up Free</button>';
+    } else {
+      tabSignUp.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-primary bg-primary shadow-[0_4px_14px_rgba(66,29,219,0.3)] flex items-center justify-center gap-1.5";
+      tabSignIn.className = "flex-1 py-space-sm rounded-full font-label-lg text-label-lg transition-all duration-300 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5";
+      submitText.textContent = "Create Free Account";
+      promptContainer.innerHTML = '<span>Already have a Melody profile?</span> <button type="button" onclick="switchAuthTab(\'signin\')" class="font-title-md text-title-md text-secondary ml-1 hover:underline">Sign In</button>';
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const input = document.getElementById('auth-password');
+    const icon = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function toggleChip(button) {
+    const isSelected = button.classList.contains('bg-primary');
+    const icon = button.querySelector('.material-symbols-outlined');
+
+    if (isSelected) {
+      button.classList.remove('bg-primary', 'text-on-primary');
+      button.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+      if (icon) icon.classList.add('hidden');
+    } else {
+      button.classList.add('bg-primary', 'text-on-primary');
+      button.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+      if (icon) icon.classList.remove('hidden');
+    }
+  }
+
+  function fillDemoPhone() {
+    const idInput = document.getElementById('auth-identifier');
+    idInput.value = "+91 98490 12345";
+  }
+</script><div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 -translate-y-2"><div id="toast-pill" class="bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 text-label-md font-label-md"><span id="toast-icon" class="material-symbols-outlined text-[18px] text-tertiary-fixed">check_circle</span><span id="toast-msg" class="">Notification</span></div></div></main>
+
+
+
+
+
+</body></html>

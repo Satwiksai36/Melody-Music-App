@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen relative"><header class="fixed top-0 w-full z-40 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-on-surface active:scale-90 hover:text-primary transition-all rounded-full" id="btn-back"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><div class="relative w-9 h-9 flex items-center justify-center flex-shrink-0"><div class="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-[0_2px_8px_rgba(66,29,219,0.15)]"><div class="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center gap-[2.5px]"><span class="w-[2.5px] h-3 rounded-full bg-[#ff5e3a]"></span><span class="w-[2.5px] h-4.5 rounded-full bg-[#ff453a]"></span><span class="w-[2.5px] h-5 rounded-full bg-[#5b42f3]"></span><span class="w-[2.5px] h-4 rounded-full bg-[#3830a3]"></span><span class="w-[2.5px] h-2.5 rounded-full bg-[#0d9488]"></span></div></div><div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary shadow-sm ring-1 ring-surface"><span class="material-symbols-outlined text-[10px] leading-none" style="font-variation-settings: 'FILL' 1;">bolt</span></div></div><h1 class="font-headline-sm text-headline-sm text-on-surface truncate ml-space-xs">Settings &amp; Profile</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Profile Avatar" class="w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" id="btn-top-avatar"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)] ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-20">
+<!-- Top Profile Card Section -->
+<section class="px-margin pt-space-md">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-lg shadow-sm">
+<!-- Decorative Backdrop Aura -->
+<div class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-gradient-to-br from-primary-fixed via-secondary-fixed to-transparent opacity-60 blur-2xl pointer-events-none"></div>
+<div class="absolute -left-10 bottom-0 w-36 h-36 rounded-full bg-tertiary-fixed opacity-40 blur-xl pointer-events-none"></div>
+<div class="relative flex flex-col items-center text-center">
+<!-- Avatar with Tactile Ring & Edit Badge -->
+<div class="relative mb-space-sm group">
+<div class="w-24 h-24 rounded-full p-[3px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-md">
+<img class="w-full h-full rounded-full object-cover" data-alt="Close-up portrait of Ananya, a radiant Indian music enthusiast with warm lighting, wearing chic modern studio headphones, soft pastel teal and lavender background, editorial music streaming style, crisp photorealistic details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Nca8Wryg-0g7h4gBFqPVv1UPDP5UmCGwM5xFNrhfEzvncZlNrLjwwHm7YFoQT8Z_hMaPjO9g-P-hLU_4jm5SrOA-7i5p6UtaiZijMPu3PD-cWHXuOt_Qp3yLliS6iiMFh6dH8xEgudGQAbLPQx8aW2Pdiqd58gLxfvO2Xfa8JNaV0EHwEqlfLlif6yxxdiv4flgqG5vOh5ocg9xavF4CnwGX6e9hLxRXE6P1RHPuITjZUqivdZQ6cw"/>
+</div>
+<button aria-label="Edit Profile Picture" class="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md active:scale-90 transition-transform" id="btn-edit-avatar">
+<span class="material-symbols-outlined text-[16px]">photo_camera</span>
+</button>
+</div>
+<!-- Name & Identity -->
+<div class="flex items-center gap-space-xs mb-1">
+<h2 class="font-headline-md text-headline-md text-on-surface">Ananya Sharma</h2>
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">@ananya.melody</p>
+<!-- Membership Badge -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-on-primary shadow-sm mb-space-md">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+<span class="font-label-md text-label-md tracking-wider uppercase">Melody HiFi Pro</span>
+</div>
+<!-- Quick Stats Pill Container -->
+<div class="w-full grid grid-cols-3 gap-space-xs py-space-sm px-space-md rounded-lg bg-surface-container-low mb-space-md">
+<button class="flex flex-col items-center active:scale-95 transition-transform" onclick="showToast('Opened Ananya\'s 34 Playlists')">
+<span class="font-headline-sm text-headline-sm text-on-surface">34</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Playlists</span>
+</button>
+<button class="flex flex-col items-center active:scale-95 transition-transform" onclick="showToast('1,240 Total Listeners Following')">
+<span class="font-headline-sm text-headline-sm text-on-surface">1.2k</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Followers</span>
+</button>
+<button class="flex flex-col items-center active:scale-95 transition-transform" onclick="showToast('Following 248 Artists &amp; Friends')">
+<span class="font-headline-sm text-headline-sm text-on-surface">248</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Following</span>
+</button>
+</div>
+<!-- Profile Actions -->
+<div class="w-full flex items-center gap-space-sm">
+<button class="flex-1 h-11 rounded-full bg-on-surface text-surface-container-lowest font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform" id="btn-edit-profile">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+            Edit Profile
+          </button>
+<button aria-label="Share Profile" class="w-11 h-11 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center shadow-sm active:scale-90 transition-transform" id="btn-share-profile">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Subscription Plan Card -->
+<section class="px-margin pt-space-lg">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary-container to-secondary-container p-space-md text-on-primary shadow-md">
+<!-- Glow effect -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 rounded-full bg-secondary-fixed-dim opacity-30 blur-2xl"></div>
+<div class="relative z-10 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">workspace_premium</span>
+<span class="font-label-sm text-label-sm tracking-widest uppercase bg-surface-container-lowest/20 px-2 py-0.5 rounded-full backdrop-blur-sm">Active Plan</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-primary-container">Renews Nov 2026</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-primary mb-0.5">HiFi Family Lossless</h3>
+<p class="font-body-sm text-body-sm text-on-primary-container">Master Quality Audio • 6 Connected Profiles • Atmos Ready</p>
+</div>
+<div class="pt-space-xs flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest/30 backdrop-blur-sm flex items-center justify-center text-label-sm">A</div>
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest/30 backdrop-blur-sm flex items-center justify-center text-label-sm">R</div>
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest/30 backdrop-blur-sm flex items-center justify-center text-label-sm">K</div>
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest/40 backdrop-blur-sm flex items-center justify-center text-label-sm font-label-md">+3</div>
+</div>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm active:scale-95 transition-transform flex items-center gap-1 hover:bg-surface-container-low" id="btn-manage-plan">
+            Manage
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Audio & Playback Preferences -->
+<section class="px-margin pt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Audio &amp; Playback</h3>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Studio Grade</span>
+</div>
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest rounded-xl p-space-xs shadow-sm">
+<!-- Streaming Quality -->
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low active:bg-surface-container-high transition-colors text-left group" onclick="showToast('Streaming Quality: Lossless HiFi (24-bit / 96kHz)')">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">music_note</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Streaming Quality</p>
+<p class="font-body-sm text-body-sm text-primary truncate">Lossless HiFi (24-bit / 96kHz)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px] group-hover:text-on-surface transition-colors">chevron_right</span>
+</button>
+<!-- Download Quality -->
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low active:bg-surface-container-high transition-colors text-left group" onclick="showToast('Download Quality: Very High (320 kbps)')">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">download_for_offline</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Download Quality</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Very High (320 kbps)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px] group-hover:text-on-surface transition-colors">chevron_right</span>
+</button>
+<!-- Equalizer Setting -->
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low active:bg-surface-container-high transition-colors text-left group" onclick="showToast('Equalizer: Custom - Vocal Boost active')">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-secondary-container flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Equalizer Preset</p>
+<div class="flex items-center gap-1.5">
+<span class="flex items-end gap-[2px] h-3">
+<span class="w-[2px] h-2 bg-secondary-container rounded-full animate-pulse"></span>
+<span class="w-[2px] h-3 bg-secondary-container rounded-full animate-pulse" style="animation-delay: 150ms"></span>
+<span class="w-[2px] h-1.5 bg-secondary-container rounded-full animate-pulse" style="animation-delay: 300ms"></span>
+<span class="w-[2px] h-2.5 bg-secondary-container rounded-full animate-pulse" style="animation-delay: 75ms"></span>
+</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Custom - Vocal Boost</p>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px] group-hover:text-on-surface transition-colors">chevron_right</span>
+</button>
+<!-- Crossfade & Gapless Toggle -->
+<div class="flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">sync_alt</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Crossfade Playback</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="crossfade-status">Active (4s blend between tracks)</p>
+</div>
+</div>
+<button aria-checked="true" class="w-12 h-7 bg-primary rounded-full relative p-0.5 transition-colors focus:outline-none flex-shrink-0 cursor-pointer" data-label="Crossfade Playback" role="switch">
+<span class="w-6 h-6 bg-on-primary rounded-full block shadow-sm transform translate-x-5 transition-transform duration-200"></span>
+</button>
+</div>
+<!-- Normalize Volume Toggle -->
+<div class="flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">volume_up</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Normalize Volume</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="normalize-status">Standardized volume for all tracks</p>
+</div>
+</div>
+<button aria-checked="true" class="w-12 h-7 bg-primary rounded-full relative p-0.5 transition-colors focus:outline-none flex-shrink-0 cursor-pointer" data-label="Normalize Volume" role="switch">
+<span class="w-6 h-6 bg-on-primary rounded-full block shadow-sm transform translate-x-5 transition-transform duration-200"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Regional & Content Preferences -->
+<section class="px-margin pt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Regional &amp; Discovery</h3>
+</div>
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<!-- Sound Languages Selector -->
+<div class="flex flex-col gap-space-xs pb-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">language</span>
+<span class="font-title-md text-title-md text-on-surface">Music Languages</span>
+</div>
+<button class="font-label-md text-label-md text-primary font-semibold hover:underline active:opacity-70 transition-opacity" id="btn-change-languages">Change</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-xs">Fine-tune your daily mixes, charts, and smart recommendations</p>
+<!-- Language Badges -->
+<div class="flex flex-wrap gap-space-xs" id="language-chips-container">
+<button class="lang-chip inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md transition-all active:scale-95 cursor-pointer ring-1 ring-tertiary/20" data-active="true" data-lang="Telugu (తెలుగు)">
+<span class="w-2 h-2 rounded-full bg-tertiary status-dot"></span>
+<span class="chip-text">Telugu (తెలుగు)</span>
+<span class="material-symbols-outlined text-[14px] check-icon">check</span>
+</button>
+<button class="lang-chip inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md transition-all active:scale-95 cursor-pointer ring-1 ring-secondary-container/20" data-active="true" data-lang="Hindi (हिंदी)">
+<span class="w-2 h-2 rounded-full bg-secondary-container status-dot"></span>
+<span class="chip-text">Hindi (हिंदी)</span>
+<span class="material-symbols-outlined text-[14px] check-icon">check</span>
+</button>
+<button class="lang-chip inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md transition-all active:scale-95 cursor-pointer ring-1 ring-primary/20" data-active="true" data-lang="Tamil (தமிழ்)">
+<span class="w-2 h-2 rounded-full bg-primary status-dot"></span>
+<span class="chip-text">Tamil (தமிழ்)</span>
+<span class="material-symbols-outlined text-[14px] check-icon">check</span>
+</button>
+<button aria-label="Add music language" class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface hover:bg-surface-variant active:scale-90 transition-all cursor-pointer" id="btn-add-language">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+<!-- Explicit Content Toggle -->
+<div class="flex items-center justify-between pt-space-xs rounded-lg hover:bg-surface-container-low transition-colors px-1">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">explicit</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Explicit Content</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="explicit-status">Allow playback of explicit music</p>
+</div>
+</div>
+<button aria-checked="true" class="w-12 h-7 bg-primary rounded-full relative p-0.5 transition-colors focus:outline-none flex-shrink-0 cursor-pointer" data-label="Explicit Content" role="switch">
+<span class="w-6 h-6 bg-on-primary rounded-full block shadow-sm transform translate-x-5 transition-transform duration-200"></span>
+</button>
+</div>
+<!-- Offline Mode Toggle -->
+<div class="flex items-center justify-between pt-space-xs rounded-lg hover:bg-surface-container-low transition-colors px-1">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">cloud_off</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Offline Mode</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="offline-status">Stream downloaded library only</p>
+</div>
+</div>
+<button aria-checked="false" class="w-12 h-7 bg-surface-variant rounded-full relative p-0.5 transition-colors focus:outline-none flex-shrink-0 cursor-pointer" data-label="Offline Mode" role="switch">
+<span class="w-6 h-6 bg-on-primary rounded-full block shadow-sm transform translate-x-0 transition-transform duration-200"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Storage & Device Cache Section -->
+<section class="px-margin pt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Device Storage</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Internal Flash</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div>
+<div class="flex justify-between items-center mb-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface">Downloaded Music &amp; Cache</span>
+<span class="font-label-md text-label-md text-primary font-bold transition-all duration-300" id="storage-text">4.2 GB of 64 GB</span>
+</div>
+<!-- Custom Segmented Storage Meter -->
+<div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden flex transition-all duration-500" id="storage-bar">
+<div class="h-full bg-primary transition-all duration-500" id="storage-bar-songs" style="width: 22%" title="Offline Audio"></div>
+<div class="h-full bg-secondary-container transition-all duration-500" id="storage-bar-cache" style="width: 8%" title="Melody Cache"></div>
+<div class="h-full bg-tertiary-fixed-dim transition-all duration-500" id="storage-bar-other" style="width: 14%" title="App Assets"></div>
+</div>
+<!-- Legend indicators -->
+<div class="flex items-center gap-space-md pt-space-xs flex-wrap">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="legend-songs">Songs (3.4 GB)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="legend-cache">Cache (380 MB)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Other</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs gap-space-sm">
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="cache-desc">Clearing cache won't delete downloaded offline tracks.</p>
+<button class="px-space-md py-2 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant active:scale-95 transition-all flex-shrink-0 flex items-center justify-center gap-1.5 min-w-[104px]" id="btn-clear-cache">
+<span class="material-symbols-outlined text-[16px] animate-spin hidden" id="cache-spinner">progress_activity</span>
+<span id="cache-label">Clear Cache</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Connected Ecosystem -->
+<section class="px-margin pt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Devices &amp; Cast</h3>
+</div>
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest rounded-xl p-space-xs shadow-sm">
+<!-- Connected Device Item -->
+<div class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low transition-colors" id="soundbar-row">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary flex-shrink-0 transition-colors" id="soundbar-icon-wrap">
+<span class="material-symbols-outlined text-[20px]">speaker</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<p class="font-title-md text-title-md text-on-surface">Studio Living Soundbar</p>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse transition-colors" id="soundbar-pulse"></span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary truncate transition-colors" id="soundbar-status-text">Connected • AirPlay Hi-Res</p>
+</div>
+</div>
+<button class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm active:scale-90 hover:bg-surface-variant transition-all font-semibold" id="btn-toggle-soundbar">
+          Disconnect
+        </button>
+</div>
+<!-- Secondary Device Item -->
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low active:bg-surface-container-high transition-colors text-left group" onclick="showToast('Apple CarPlay: Ready to auto-connect in vehicle')">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Apple CarPlay</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Auto-connect when driving</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px] group-hover:text-on-surface transition-colors">chevron_right</span>
+</button>
+<!-- Notifications & Smart Recommendations -->
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg hover:bg-surface-container-low active:bg-surface-container-high transition-colors text-left group" onclick="showToast('Artist Radar &amp; Telugu/Hindi release alerts active')">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div class="min-w-0">
+<p class="font-title-md text-title-md text-on-surface">Artist Radar &amp; Alerts</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">New Telugu/Bollywood releases</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px] group-hover:text-on-surface transition-colors">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Danger Zone & Account Exit -->
+<section class="px-margin pt-space-lg flex flex-col gap-space-sm">
+<button class="w-full h-12 rounded-xl bg-surface-container-lowest text-secondary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm active:bg-secondary-fixed/40 active:scale-[0.99] transition-all cursor-pointer" id="btn-logout">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+      Log Out
+    </button>
+<button class="w-full py-2 text-center text-outline hover:text-error active:text-error font-label-md text-label-md transition-colors cursor-pointer" id="btn-delete-account">
+      Delete Account &amp; Vault Data
+    </button>
+</section>
+<!-- Footer Branding Details -->
+<footer class="px-margin pt-space-md pb-space-lg flex flex-col items-center text-center">
+<button class="flex items-center gap-1.5 mb-1 text-primary active:scale-95 transition-transform" onclick="showToast('Melody SoundCore™ v2.4.0 (Lossless 24-bit Engine)')">
+<span class="material-symbols-outlined text-[16px]">graphic_eq</span>
+<span class="font-label-sm text-label-sm tracking-widest uppercase font-bold">Melody SoundCore™ v2.4.0</span>
+</button>
+<p class="font-body-sm text-body-sm text-outline">Build 382 • Lossless Spatial Audio Engine</p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-1">Crafted with rhythm for Telugu &amp; Indian Cinema Sound</p>
+</footer>
+</div>
+<!-- Plan Management Modal Sheet -->
+<div aria-modal="true" class="fixed inset-0 z-50 bg-inverse-surface/50 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 flex items-end sm:items-center justify-center p-0 sm:p-4" id="modal-manage-plan" role="dialog">
+<div class="w-full sm:max-w-md bg-surface-container-lowest rounded-t-xl sm:rounded-xl p-space-lg shadow-2xl transform translate-y-full sm:translate-y-0 sm:scale-95 transition-all duration-300 flex flex-col gap-space-md" id="modal-plan-content">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[24px]">workspace_premium</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Manage HiFi Plan</h3>
+</div>
+<button aria-label="Close modal" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors" id="btn-close-plan-modal">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="font-title-md text-title-md text-on-surface">Family Lossless Tier</span>
+<span class="font-label-md text-label-md px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-bold">₹199 / month</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">6 premium accounts with independent loss-free streaming &amp; offline downloads.</p>
+<p class="font-label-sm text-label-sm text-primary font-semibold mt-1">Next auto-renewal: 14 Nov 2026</p>
+</div>
+<div class="flex flex-col gap-space-xs">
+<button class="w-full py-2.5 px-space-md rounded-full bg-primary text-on-primary font-label-md text-label-md font-semibold active:scale-95 transition-transform" onclick="showToast('Family slots invitation link copied!'); closeModal('modal-manage-plan');">
+        Invite or Manage Members (+3 Available)
+      </button>
+<button class="w-full py-2.5 px-space-md rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold active:scale-95 transition-transform" onclick="showToast('Payment method up to date (UPI autopay)'); closeModal('modal-manage-plan');">
+        Update Payment Method
+      </button>
+<button class="w-full py-2 text-center text-secondary font-label-md text-label-md font-semibold hover:underline active:opacity-75 transition-opacity" onclick="showToast('Subscription renewal settings opened'); closeModal('modal-manage-plan');">
+        Cancel or Switch Subscription
+      </button>
+</div>
+</div>
+</div>
+<!-- Logout Confirmation Modal Dialog -->
+<div aria-modal="true" class="fixed inset-0 z-50 bg-inverse-surface/50 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-margin" id="modal-logout" role="dialog">
+<div class="w-full max-w-sm bg-surface-container-lowest rounded-xl p-space-lg shadow-2xl transform scale-95 transition-all duration-300 flex flex-col items-center text-center gap-space-sm" id="modal-logout-content">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary mb-1">
+<span class="material-symbols-outlined text-[26px]">logout</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Log Out from Melody?</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Your offline library will remain cached on this device for 30 days until your next login.</p>
+<div class="w-full grid grid-cols-2 gap-space-sm pt-space-xs">
+<button class="h-11 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold active:scale-95 transition-transform" id="btn-cancel-logout">
+        Cancel
+      </button>
+<button class="h-11 rounded-full bg-secondary text-on-secondary font-label-md text-label-md font-semibold shadow-sm active:scale-95 transition-transform" id="btn-confirm-logout">
+        Yes, Log Out
+      </button>
+</div>
+</div>
+</div>
+<!-- Floating Notification / Feedback Toast -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4 px-4 w-full max-w-sm flex justify-center" id="toast-container">
+<div class="bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full shadow-lg font-label-md text-label-md flex items-center gap-2 pointer-events-auto border border-white/10" id="toast-content">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed" id="toast-icon">check_circle</span>
+<span class="truncate" id="toast-text">Action completed</span>
+</div>
+</div>
+<script>
+  // Toast Helper
+  let toastTimer = null;
+  function showToast(message, icon = 'check_circle') {
+    const container = document.getElementById('toast-container');
+    const text = document.getElementById('toast-text');
+    const iconEl = document.getElementById('toast-icon');
+    
+    if (toastTimer) clearTimeout(toastTimer);
+    
+    text.textContent = message;
+    iconEl.textContent = icon;
+    
+    container.classList.remove('opacity-0', 'translate-y-4');
+    container.classList.add('opacity-100', 'translate-y-0');
+    
+    toastTimer = setTimeout(() => {
+      container.classList.remove('opacity-100', 'translate-y-0');
+      container.classList.add('opacity-0', 'translate-y-4');
+    }, 2800);
+  }
+
+  // Modal helpers
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    modal.classList.remove('hidden');
+    // slight delay for transition
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      const inner = modal.querySelector('#modal-plan-content, #modal-logout-content');
+      if (inner) {
+        inner.classList.remove('translate-y-full', 'scale-95');
+        inner.classList.add('translate-y-0', 'scale-100');
+      }
+    }, 10);
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    const inner = modal.querySelector('#modal-plan-content, #modal-logout-content');
+    if (inner) {
+      inner.classList.add('scale-95');
+      if (id === 'modal-manage-plan') inner.classList.add('translate-y-full');
+    }
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+
+  // 1. Top Buttons & Edit/Share profile feedback
+  document.getElementById('btn-back')?.addEventListener('click', () => {
+    showToast('Navigating back to Library', 'arrow_back');
+  });
+
+  document.getElementById('btn-top-avatar')?.addEventListener('click', () => {
+    showToast('Viewing Ananya\'s account details', 'account_circle');
+  });
+
+  document.getElementById('btn-edit-avatar')?.addEventListener('click', () => {
+    showToast('Select photo from library to update avatar', 'photo_library');
+  });
+
+  document.getElementById('btn-edit-profile')?.addEventListener('click', () => {
+    showToast('Opening Edit Profile sheet...', 'edit');
+  });
+
+  document.getElementById('btn-share-profile')?.addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Ananya Sharma on Melody HiFi',
+          text: 'Listen to master quality Indian soundtracks curated by Ananya.',
+          url: window.location.href,
+        });
+      } catch (err) {
+        showToast('Profile link copied to clipboard!', 'share');
+      }
+    } else {
+      showToast('Profile link copied to clipboard!', 'share');
+    }
+  });
+
+  // 2. Manage Plan button & Modal
+  document.getElementById('btn-manage-plan')?.addEventListener('click', () => {
+    openModal('modal-manage-plan');
+  });
+  document.getElementById('btn-close-plan-modal')?.addEventListener('click', () => {
+    closeModal('modal-manage-plan');
+  });
+
+  // 3 & 4. Toggle Switch Micro-Interactions
+  document.querySelectorAll('button[role="switch"]').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const isChecked = toggle.getAttribute('aria-checked') === 'true';
+      const newState = !isChecked;
+      toggle.setAttribute('aria-checked', newState ? 'true' : 'false');
+      const indicator = toggle.querySelector('span');
+      const label = toggle.getAttribute('data-label') || 'Setting';
+      
+      if (newState) {
+        toggle.classList.remove('bg-surface-variant');
+        toggle.classList.add('bg-primary');
+        indicator.classList.remove('translate-x-0');
+        indicator.classList.add('translate-x-5');
+        showToast(`${label} enabled`, 'toggle_on');
+      } else {
+        toggle.classList.remove('bg-primary');
+        toggle.classList.add('bg-surface-variant');
+        indicator.classList.remove('translate-x-5');
+        indicator.classList.add('translate-x-0');
+        showToast(`${label} disabled`, 'toggle_off');
+      }
+
+      // Update secondary helper text descriptions dynamically if present
+      if (label === 'Crossfade Playback') {
+        const desc = document.getElementById('crossfade-status');
+        if (desc) desc.textContent = newState ? 'Active (4s blend between tracks)' : 'Disabled (Standard gapless)';
+      } else if (label === 'Offline Mode') {
+        const desc = document.getElementById('offline-status');
+        if (desc) desc.textContent = newState ? 'Active: Only downloaded tracks play' : 'Stream downloaded library only';
+      }
+    });
+  });
+
+  // 5. Music Languages interactive chip selection
+  const langChips = document.querySelectorAll('.lang-chip');
+  langChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const isActive = chip.getAttribute('data-active') === 'true';
+      const langName = chip.getAttribute('data-lang');
+      const checkIcon = chip.querySelector('.check-icon');
+      const dot = chip.querySelector('.status-dot');
+
+      if (isActive) {
+        chip.setAttribute('data-active', 'false');
+        chip.classList.remove('bg-tertiary-fixed', 'bg-secondary-fixed', 'bg-primary-fixed', 'text-on-tertiary-fixed', 'text-on-secondary-fixed', 'text-on-primary-fixed');
+        chip.classList.add('bg-surface-container', 'text-on-surface-variant', 'opacity-60');
+        if (checkIcon) checkIcon.classList.add('hidden');
+        if (dot) dot.classList.add('opacity-40');
+        showToast(`Removed ${langName} from recommendations`, 'remove_circle_outline');
+      } else {
+        chip.setAttribute('data-active', 'true');
+        chip.classList.remove('bg-surface-container', 'text-on-surface-variant', 'opacity-60');
+        if (langName.includes('Telugu')) {
+          chip.classList.add('bg-tertiary-fixed', 'text-on-tertiary-fixed');
+        } else if (langName.includes('Hindi')) {
+          chip.classList.add('bg-secondary-fixed', 'text-on-secondary-fixed');
+        } else {
+          chip.classList.add('bg-primary-fixed', 'text-on-primary-fixed');
+        }
+        if (checkIcon) checkIcon.classList.remove('hidden');
+        if (dot) dot.classList.remove('opacity-40');
+        showToast(`Added ${langName} to recommendations`, 'check');
+      }
+    });
+  });
+
+  document.getElementById('btn-change-languages')?.addEventListener('click', () => {
+    showToast('Tap any language chip to toggle discovery preference', 'tune');
+  });
+
+  document.getElementById('btn-add-language')?.addEventListener('click', () => {
+    showToast('Adding more regional Indian dialects (Kannada, Malayalam)...', 'add_circle');
+  });
+
+  // 6. Clear Cache button simulation
+  let cacheCleared = false;
+  const btnClearCache = document.getElementById('btn-clear-cache');
+  const cacheLabel = document.getElementById('cache-label');
+  const cacheSpinner = document.getElementById('cache-spinner');
+  const storageText = document.getElementById('storage-text');
+  const storageBarCache = document.getElementById('storage-bar-cache');
+  const storageBarSongs = document.getElementById('storage-bar-songs');
+  const legendCache = document.getElementById('legend-cache');
+  const legendSongs = document.getElementById('legend-songs');
+
+  btnClearCache?.addEventListener('click', () => {
+    if (cacheCleared) {
+      showToast('Cache is already optimized!', 'check');
+      return;
+    }
+
+    cacheSpinner?.classList.remove('hidden');
+    cacheLabel.textContent = 'Clearing...';
+    btnClearCache.disabled = true;
+
+    setTimeout(() => {
+      cacheSpinner?.classList.add('hidden');
+      cacheLabel.textContent = 'Cleared';
+      btnClearCache.classList.add('text-tertiary', 'bg-tertiary-fixed/40');
+      
+      // Update values
+      storageText.textContent = '0.4 GB of 64 GB';
+      if (storageBarCache) storageBarCache.style.width = '1%';
+      if (storageBarSongs) storageBarSongs.style.width = '4%';
+      if (legendCache) legendCache.textContent = 'Cache (12 MB)';
+      if (legendSongs) legendSongs.textContent = 'Songs (380 MB)';
+
+      cacheCleared = true;
+      btnClearCache.disabled = false;
+      showToast('Cache cleared! Freed 3.8 GB storage space', 'delete_sweep');
+    }, 900);
+  });
+
+  // 7. Studio Living Soundbar Connect / Disconnect
+  const btnSoundbar = document.getElementById('btn-toggle-soundbar');
+  const soundbarPulse = document.getElementById('soundbar-pulse');
+  const soundbarStatus = document.getElementById('soundbar-status-text');
+  const soundbarIconWrap = document.getElementById('soundbar-icon-wrap');
+  let soundbarConnected = true;
+
+  btnSoundbar?.addEventListener('click', () => {
+    soundbarConnected = !soundbarConnected;
+    if (soundbarConnected) {
+      btnSoundbar.textContent = 'Disconnect';
+      soundbarStatus.textContent = 'Connected • AirPlay Hi-Res';
+      soundbarStatus.classList.remove('text-on-surface-variant');
+      soundbarStatus.classList.add('text-tertiary');
+      soundbarPulse.classList.remove('bg-outline', 'hidden');
+      soundbarPulse.classList.add('bg-tertiary', 'animate-pulse');
+      soundbarIconWrap.classList.remove('bg-surface-container-high', 'text-on-surface');
+      soundbarIconWrap.classList.add('bg-tertiary-fixed', 'text-tertiary');
+      showToast('Reconnected to Studio Living Soundbar', 'speaker');
+    } else {
+      btnSoundbar.textContent = 'Connect';
+      soundbarStatus.textContent = 'Disconnected • Available nearby';
+      soundbarStatus.classList.remove('text-tertiary');
+      soundbarStatus.classList.add('text-on-surface-variant');
+      soundbarPulse.classList.remove('bg-tertiary', 'animate-pulse');
+      soundbarPulse.classList.add('bg-outline');
+      soundbarIconWrap.classList.remove('bg-tertiary-fixed', 'text-tertiary');
+      soundbarIconWrap.classList.add('bg-surface-container-high', 'text-on-surface');
+      showToast('Disconnected from Studio Living Soundbar', 'speaker_notes_off');
+    }
+  });
+
+  // 8. Logout Confirmation modal
+  document.getElementById('btn-logout')?.addEventListener('click', () => {
+    openModal('modal-logout');
+  });
+  document.getElementById('btn-cancel-logout')?.addEventListener('click', () => {
+    closeModal('modal-logout');
+  });
+  document.getElementById('btn-confirm-logout')?.addEventListener('click', () => {
+    closeModal('modal-logout');
+    showToast('Logged out successfully. See you soon!', 'logout');
+  });
+  document.getElementById('btn-delete-account')?.addEventListener('click', () => {
+    showToast('Please visit melodyhifi.com/safety to request data wipe', 'warning');
+  });
+
+  // Close modals when clicking backdrop
+  ['modal-manage-plan', 'modal-logout'].forEach(id => {
+    const modal = document.getElementById(id);
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal(id);
+    });
+  });
+</script></main>
+</body></html>

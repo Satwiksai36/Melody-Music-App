@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-primary-container": "#e2ddff",
+        "on-tertiary-fixed": "#002118",
+        "outline": "#787587",
+        "on-primary-fixed-variant": "#3c10d7",
+        "on-secondary-fixed": "#3d0600",
+        "secondary": "#b42907",
+        "surface-variant": "#e3e0f2",
+        "secondary-fixed": "#ffdad2",
+        "on-error-container": "#93000a",
+        "error": "#ba1a1a",
+        "primary-fixed": "#e4dfff",
+        "on-primary": "#ffffff",
+        "tertiary": "#155544",
+        "surface-container-low": "#f5f2ff",
+        "surface-dim": "#dbd8e9",
+        "surface-container": "#efecfd",
+        "inverse-surface": "#2f2f3c",
+        "surface-container-highest": "#e3e0f2",
+        "on-surface": "#1a1a27",
+        "surface-tint": "#563bee",
+        "inverse-on-surface": "#f2efff",
+        "on-secondary-container": "#5b0d00",
+        "on-primary-fixed": "#160066",
+        "primary-container": "#5b42f3",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-container": "#afeed7",
+        "on-background": "#1a1a27",
+        "error-container": "#ffdad6",
+        "tertiary-container": "#326e5c",
+        "tertiary-fixed-dim": "#96d3bd",
+        "background": "#fcf8ff",
+        "tertiary-fixed": "#b1efd8",
+        "surface-bright": "#fcf8ff",
+        "surface": "#fcf8ff",
+        "primary-fixed-dim": "#c6bfff",
+        "on-secondary": "#ffffff",
+        "on-tertiary-fixed-variant": "#0d503f",
+        "on-error": "#ffffff",
+        "primary": "#421ddb",
+        "on-secondary-fixed-variant": "#8b1a00",
+        "outline-variant": "#c8c4d9",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-high": "#e9e6f8",
+        "secondary-fixed-dim": "#ffb4a3",
+        "secondary-container": "#fe5d39",
+        "on-surface-variant": "#474556",
+        "inverse-primary": "#c6bfff"
+      },
+      borderRadius: {
+        "DEFAULT": "1rem",
+        "lg": "1.5rem",
+        "xl": "2rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "margin-tablet": "2rem",
+        "space-md": "1rem",
+        "space-xl": "2.25rem",
+        "gutter": "1rem",
+        "space-lg": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin-desktop": "3rem",
+        "gutter-tablet": "1.5rem",
+        "gutter-desktop": "2rem",
+        "space-sm": "0.5rem",
+        "margin": "1.25rem"
+      },
+      fontFamily: {
+        "label-sm": ["Plus Jakarta Sans"],
+        "title-md": ["Plus Jakarta Sans"],
+        "display-lg-mobile": ["Outfit"],
+        "label-lg": ["Plus Jakarta Sans"],
+        "label-md": ["Plus Jakarta Sans"],
+        "display-lg": ["Outfit"],
+        "headline-sm": ["Outfit"],
+        "body-md": ["Plus Jakarta Sans"],
+        "headline-md": ["Outfit"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "headline-lg": ["Outfit"]
+      }
+    }
+  }
+}</script><style>
+@layer base {
+  html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #fcf8ff;
+  }
+  body {
+    overscroll-behavior-y: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 16px);
+  }
+}
+::-webkit-scrollbar {
+  display: none;
+}
+</style></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-white"><main class="flex-1 flex flex-col relative w-full pb-safe bg-surface pt-safe"><div class="flex flex-col w-full min-w-0 pb-28">
+<!-- Top Navigation & Stepper Header -->
+<div class="px-margin pt-2 pb-2 flex items-center justify-between">
+<button aria-label="Go back" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-transform active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<button class="text-body-md font-semibold text-on-surface-variant hover:text-on-surface transition-colors py-1 px-3 rounded-full hover:bg-surface-container">
+      Skip
+    </button>
+</div>
+<!-- Title & Subtitle -->
+<div class="px-margin mt-3 flex flex-col gap-1">
+<h1 class="font-display-lg-mobile text-[30px] leading-[36px] tracking-tight text-on-surface font-bold">
+      Choose your languages
+    </h1>
+<p class="font-body-md text-[14px] text-on-surface-variant leading-relaxed">
+      Pick the singers and sounds you love to customize your daily mixes
+    </p>
+</div>
+<!-- Search Bar -->
+<div class="px-margin mt-4">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-body-md text-[14px] pl-10 pr-10 py-3 rounded-xl placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all shadow-sm" id="languageSearch" placeholder="Search languages or artists..." type="text">
+<button aria-label="Voice search" class="material-symbols-outlined absolute right-3.5 text-on-surface-variant hover:text-primary text-[20px] transition-colors">mic</button>
+</div>
+</div>
+<!-- Popular Artists Quick Preview Filter Chips -->
+<div class="mt-4 pl-margin overflow-x-auto no-scrollbar flex items-center gap-2 pr-margin py-1">
+<span class="text-xs font-bold uppercase tracking-wider text-outline shrink-0 mr-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-primary">local_fire_department</span> Trending
+    </span>
+<span class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface whitespace-nowrap cursor-pointer hover:bg-surface-container-high transition-colors">Arijit Singh</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface whitespace-nowrap cursor-pointer hover:bg-surface-container-high transition-colors">Sid Sriram</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface whitespace-nowrap cursor-pointer hover:bg-surface-container-high transition-colors">Anirudh</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface whitespace-nowrap cursor-pointer hover:bg-surface-container-high transition-colors">Diljit Dosanjh</span>
+<span class="px-3 py-1 rounded-full text-xs font-medium bg-surface-container text-on-surface whitespace-nowrap cursor-pointer hover:bg-surface-container-high transition-colors">Shreya Ghoshal</span>
+</div>
+<!-- Section Header -->
+<div class="px-margin mt-4 flex items-center justify-between mb-5">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-bold">Featured Languages</span>
+<span class="font-label-md text-label-md text-primary font-bold bg-primary-fixed/60 px-2.5 py-0.5 rounded-full" id="selectedCount">2 Selected</span>
+</div>
+<!-- Full Artist Cards Grid -->
+<div class="px-margin grid grid-cols-2 gap-3.5" id="languageGrid"><!-- Sid Sriram (Telugu - Selected) -->
+<div class="artist-card is-selected relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-lg shadow-primary/25 ring-2 ring-primary ring-offset-2 ring-offset-background transition-all duration-200 active:scale-[0.97] group flex flex-col justify-between p-3" data-artist="Sid Sriram" data-lang="Telugu" onclick="toggleCard(this)">
+<img alt="Sid Sriram" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSMKkMCdeElVoyh29Cn16YV4JUDMvPSbqIxQJ_OgGaV6i1CBQr_mchrHUtifLc7tQs6t3y6khQXbQAf67GsBEliFo1W5feASn0CsRdLPOUJntFf8zx3j_mKumbevH6pBFxEKeWEWNzdYw42ia5XUSOqcI5Otv50lLoJiwfOe83j3iBqYLRhomvJilY-l9HcDz14aFI-Dz_uZ1hAAT-DNtdfNAz1kX2a1OWFOg-3YLvtbBL8rjPg2tAQw">
+<div class="gradient-overlay absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/25">
+Telugu • తెలుగు
+</span>
+<div class="check-pill w-6 h-6 rounded-full bg-white text-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Sid Sriram</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Top Telugu Vocalist</p>
+</div>
+</div>
+
+<!-- Arijit Singh (Hindi - Selected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] transition-all duration-200 active:scale-[0.97] group flex flex-col justify-between p-3 is-selected ring-2 ring-primary ring-offset-2 ring-offset-background shadow-lg shadow-primary/25" data-artist="Arijit Singh" data-lang="Hindi" onclick="toggleCard(this)">
+<img alt="Arijit Singh" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUTAuaDj79pwgxIqfEJ7lAuhn0YhJ_bITQAuPEOaRVLsfboHh-zv5drcTBcSRQAqub6Hw8EhL_XDala_WS6SJSIRVmJccZA_mzNo034JSzWA9SvrRur88XQuA_IIvyIp9y94xSB7OiI6SaDRioJuCRI4UNLgrScK0TuCdrgWSF6hsQUHX97rZ286LFUWMielldQWboehamiM6dKTIlpZy96wBsBSisXrlQOHEaqfU2oHBP1_Gx6HHLNQ">
+<div class="gradient-overlay absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border bg-white/20 border-white/25">
+Hindi • हिंदी
+</span>
+<div class="check-pill w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md flex">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Arijit Singh</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Soulful Hindi Melodies</p>
+</div>
+</div>
+
+<!-- Anirudh Ravichander (Tamil - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.97] group border border-outline-variant/40 flex flex-col justify-between p-3" data-artist="Anirudh Ravichander" data-lang="Tamil" onclick="toggleCard(this)">
+<img alt="Anirudh Ravichander" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFxCJmyku9_SkVzcqefrSCppkMbgUCJIzlYX5AcrBWBDhtvYLa_xctTSALYtdLxpFeRbgcp0TfIuX5fTNoSLgphJ1ZrzfIyLj8nUIVvKlzXhIwIF82A1JE9y6srXiNL-ya5jJuGSnJij_r8ex-VAuMPTpikiS-lICjtUqJNjCx81oc28qfeqMdli76C-E1UL_9VVehjHTwBsgi58FJcgHQyvzDCt4L9cdtab2rr82VL2kPI13vVu5gg">
+<div class="gradient-overlay hidden absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/20">
+Tamil • தமிழ்
+</span>
+<div class="check-pill hidden w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Anirudh</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">High-Energy Tamil Hits</p>
+</div>
+</div>
+
+<!-- Diljit Dosanjh (Punjabi - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] hover:shadow-md transition-all duration-200 active:scale-[0.97] group flex flex-col justify-between p-3 border border-outline-variant/40 shadow-sm" data-artist="Diljit Dosanjh" data-lang="Punjabi" onclick="toggleCard(this)">
+<img alt="Diljit Dosanjh" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkGHTm1Wp9hvKqVKOD1x2Isg_ogXVGtFi8kEzvxTHGE15PLmFzCEoUdnwSXP7F5LK9mWYE0vodD0ZT1TcXqXm5juehbcFN9EjuvC0-kGU62hi2sSw9NGx8Y0dmu2LfrQNBUM_du1VASgMmpqVDMlScBsQT6RUv3gBw8ha_D64WMxPjXzj-yjCcGeVKCNRqLm48RzucaYSc0NUCi4fRX1Qsrk1eb139tK_x5oj6a4tabeZEEaJQ1CbVtw">
+<div class="gradient-overlay absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity hidden"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border bg-black/40 border-white/20">
+Punjabi • ਪੰਜਾਬੀ
+</span>
+<div class="check-pill w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md hidden">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Diljit Dosanjh</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Global Punjabi Beats</p>
+</div>
+</div>
+
+<!-- K.J. Yesudas (Malayalam - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.97] group border border-outline-variant/40 flex flex-col justify-between p-3" data-artist="K.J. Yesudas" data-lang="Malayalam" onclick="toggleCard(this)">
+<img alt="K.J. Yesudas" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuI_0sRKBWrpervaOoVW_3_Hj9b1lf8CpqVGLbchknSCscJ14LICuW4ch0ozUAXqTQWu2tbVAD0bAd3RBVdPQYQVnAb0KcXT8kcd_AI4iy0fMZXNYoLt1ub_vHMcqgscbTojLGTLmM5uhoiSJ6aPfxh_qQPkmctvfczgJQKfX5kxAJeg5SqyV5sdBBumvqZ51LS6qtLjPCm7qjsxQvLxu-c9bUYsKGnRVDcUnt_mAEFtyL3dlZwoCslQ">
+<div class="gradient-overlay hidden absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/20">
+Malayalam • മലയാളം
+</span>
+<div class="check-pill hidden w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">K.J. Yesudas</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Celestial Classics</p>
+</div>
+</div>
+
+<!-- The Weeknd (English / Global - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.97] group border border-outline-variant/40 flex flex-col justify-between p-3" data-artist="The Weeknd" data-lang="English" onclick="toggleCard(this)">
+<img alt="The Weeknd" class="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVbAj36Jsl7PHHgB31M6YuJX4ta-PpYrnSRRlC8hAA5u1CCI8bahc1V0NXyhNuxBWruE7sQjm3zTnx48j4Xaha8DHkJHFAPqItpDKBfPKx45iG8YFnPP8jPhd1IGPXGhlN1O4Q4DZJvdxXaJN-C7ErtCMJyBrZHrrfxNH9qjceMnPJoKFOEYPpf_bB2694fC1ED-wxVfCFDr67NylHThfaNyn2OqaxHGLT_8XRDDjtHNXSAhg3zWLxCA">
+<div class="gradient-overlay hidden absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/20">
+English • Global
+</span>
+<div class="check-pill hidden w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">The Weeknd</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Global Pop &amp; R&amp;B</p>
+</div>
+</div>
+
+<!-- Vijay Prakash (Kannada - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.97] group border border-outline-variant/40 flex flex-col justify-between p-3" data-artist="Vijay Prakash" data-lang="Kannada" onclick="toggleCard(this)">
+<img alt="Vijay Prakash" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6WFkucba0ZOv0kWEZmkA6j0shOIM0-6JtETj816KHUhbx3qKagzr-_o6nPPxd1k33fNuczqzFe3MVI-RjnqjsOhEnhj_wzYSSuY2pvzvSXzbRMB4AEMGQ0322UB1QEVYQ1ltZmWXwNMPoBmyHPP9ZouqlGRFADuwvnubbTmF74DACW6AZ5UaX7raZ3qqS6MIscUHuReI8pyXXZF65sA7gMJVDT73dN4J4jP7E8V72IQE3KTvcaWfNA">
+<div class="gradient-overlay hidden absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/20">
+Kannada • ಕನ್ನಡ
+</span>
+<div class="check-pill hidden w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Vijay Prakash</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Kannada Superhits</p>
+</div>
+</div>
+
+<!-- Shreya Ghoshal (Bengali / Hindi - Unselected) -->
+<div class="artist-card relative cursor-pointer select-none rounded-2xl overflow-hidden aspect-[4/3] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.97] group border border-outline-variant/40 flex flex-col justify-between p-3" data-artist="Shreya Ghoshal" data-lang="Bengali" onclick="toggleCard(this)">
+<img alt="Shreya Ghoshal" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDgOyIj9qxTUJN2bxoPwOqzq9HH7Ud060-HWnVzYuZmLc7bX1aYD1G9JgzbyHBDaSJxpvmcL_6Fwx848BWxBjEN9gu1ie7yw5DT8vdbouors-tiDasghPrayTinofcnZD-kWM-G1Q9VI6wnCsQGaLvyQs774JJuNU9ZcezqiR9f-ufy1Tln3GQ6fhJkvm7pjssCrVhqSeRggaaCWqYW8rKSAuPv8a-tcs_Ye8RJwyclHsRuvT5NrF7Dg">
+<div class="gradient-overlay hidden absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/50 to-black/20 mix-blend-multiply opacity-90 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+<!-- Top Badges & Checkmark -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<span class="px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[11px] font-semibold text-white tracking-wide border border-white/20">
+Bengali • বাংলা
+</span>
+<div class="check-pill hidden w-6 h-6 rounded-full bg-white text-primary items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<!-- Bottom Info -->
+<div class="relative z-10 mt-auto flex flex-col">
+<h3 class="font-headline-sm text-[16px] font-bold leading-tight text-white drop-shadow-sm artist-name">Shreya Ghoshal</h3>
+<p class="font-body-sm text-[11px] text-white/80 font-medium tracking-wide">Evergreen Melodies</p>
+</div>
+</div></div>
+</div>
+<!-- Sticky Bottom Floating Action Dock -->
+<div class="fixed bottom-0 inset-x-0 pb-safe pt-2 bg-gradient-to-t from-surface via-surface/95 to-transparent z-40 px-margin pointer-events-none">
+<div class="pointer-events-auto pb-4">
+<button class="w-full bg-[#5b42f3] hover:bg-[#4d28e0] text-white py-3.5 px-6 rounded-full font-label-lg text-[15px] font-semibold flex items-center justify-center gap-2 shadow-lg shadow-[#5b42f3]/35 transition-all active:scale-[0.98]" id="continueBtn"><span class="">Continue (2 selected)</span><span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+</div>
+</div>
+<script>
+  function toggleCard(card) {
+    const isSelected = card.classList.contains('is-selected');
+    const checkPill = card.querySelector('.check-pill');
+    const gradientOverlay = card.querySelector('.gradient-overlay');
+    const langBadge = card.querySelector('span.rounded-full');
+
+    if (isSelected) {
+      // Deselect
+      card.classList.remove('is-selected', 'ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background', 'shadow-lg', 'shadow-primary/25');
+      card.classList.add('border', 'border-outline-variant/40', 'shadow-sm');
+      if (checkPill) {
+        checkPill.classList.add('hidden');
+        checkPill.classList.remove('flex');
+      }
+      if (gradientOverlay) {
+        gradientOverlay.classList.add('hidden');
+      }
+      if (langBadge) {
+        langBadge.classList.remove('bg-white/20', 'border-white/25');
+        langBadge.classList.add('bg-black/40', 'border-white/20');
+      }
+    } else {
+      // Select
+      card.classList.add('is-selected', 'ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background', 'shadow-lg', 'shadow-primary/25');
+      card.classList.remove('border', 'border-outline-variant/40', 'shadow-sm');
+      if (checkPill) {
+        checkPill.classList.remove('hidden');
+        checkPill.classList.add('flex');
+      }
+      if (gradientOverlay) {
+        gradientOverlay.classList.remove('hidden');
+      }
+      if (langBadge) {
+        langBadge.classList.remove('bg-black/40', 'border-white/20');
+        langBadge.classList.add('bg-white/20', 'border-white/25');
+      }
+    }
+
+    updateSelectedCount();
+  }
+
+  function updateSelectedCount() {
+    const selectedCount = document.querySelectorAll('.artist-card.is-selected').length;
+    const countBadge = document.getElementById('selectedCount');
+    const continueBtn = document.getElementById('continueBtn');
+    
+    if (countBadge) {
+      countBadge.innerText = `${selectedCount} Selected`;
+    }
+    if (continueBtn) {
+      continueBtn.innerHTML = `<span>Continue (${selectedCount} selected)</span><span class="material-symbols-outlined text-[18px]">arrow_forward</span>`;
+    }
+  }
+
+  // Filter interaction for search
+  document.getElementById('languageSearch').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.artist-card');
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (!term || text.includes(term)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script></main>
+
+
+
+
+
+</body></html>

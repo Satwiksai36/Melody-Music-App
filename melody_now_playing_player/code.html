@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes beaconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.5); opacity: 0.3; }
+}
+.beacon-ring {
+  animation: beaconPulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes auraPulse {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.22); opacity: 0.2; }
+}
+.aura-pulse {
+  animation: auraPulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.wave-bar {
+  transition: height 0.1s ease-out, background-color 0.15s ease-out;
+  transform-origin: center;
+}
+</style></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen relative"><header class="fixed top-0 w-full z-40 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary active:scale-90 transition-transform" id="top-back-btn"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><div class="relative w-9 h-9 flex items-center justify-center flex-shrink-0 cursor-pointer active:scale-95 transition-transform" id="header-logo"><div class="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-[0_2px_8px_rgba(66,29,219,0.15)]"><div class="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center gap-[2.5px]"><span class="w-[2.5px] h-3 rounded-full bg-[#ff5e3a]"></span><span class="w-[2.5px] h-4.5 rounded-full bg-[#ff453a]"></span><span class="w-[2.5px] h-5 rounded-full bg-[#5b42f3]"></span><span class="w-[2.5px] h-4 rounded-full bg-[#3830a3]"></span><span class="w-[2.5px] h-2.5 rounded-full bg-[#0d9488]"></span></div></div><div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary shadow-sm ring-1 ring-surface"><span class="material-symbols-outlined text-[10px] leading-none" style="font-variation-settings: 'FILL' 1;">bolt</span></div></div><h1 class="font-headline-sm text-headline-sm text-on-surface truncate ml-space-xs">Now Playing</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Profile" class="w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" id="profile-btn"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)] ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"/></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full relative overflow-hidden select-none pb-12">
+<!-- Soft Ambient Glow Mesh Background -->
+<div class="absolute inset-0 pointer-events-none opacity-40 overflow-hidden">
+<div class="absolute -top-16 -left-12 w-80 h-80 rounded-full bg-secondary-fixed blur-3xl mix-blend-multiply"></div>
+<div class="absolute top-1/4 -right-16 w-88 h-88 rounded-full bg-primary-fixed-dim blur-3xl mix-blend-multiply"></div>
+<div class="absolute bottom-1/3 left-1/4 w-72 h-72 rounded-full bg-tertiary-fixed blur-3xl opacity-60 mix-blend-multiply"></div>
+</div>
+<!-- Inner Ambient Content Wrapper -->
+<div class="relative z-10 flex flex-col w-full px-margin">
+<!-- Top Mini Context Action Row -->
+<div class="flex items-center justify-between py-space-sm">
+<button aria-label="Minimize Player" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface shadow-sm active:scale-95 transition-transform hover:bg-surface-container-high" id="minimize-btn">
+<span class="material-symbols-outlined text-[22px]">keyboard_arrow_down</span>
+</button>
+<div class="flex flex-col items-center max-w-[210px] text-center cursor-pointer active:opacity-75 transition-opacity" id="playlist-header-chip">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant/80">Playing from playlist</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold truncate flex items-center gap-1">
+          Telugu Melodies
+          <span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+</span>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="Toggle Lyrics" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface shadow-sm active:scale-95 transition-all hover:bg-surface-container-high" id="lyrics-btn">
+<span class="material-symbols-outlined text-[20px]">lyrics</span>
+</button>
+<button aria-label="Share Song" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface shadow-sm active:scale-95 transition-transform hover:bg-surface-container-high" id="share-btn">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+</div>
+</div>
+<!-- Hero Signature Album Art Presentation (~45-50% Viewport impact) -->
+<div class="relative w-full my-space-md flex flex-col items-center">
+<!-- Layered vinyl record backdrop disc poking out subtly -->
+<div class="relative w-72 h-72 sm:w-80 sm:h-80 mx-auto flex items-center justify-center">
+<!-- Vinyl peek outline simulation -->
+<div class="absolute w-[92%] h-[92%] rounded-full bg-inverse-surface shadow-xl flex items-center justify-center translate-y-2 opacity-40 transition-transform duration-700 ease-out rotate-12" id="vinyl-disc">
+<div class="w-24 h-24 rounded-full bg-surface-variant flex items-center justify-center border-4 border-inverse-surface">
+<div class="w-8 h-8 rounded-full bg-surface"></div>
+</div>
+</div>
+<!-- Main Illustrated Collage Album Plaque -->
+<div class="relative z-10 w-full h-full rounded-3xl overflow-hidden shadow-[0_20px_36px_rgba(91,66,243,0.18)] bg-surface-container-lowest select-none group">
+<div class="relative w-full h-full bg-gradient-to-tr from-secondary-fixed via-tertiary-fixed to-primary-fixed" id="album-bg">
+<!-- Arched artistic backdrop cutouts like inspiration image -->
+<div class="absolute inset-x-4 bottom-0 top-6 rounded-t-full bg-surface-container-high/80 overflow-hidden flex items-end justify-center">
+<!-- Decorative retro sun rays / rainbow arch -->
+<svg class="absolute -top-6 w-52 h-52 text-secondary/30" fill="none" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="44" stroke="currentColor" stroke-dasharray="4 4" stroke-width="6"></circle>
+<circle cx="50" cy="50" r="34" stroke="currentColor" stroke-width="4"></circle>
+<circle cx="50" cy="50" r="24" stroke="currentColor" stroke-width="6"></circle>
+</svg>
+<!-- Central Duotone/Stylized Singer Character Cutout Image -->
+<img alt="Album Cover" class="relative z-10 w-full h-[90%] object-contain object-bottom drop-shadow-lg transition-transform duration-500 ease-out" data-alt="Vibrant editorial photo collage of an Indian male vocalist singing joyfully into a retro studio microphone, duotone vintage cinema styling with soft coral lighting and mint accent tones, crisp isolated character portrait aesthetic inspired by modern music streaming covers" id="album-art-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD-e10rDuLMeubRjHIWXXTJFU1ZvezdIXPAsgzlqrVeQ95aiGQINDmWYS1Fb3geEI98fbQJv3q0vIkgQJiCUTHrWIKM5a8mPExAoLpdeoGRWfB_ZjTSho_uHnDNAOrO1tsWRLxbxEx4bdzRV16PTvSKAPkarWSqTds1diY3xLqnHMTn1urZ24u7KmoWe_kCqzcluruX04LELdS1-DVWee2TTNPp22oXm4Gezr7Y5yGplVes-KiGcYqjQ"/>
+</div>
+<!-- Top Floating Badge Over Art -->
+<div class="absolute top-4 left-4 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface/90 backdrop-blur-md shadow-sm active:scale-95 transition-transform cursor-pointer" id="audio-format-badge">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse" id="badge-dot"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Dolby Atmos • Lossless</span>
+</div>
+<!-- Heart sparkle badge -->
+<button aria-label="Visualizer Mode" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-surface/85 backdrop-blur-md flex items-center justify-center text-secondary shadow-sm active:scale-90 transition-transform" id="sparkle-btn">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Track Metadata & Interactive Secondary Actions -->
+<div class="flex items-center justify-between mt-space-sm mb-space-md">
+<div class="flex-1 min-w-0 pr-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight truncate transition-all duration-300" id="song-title">
+          Samajavaragamana
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium truncate mt-0.5 transition-all duration-300" id="song-artist">
+          Sid Sriram <span class="text-secondary">•</span> Thaman S <span class="text-outline text-body-sm">(Ala Vaikunthapurramuloo)</span>
+</p>
+</div>
+<!-- Quick Action Group -->
+<div class="flex items-center gap-2 flex-shrink-0">
+<button aria-label="Favorite Track" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-secondary active:scale-90 transition-all shadow-sm" id="favorite-btn">
+<span class="material-symbols-outlined text-[24px] transition-transform duration-200" id="favorite-icon">favorite</span>
+</button>
+<button aria-label="Add to Playlist" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-90 transition-all shadow-sm hover:text-primary" id="playlist-add-btn">
+<span class="material-symbols-outlined text-[22px] transition-transform duration-200" id="playlist-add-icon">playlist_add</span>
+</button>
+</div>
+</div>
+<!-- Playback Scrubber: Interactive Sound Wave Section -->
+<div class="w-full bg-surface-container-low p-space-md rounded-2xl shadow-sm mb-space-md relative">
+<!-- Floating Scrubber Tooltip -->
+<div class="absolute -top-7 pointer-events-none transition-all duration-75 opacity-0 z-30 transform -translate-x-1/2" id="scrubber-tooltip">
+<div class="px-2 py-0.5 rounded-full bg-inverse-surface text-inverse-on-surface text-[11px] font-bold shadow-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">timer</span>
+<span id="tooltip-time">02:14</span>
+</div>
+</div>
+<!-- Tactile Waveform Bars SVG / DOM representation -->
+<div class="relative w-full h-16 flex items-center justify-between cursor-pointer py-1 touch-none select-none" id="waveform-container" title="Drag or tap to seek position">
+<!-- Bar elements dynamically rendered with responsive flex spacing -->
+<div class="absolute inset-0 flex items-center justify-between gap-[3px]" id="bars-track">
+<!-- Populated via script to precisely control heights, styles and live ripple -->
+</div>
+<!-- Dynamic Playhead Beacon and Vertical Indicator Pin -->
+<div class="absolute top-0 bottom-0 pointer-events-none flex flex-col items-center justify-center z-20 transition-[left] duration-75" id="playhead-group" style="left: 48.9%;">
+<!-- Top Beacon Pin Ring -->
+<div class="relative flex items-center justify-center -top-1">
+<span class="absolute w-5 h-5 rounded-full bg-secondary-container/30 beacon-ring" id="beacon-ring"></span>
+<span class="w-3.5 h-3.5 bg-secondary-container rounded-full ring-2 ring-surface-container-lowest shadow-[0_2px_6px_rgba(254,93,57,0.5)]"></span>
+</div>
+<!-- Vertical Playhead Line -->
+<span class="w-1.5 h-12 bg-gradient-to-b from-[#fe5d39] to-[#ea580c] rounded-full shadow-[0_0_12px_rgba(254,93,57,0.7)]"></span>
+</div>
+</div>
+<!-- Scrubber Timers -->
+<div class="flex items-center justify-between mt-2 pt-1 font-body-sm text-body-sm">
+<span class="text-secondary font-bold tracking-tight" id="elapsed-time">02:14</span>
+<div class="flex items-center gap-1 text-on-surface-variant/70 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">graphic_eq</span>
+<span class="">Adaptive Bitrate</span>
+</div>
+<span class="text-on-surface-variant font-medium" id="total-duration">04:34</span>
+</div>
+</div>
+<!-- Core Physical Playback Control Hub -->
+<div class="flex items-center justify-between px-space-xs mb-space-lg">
+<!-- Shuffle Button (Active glowing state) -->
+<button aria-label="Shuffle On" class="w-11 h-11 rounded-full bg-primary-fixed text-primary flex items-center justify-center relative active:scale-90 transition-transform shadow-sm" id="shuffle-btn">
+<span class="material-symbols-outlined text-[20px]">shuffle</span>
+<span class="absolute bottom-1.5 w-1 h-1 rounded-full bg-primary" id="shuffle-dot"></span>
+</button>
+<!-- Previous Track -->
+<button aria-label="Previous Track" class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:text-primary active:scale-90 transition-transform" id="prev-btn">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">skip_previous</span>
+</button>
+<!-- Hero Play / Pause Controller Button -->
+<div class="relative flex items-center justify-center">
+<span class="absolute w-24 h-24 rounded-full bg-primary-container/40 aura-pulse pointer-events-none" id="play-aura"></span>
+<button aria-label="Pause Song" class="relative z-10 w-20 h-20 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_12px_28px_rgba(91,66,243,0.35)] active:scale-95 hover:bg-primary transition-all duration-200" id="play-pause-btn">
+<span class="material-symbols-outlined text-[38px] transition-transform duration-150" id="play-icon" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+</div>
+<!-- Next Track -->
+<button aria-label="Next Track" class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:text-primary active:scale-90 transition-transform" id="next-btn">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">skip_next</span>
+</button>
+<!-- Repeat Toggle -->
+<button aria-label="Repeat Mode" class="w-11 h-11 rounded-full bg-surface-container text-secondary flex items-center justify-center active:scale-90 transition-transform shadow-sm" id="repeat-btn">
+<span class="material-symbols-outlined text-[20px]" id="repeat-icon">repeat_one</span>
+</button>
+</div>
+<!-- Bottom Audio Utility & Queue Preview Drawer Sheet -->
+<div class="w-full flex flex-col gap-2.5">
+<!-- Output Device Routing Chip -->
+<div class="w-full flex items-center justify-between px-space-md py-2.5 rounded-2xl bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center" id="device-icon-container">
+<span class="material-symbols-outlined text-[18px]" id="device-icon">speaker_group</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant/80 uppercase">Connected Device</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-1" id="current-device-name">
+              Melody Stream • HD Audio 24-bit
+            </span>
+</div>
+</div>
+<button class="px-3 py-1 rounded-full bg-surface text-on-surface font-label-sm text-label-sm font-bold shadow-xs active:scale-95 transition-transform hover:bg-surface-container" id="change-device-btn">
+          Change
+        </button>
+</div>
+<!-- Quick Lyrics Glance & Up Next Peek Pull Bar -->
+<div class="w-full rounded-2xl bg-surface-container p-space-md shadow-sm flex flex-col gap-space-sm transition-all duration-300" id="up-next-card">
+<div class="flex items-center justify-between cursor-pointer" id="queue-header-trigger">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">queue_music</span>
+<span class="font-title-md text-title-md text-on-surface font-bold" id="up-next-title">Up Next: Butta Bomma</span>
+</div>
+<div class="flex items-center gap-1 font-label-md text-label-md text-primary font-bold active:scale-95 transition-transform" id="queue-pill-btn">
+<span id="queue-count-text">Queue (14)</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</div>
+<!-- Lyrics Snippet Peek Line (expandable) -->
+<div class="px-3 py-2 rounded-xl bg-surface-container-lowest/80 flex flex-col gap-2 cursor-pointer transition-all duration-300 hover:bg-surface-container-lowest" id="lyrics-preview-bar">
+<div class="flex items-center justify-between w-full">
+<p class="font-body-sm text-body-sm text-on-surface-variant italic truncate max-w-[80%]" id="lyrics-snippet-text">
+              "Samajavaragamana... Ninu choosi aagagalaana..."
+            </p>
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Lyrics</span>
+<span class="material-symbols-outlined text-[16px] text-secondary transition-transform duration-300" id="lyrics-expand-arrow">expand_more</span>
+</div>
+</div>
+<!-- Full Lyrics Content Collapsible Accordion -->
+<div class="hidden pt-2 border-t border-surface-variant/40 flex flex-col gap-1.5 text-center" id="expanded-lyrics-content">
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Mallela vaanala navvula thoothina vela</p>
+<p class="font-body-md text-body-md font-bold text-secondary">"Samajavaragamana... Ninu choosi aagagalaana..."</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Naluguriki thelisela cheppana praanam meeda</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant/60">Gunde layalone nindi unna prema...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Dialog / Sheet: Device Routing Selector -->
+<div class="fixed inset-0 z-50 flex items-end justify-center bg-inverse-surface/40 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300" id="device-modal-backdrop">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-t-3xl p-space-lg shadow-2xl transform translate-y-full transition-transform duration-300 flex flex-col gap-space-md" id="device-modal-card">
+<div class="flex items-center justify-between pb-2 border-b border-surface-variant/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">devices</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Connect to a Device</h3>
+</div>
+<button aria-label="Close Device Selector" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95" id="close-device-modal">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-2" id="devices-list">
+<!-- Option 1: Melody Stream HD -->
+<button class="w-full flex items-center justify-between p-3 rounded-2xl bg-surface-container-high/60 border-2 border-primary text-left transition-all active:scale-[0.98] device-option" data-device="Melody Stream • HD Audio 24-bit" data-icon="speaker_group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">speaker_group</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-on-surface">Melody Stream</span>
+<span class="font-body-sm text-body-sm text-primary font-medium">HD Audio 24-bit • Connected</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">check_circle</span>
+</button>
+<!-- Option 2: AirPlay / Bluetooth Headphones -->
+<button class="w-full flex items-center justify-between p-3 rounded-2xl bg-surface-container text-left transition-all hover:bg-surface-container-high active:scale-[0.98] device-option" data-device="AirPods Pro (2nd Gen)" data-icon="headphones">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">headphones</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-on-surface">AirPods Pro</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Spatial Audio Ready</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px]">circle</span>
+</button>
+<!-- Option 3: Phone Speaker -->
+<button class="w-full flex items-center justify-between p-3 rounded-2xl bg-surface-container text-left transition-all hover:bg-surface-container-high active:scale-[0.98] device-option" data-device="iPhone Speaker" data-icon="smartphone">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">smartphone</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-on-surface">iPhone Speaker</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Standard Stereo Output</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[22px]">circle</span>
+</button>
+</div>
+<div class="pt-1 text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">AirPlay &amp; Bluetooth devices within range will connect automatically.</p>
+</div>
+</div>
+</div>
+<!-- Floating Action Toast Notification -->
+<div class="fixed bottom-24 inset-x-0 mx-auto w-fit max-w-[85%] px-4 py-2.5 rounded-full bg-inverse-surface/95 text-inverse-on-surface backdrop-blur-md shadow-xl flex items-center gap-2.5 z-50 pointer-events-none opacity-0 transform translate-y-4 transition-all duration-300" id="app-toast">
+<span class="material-symbols-outlined text-[20px] text-secondary-container" id="toast-icon">info</span>
+<span class="font-body-sm text-body-sm font-semibold truncate" id="toast-message">Notification</span>
+</div>
+<script>
+  (function() {
+    // Playlist data for interactive Skip / Prev
+    const playlist = [
+      {
+        title: "Samajavaragamana",
+        artist: "Sid Sriram • Thaman S",
+        movie: "(Ala Vaikunthapurramuloo)",
+        duration: 274, // 04:34
+        startSec: 134,
+        upNext: "Up Next: Butta Bomma",
+        lyricsSnippet: '"Samajavaragamana... Ninu choosi aagagalaana..."',
+        lyricsFull: [
+          "Mallela vaanala navvula thoothina vela",
+          '"Samajavaragamana... Ninu choosi aagagalaana..."',
+          "Naluguriki thelisela cheppana praanam meeda",
+          "Gunde layalone nindi unna prema..."
+        ]
+      },
+      {
+        title: "Butta Bomma",
+        artist: "Armaan Malik • Thaman S",
+        movie: "(Ala Vaikunthapurramuloo)",
+        duration: 198, // 03:18
+        startSec: 42,
+        upNext: "Up Next: Ramuloo Ramulaa",
+        lyricsSnippet: '"Butta bomma butta bomma nannu suthukuntive..."',
+        lyricsFull: [
+          "Inthakanna manchi polikedo thochalede baala",
+          '"Butta bomma butta bomma nannu suthukuntive..."',
+          "Zindagike attomatta gicche pilla",
+          "Nee kallalona muthyamalle daachukunna vela..."
+        ]
+      },
+      {
+        title: "Ramuloo Ramulaa",
+        artist: "Anurag Kulkarni • Mangli",
+        movie: "(Ala Vaikunthapurramuloo)",
+        duration: 251, // 04:11
+        startSec: 15,
+        upNext: "Up Next: Samajavaragamana",
+        lyricsSnippet: '"Ramuloo Ramulaa nannagam chesindiro..."',
+        lyricsFull: [
+          "Pillada ninu choosi pichi lesinde ro",
+          '"Ramuloo Ramulaa nannagam chesindiro..."',
+          "Kanne gunde chindulesi thuntari chesesinde",
+          "Taarumaaru aipoyindi manase poorthiga..."
+        ]
+      }
+    ];
+
+    let currentTrackIndex = 0;
+    let totalDurationSeconds = playlist[0].duration;
+    let currentSeconds = playlist[0].startSec;
+    let isPlaying = true;
+    let isDragging = false;
+    let lastTick = performance.now();
+
+    // DOM Elements
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const playIcon = document.getElementById('play-icon');
+    const playAura = document.getElementById('play-aura');
+    const vinylDisc = document.getElementById('vinyl-disc');
+    const barsTrack = document.getElementById('bars-track');
+    const playheadGroup = document.getElementById('playhead-group');
+    const beaconRing = document.getElementById('beacon-ring');
+    const elapsedTimeEl = document.getElementById('elapsed-time');
+    const totalDurationEl = document.getElementById('total-duration');
+    const scrubberTooltip = document.getElementById('scrubber-tooltip');
+    const tooltipTime = document.getElementById('tooltip-time');
+    const waveformContainer = document.getElementById('waveform-container');
+    const favBtn = document.getElementById('favorite-btn');
+    const favIcon = document.getElementById('favorite-icon');
+    const playlistAddBtn = document.getElementById('playlist-add-btn');
+    const playlistAddIcon = document.getElementById('playlist-add-icon');
+    const shuffleBtn = document.getElementById('shuffle-btn');
+    const shuffleDot = document.getElementById('shuffle-dot');
+    const repeatBtn = document.getElementById('repeat-btn');
+    const repeatIcon = document.getElementById('repeat-icon');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const songTitleEl = document.getElementById('song-title');
+    const songArtistEl = document.getElementById('song-artist');
+    const upNextTitleEl = document.getElementById('up-next-title');
+    const lyricsSnippetEl = document.getElementById('lyrics-snippet-text');
+    const lyricsPreviewBar = document.getElementById('lyrics-preview-bar');
+    const lyricsExpandArrow = document.getElementById('lyrics-expand-arrow');
+    const expandedLyricsContent = document.getElementById('expanded-lyrics-content');
+    const lyricsBtn = document.getElementById('lyrics-btn');
+    const shareBtn = document.getElementById('share-btn');
+    const topBackBtn = document.getElementById('top-back-btn');
+    const minimizeBtn = document.getElementById('minimize-btn');
+    const queuePillBtn = document.getElementById('queue-pill-btn');
+    const queueHeaderTrigger = document.getElementById('queue-header-trigger');
+    const audioFormatBadge = document.getElementById('audio-format-badge');
+    const sparkleBtn = document.getElementById('sparkle-btn');
+    const profileBtn = document.getElementById('profile-btn');
+    const playlistHeaderChip = document.getElementById('playlist-header-chip');
+
+    // Device Modal Elements
+    const changeDeviceBtn = document.getElementById('change-device-btn');
+    const deviceModalBackdrop = document.getElementById('device-modal-backdrop');
+    const deviceModalCard = document.getElementById('device-modal-card');
+    const closeDeviceModal = document.getElementById('close-device-modal');
+    const currentDeviceName = document.getElementById('current-device-name');
+    const deviceIconContainer = document.getElementById('device-icon-container');
+    const deviceIcon = document.getElementById('device-icon');
+    const deviceOptionBtns = document.querySelectorAll('.device-option');
+
+    // Toast element
+    const appToast = document.getElementById('app-toast');
+    const toastIcon = document.getElementById('toast-icon');
+    const toastMessage = document.getElementById('toast-message');
+    let toastTimeout = null;
+
+    function showToast(msg, iconName = 'check_circle') {
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastMessage.textContent = msg;
+      toastIcon.textContent = iconName;
+      appToast.classList.remove('opacity-0', 'translate-y-4');
+      appToast.classList.add('opacity-100', 'translate-y-0');
+      toastTimeout = setTimeout(() => {
+        appToast.classList.remove('opacity-100', 'translate-y-0');
+        appToast.classList.add('opacity-0', 'translate-y-4');
+      }, 2200);
+    }
+
+    // Baseline heights for 36 waveform bars (in px)
+    const baseBarHeights = [
+      12, 18, 30, 16, 38, 26, 44, 34, 48, 22,
+      38, 30, 48, 36, 42, 28, 20, 32, 46, 38,
+      24, 44, 32, 28, 48, 32, 16, 40, 24, 44,
+      32, 20, 28, 36, 16, 12
+    ];
+    const totalBars = baseBarHeights.length;
+    const barElements = [];
+
+    // Initialize Waveform DOM Bars
+    barsTrack.innerHTML = '';
+    for (let i = 0; i < totalBars; i++) {
+      const bar = document.createElement('span');
+      bar.className = 'wave-bar flex-1 rounded-full';
+      bar.style.height = `${baseBarHeights[i]}px`;
+      bar.style.maxHeight = '52px';
+      bar.style.minHeight = '6px';
+      barsTrack.appendChild(bar);
+      barElements.push(bar);
+    }
+
+    function formatTime(secs) {
+      const clamped = Math.max(0, Math.min(totalDurationSeconds, Math.floor(secs)));
+      const mins = String(Math.floor(clamped / 60)).padStart(2, '0');
+      const seconds = String(clamped % 60).padStart(2, '0');
+      return `${mins}:${seconds}`;
+    }
+
+    // Refresh bar colors and playhead position based on current progress
+    function updateWaveformDisplay(ratio) {
+      const clampedRatio = Math.max(0, Math.min(1, ratio));
+      const activeBarCount = Math.floor(clampedRatio * totalBars);
+
+      // Slide playhead indicator smoothly
+      const percentage = (clampedRatio * 100);
+      playheadGroup.style.left = `calc(${percentage}% - 3px)`;
+
+      // Update bars appearance (active gradient orange vs muted outline)
+      barElements.forEach((bar, index) => {
+        if (index <= activeBarCount) {
+          bar.style.backgroundColor = '#fe5d39';
+          bar.style.opacity = '1';
+          bar.style.boxShadow = '0 0 6px rgba(254,93,57,0.3)';
+        } else {
+          bar.style.backgroundColor = '#c8c4d9';
+          bar.style.opacity = '0.45';
+          bar.style.boxShadow = 'none';
+        }
+      });
+
+      // Update timer display
+      elapsedTimeEl.textContent = formatTime(clampedRatio * totalDurationSeconds);
+    }
+
+    // Load track information
+    function loadTrack(index) {
+      const track = playlist[index];
+      totalDurationSeconds = track.duration;
+      currentSeconds = 0;
+      songTitleEl.textContent = track.title;
+      songArtistEl.innerHTML = `${track.artist} <span class="text-outline text-body-sm">${track.movie}</span>`;
+      upNextTitleEl.textContent = track.upNext;
+      lyricsSnippetEl.textContent = track.lyricsSnippet;
+      totalDurationEl.textContent = formatTime(track.duration);
+
+      // update expanded lyrics lines
+      expandedLyricsContent.innerHTML = `
+        <p class="font-body-sm text-body-sm text-on-surface-variant/70">${track.lyricsFull[0]}</p>
+        <p class="font-body-md text-body-md font-bold text-secondary">${track.lyricsFull[1]}</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant/70">${track.lyricsFull[2]}</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant/60">${track.lyricsFull[3]}</p>
+      `;
+
+      updateWaveformDisplay(0);
+      showToast(`Now playing: ${track.title}`, 'music_note');
+    }
+
+    // Live Equalizer Organic Ripple Animation on Bars
+    let wavePhase = 0;
+    function animateWaveform(timestamp) {
+      if (isPlaying) {
+        const delta = (timestamp - lastTick) / 1000;
+        lastTick = timestamp;
+
+        // Auto increment playback time if not user scrubbing
+        if (!isDragging) {
+          currentSeconds += delta;
+          if (currentSeconds >= totalDurationSeconds) {
+            // Check repeat mode or loop
+            if (repeatMode === 1) { // repeat one
+              currentSeconds = 0;
+            } else {
+              currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+              loadTrack(currentTrackIndex);
+            }
+          }
+          const ratio = currentSeconds / totalDurationSeconds;
+          updateWaveformDisplay(ratio);
+        }
+
+        wavePhase += 0.08;
+        const currentRatio = currentSeconds / totalDurationSeconds;
+        const playheadIndex = Math.floor(currentRatio * totalBars);
+
+        // Organic ripple bounce heights near playhead
+        barElements.forEach((bar, idx) => {
+          const dist = Math.abs(idx - playheadIndex);
+          const baseH = baseBarHeights[idx];
+          if (dist < 8) {
+            const wave = Math.sin(wavePhase * 2.2 + idx * 0.7) * (9 - dist * 0.9);
+            const dynamicH = Math.max(6, Math.min(52, baseH + wave));
+            bar.style.height = `${dynamicH}px`;
+          } else {
+            const wave = Math.sin(wavePhase * 1.2 + idx * 0.4) * 2.2;
+            const dynamicH = Math.max(6, Math.min(50, baseH + wave));
+            bar.style.height = `${dynamicH}px`;
+          }
+        });
+      } else {
+        lastTick = timestamp;
+      }
+      requestAnimationFrame(animateWaveform);
+    }
+
+    // Interactive Dragging and Seeking Logic
+    function handleSeek(clientX) {
+      const rect = waveformContainer.getBoundingClientRect();
+      const clickX = clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      currentSeconds = ratio * totalDurationSeconds;
+
+      updateWaveformDisplay(ratio);
+
+      // Tooltip position and content
+      scrubberTooltip.style.left = `${clickX}px`;
+      tooltipTime.textContent = formatTime(currentSeconds);
+      scrubberTooltip.style.opacity = '1';
+    }
+
+    waveformContainer.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      waveformContainer.setPointerCapture(e.pointerId);
+      handleSeek(e.clientX);
+    });
+
+    waveformContainer.addEventListener('pointermove', (e) => {
+      if (isDragging) {
+        handleSeek(e.clientX);
+      } else {
+        const rect = waveformContainer.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+        scrubberTooltip.style.left = `${clickX}px`;
+        tooltipTime.textContent = formatTime(ratio * totalDurationSeconds);
+        scrubberTooltip.style.opacity = '0.9';
+      }
+    });
+
+    const stopDragging = () => {
+      if (isDragging) {
+        isDragging = false;
+        setTimeout(() => {
+          scrubberTooltip.style.opacity = '0';
+        }, 500);
+      }
+    };
+
+    waveformContainer.addEventListener('pointerup', stopDragging);
+    waveformContainer.addEventListener('pointercancel', stopDragging);
+    waveformContainer.addEventListener('mouseleave', () => {
+      if (!isDragging) {
+        scrubberTooltip.style.opacity = '0';
+      }
+    });
+
+    // 2. Play/Pause State Toggle with glowing aura
+    if (playPauseBtn && playIcon) {
+      playPauseBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+          playIcon.textContent = 'pause';
+          playAura.classList.remove('hidden');
+          playAura.classList.add('aura-pulse');
+          playPauseBtn.classList.add('shadow-[0_12px_28px_rgba(91,66,243,0.35)]');
+          if (beaconRing) beaconRing.classList.add('beacon-ring');
+          if (vinylDisc) vinylDisc.classList.add('rotate-12');
+          lastTick = performance.now();
+          showToast('Playback Resumed', 'play_arrow');
+        } else {
+          playIcon.textContent = 'play_arrow';
+          playAura.classList.add('hidden');
+          playAura.classList.remove('aura-pulse');
+          playPauseBtn.classList.remove('shadow-[0_12px_28px_rgba(91,66,243,0.35)]');
+          if (beaconRing) beaconRing.classList.remove('beacon-ring');
+          if (vinylDisc) vinylDisc.classList.remove('rotate-12');
+          barElements.forEach((bar, idx) => {
+            bar.style.height = `${baseBarHeights[idx]}px`;
+          });
+          showToast('Playback Paused', 'pause');
+        }
+      });
+    }
+
+    // 3. Skip Previous and Skip Next controls
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevBtn.classList.add('scale-90');
+        setTimeout(() => prevBtn.classList.remove('scale-90'), 150);
+        if (currentSeconds > 5) {
+          currentSeconds = 0;
+          updateWaveformDisplay(0);
+          showToast('Restarted track', 'replay');
+        } else {
+          currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+          loadTrack(currentTrackIndex);
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        nextBtn.classList.add('scale-90');
+        setTimeout(() => nextBtn.classList.remove('scale-90'), 150);
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex);
+      });
+    }
+
+    // 4. Shuffle & Repeat toggles
+    let shuffleActive = true;
+    if (shuffleBtn) {
+      shuffleBtn.addEventListener('click', () => {
+        shuffleActive = !shuffleActive;
+        if (shuffleActive) {
+          shuffleBtn.classList.add('bg-primary-fixed', 'text-primary');
+          shuffleBtn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+          if (shuffleDot) shuffleDot.classList.remove('hidden');
+          showToast('Shuffle Mode: ON', 'shuffle');
+        } else {
+          shuffleBtn.classList.remove('bg-primary-fixed', 'text-primary');
+          shuffleBtn.classList.add('bg-surface-container', 'text-on-surface-variant');
+          if (shuffleDot) shuffleDot.classList.add('hidden');
+          showToast('Shuffle Mode: OFF', 'shuffle');
+        }
+      });
+    }
+
+    let repeatMode = 1; // 0: off, 1: repeat_one, 2: repeat
+    if (repeatBtn && repeatIcon) {
+      repeatBtn.addEventListener('click', () => {
+        repeatMode = (repeatMode + 1) % 3;
+        if (repeatMode === 1) {
+          repeatIcon.textContent = 'repeat_one';
+          repeatBtn.classList.add('text-secondary', 'bg-secondary-fixed/40');
+          repeatBtn.classList.remove('text-on-surface-variant', 'bg-surface-container');
+          showToast('Repeat: Current Song', 'repeat_one');
+        } else if (repeatMode === 2) {
+          repeatIcon.textContent = 'repeat';
+          repeatBtn.classList.add('text-secondary', 'bg-secondary-fixed/40');
+          repeatBtn.classList.remove('text-on-surface-variant', 'bg-surface-container');
+          showToast('Repeat: All Tracks in Queue', 'repeat');
+        } else {
+          repeatIcon.textContent = 'repeat';
+          repeatBtn.classList.remove('text-secondary', 'bg-secondary-fixed/40');
+          repeatBtn.classList.add('text-on-surface-variant', 'bg-surface-container');
+          showToast('Repeat Mode: OFF', 'repeat');
+        }
+      });
+    }
+
+    // 5. Heart/Favorite & Add to Playlist with micro-animation
+    let isFavorite = false;
+    if (favBtn && favIcon) {
+      favBtn.addEventListener('click', () => {
+        isFavorite = !isFavorite;
+        favIcon.classList.add('scale-125');
+        setTimeout(() => favIcon.classList.remove('scale-125'), 200);
+
+        if (isFavorite) {
+          favIcon.style.fontVariationSettings = "'FILL' 1";
+          favIcon.classList.add('text-secondary');
+          favBtn.classList.add('bg-secondary-fixed');
+          showToast('Added to Liked Songs', 'favorite');
+        } else {
+          favIcon.style.fontVariationSettings = "'FILL' 0";
+          favIcon.classList.remove('text-secondary');
+          favBtn.classList.remove('bg-secondary-fixed');
+          showToast('Removed from Liked Songs', 'favorite_border');
+        }
+      });
+    }
+
+    let isAddedToPlaylist = false;
+    if (playlistAddBtn && playlistAddIcon) {
+      playlistAddBtn.addEventListener('click', () => {
+        isAddedToPlaylist = !isAddedToPlaylist;
+        playlistAddIcon.classList.add('scale-125');
+        setTimeout(() => playlistAddIcon.classList.remove('scale-125'), 200);
+
+        if (isAddedToPlaylist) {
+          playlistAddIcon.textContent = 'playlist_add_check';
+          playlistAddBtn.classList.add('bg-primary-fixed', 'text-primary');
+          showToast('Saved to "Telugu Favorites" Playlist', 'library_music');
+        } else {
+          playlistAddIcon.textContent = 'playlist_add';
+          playlistAddBtn.classList.remove('bg-primary-fixed', 'text-primary');
+          showToast('Removed from Playlist', 'playlist_remove');
+        }
+      });
+    }
+
+    // 6. Connected Device 'Change' Modal Interaction
+    function openDeviceModal() {
+      deviceModalBackdrop.classList.remove('pointer-events-none', 'opacity-0');
+      deviceModalBackdrop.classList.add('opacity-100');
+      deviceModalCard.classList.remove('translate-y-full');
+      deviceModalCard.classList.add('translate-y-0');
+    }
+
+    function closeDeviceModalSheet() {
+      deviceModalBackdrop.classList.remove('opacity-100');
+      deviceModalBackdrop.classList.add('opacity-0', 'pointer-events-none');
+      deviceModalCard.classList.remove('translate-y-0');
+      deviceModalCard.classList.add('translate-y-full');
+    }
+
+    if (changeDeviceBtn) changeDeviceBtn.addEventListener('click', openDeviceModal);
+    if (closeDeviceModal) closeDeviceModal.addEventListener('click', closeDeviceModalSheet);
+    deviceModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === deviceModalBackdrop) closeDeviceModalSheet();
+    });
+
+    deviceOptionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const devName = btn.getAttribute('data-device');
+        const iconName = btn.getAttribute('data-icon');
+
+        // Update active UI card style
+        deviceOptionBtns.forEach(b => {
+          b.classList.remove('bg-surface-container-high/60', 'border-2', 'border-primary');
+          b.classList.add('bg-surface-container');
+          const checkIcon = b.querySelector('.material-symbols-outlined:last-child');
+          if (checkIcon) {
+            checkIcon.textContent = 'circle';
+            checkIcon.className = 'material-symbols-outlined text-outline-variant text-[22px]';
+          }
+        });
+
+        btn.classList.add('bg-surface-container-high/60', 'border-2', 'border-primary');
+        btn.classList.remove('bg-surface-container');
+        const activeCheck = btn.querySelector('.material-symbols-outlined:last-child');
+        if (activeCheck) {
+          activeCheck.textContent = 'check_circle';
+          activeCheck.className = 'material-symbols-outlined text-primary text-[22px]';
+        }
+
+        // Apply to main banner
+        currentDeviceName.textContent = devName;
+        deviceIcon.textContent = iconName;
+        closeDeviceModalSheet();
+        showToast(`Output switched to: ${devName}`, iconName);
+      });
+    });
+
+    // 7. Top Bar and Queue Actions
+    if (topBackBtn) {
+      topBackBtn.addEventListener('click', () => {
+        showToast('Minimized to mini-player bar', 'expand_less');
+      });
+    }
+
+    if (minimizeBtn) {
+      minimizeBtn.addEventListener('click', () => {
+        showToast('Player minimized to bottom docked view', 'keyboard_arrow_down');
+      });
+    }
+
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({
+            title: playlist[currentTrackIndex].title,
+            text: `Listening to ${playlist[currentTrackIndex].title} on Melody Stream!`,
+            url: window.location.href
+          }).catch(() => {});
+        } else {
+          showToast('Share link copied to clipboard!', 'share');
+        }
+      });
+    }
+
+    if (queuePillBtn || queueHeaderTrigger) {
+      [queuePillBtn, queueHeaderTrigger].forEach(el => {
+        if (el) {
+          el.addEventListener('click', (e) => {
+            if (e.target.closest('#lyrics-preview-bar')) return;
+            showToast('Opening Up Next Queue (14 songs)...', 'queue_music');
+          });
+        }
+      });
+    }
+
+    if (playlistHeaderChip) {
+      playlistHeaderChip.addEventListener('click', () => {
+        showToast('Browsing playlist: Telugu Melodies', 'album');
+      });
+    }
+
+    if (audioFormatBadge) {
+      audioFormatBadge.addEventListener('click', () => {
+        showToast('Streaming 96kHz / 24-bit Spatial Lossless', 'spatial_audio');
+      });
+    }
+
+    if (sparkleBtn) {
+      sparkleBtn.addEventListener('click', () => {
+        showToast('Dynamic AI Sound Enhancer: Active', 'auto_awesome');
+      });
+    }
+
+    if (profileBtn) {
+      profileBtn.addEventListener('click', () => {
+        showToast('User Profile & Sound Preferences', 'account_circle');
+      });
+    }
+
+    // 8. Lyrics Snippet Accordion expand / collapse
+    let lyricsExpanded = false;
+    function toggleLyrics() {
+      lyricsExpanded = !lyricsExpanded;
+      if (lyricsExpanded) {
+        expandedLyricsContent.classList.remove('hidden');
+        lyricsExpandArrow.classList.add('rotate-180');
+        lyricsBtn.classList.add('bg-primary-fixed', 'text-primary');
+        lyricsPreviewBar.classList.add('bg-surface-container-lowest');
+        showToast('Full lyrics opened', 'lyrics');
+      } else {
+        expandedLyricsContent.classList.add('hidden');
+        lyricsExpandArrow.classList.remove('rotate-180');
+        lyricsBtn.classList.remove('bg-primary-fixed', 'text-primary');
+        showToast('Lyrics collapsed', 'keyboard_arrow_up');
+      }
+    }
+
+    if (lyricsPreviewBar) {
+      lyricsPreviewBar.addEventListener('click', toggleLyrics);
+    }
+    if (lyricsBtn) {
+      lyricsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleLyrics();
+      });
+    }
+
+    // Initial setup render and start animated loop
+    updateWaveformDisplay(currentSeconds / totalDurationSeconds);
+    requestAnimationFrame(animateWaveform);
+  })();
+</script></main></body></html>

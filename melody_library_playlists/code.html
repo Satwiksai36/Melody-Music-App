@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#e2ddff", "on-tertiary-fixed": "#002118", "outline": "#787587", "on-primary-fixed-variant": "#3c10d7", "on-secondary-fixed": "#3d0600", "secondary": "#b42907", "surface-variant": "#e3e0f2", "secondary-fixed": "#ffdad2", "on-error-container": "#93000a", "error": "#ba1a1a", "primary-fixed": "#e4dfff", "on-primary": "#ffffff", "tertiary": "#155544", "surface-container-low": "#f5f2ff", "surface-dim": "#dbd8e9", "surface-container": "#efecfd", "inverse-surface": "#2f2f3c", "surface-container-highest": "#e3e0f2", "on-surface": "#1a1a27", "surface-tint": "#563bee", "inverse-on-surface": "#f2efff", "on-secondary-container": "#5b0d00", "on-primary-fixed": "#160066", "primary-container": "#5b42f3", "on-tertiary": "#ffffff", "on-tertiary-container": "#afeed7", "on-background": "#1a1a27", "error-container": "#ffdad6", "tertiary-container": "#326e5c", "tertiary-fixed-dim": "#96d3bd", "background": "#fcf8ff", "tertiary-fixed": "#b1efd8", "surface-bright": "#fcf8ff", "surface": "#fcf8ff", "primary-fixed-dim": "#c6bfff", "on-secondary": "#ffffff", "on-tertiary-fixed-variant": "#0d503f", "on-error": "#ffffff", "primary": "#421ddb", "on-secondary-fixed-variant": "#8b1a00", "outline-variant": "#c8c4d9", "surface-container-lowest": "#ffffff", "surface-container-high": "#e9e6f8", "secondary-fixed-dim": "#ffb4a3", "secondary-container": "#fe5d39", "on-surface-variant": "#474556", "inverse-primary": "#c6bfff" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin-tablet": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "gutter": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter-tablet": "1.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "margin": "1.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Outfit"], "label-lg": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "display-lg": ["Outfit"], "headline-sm": ["Outfit"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Outfit"], "body-lg": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Outfit"] }, fontSize: { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;background-color:#fcf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes eq-pulse-1 { 0%, 100% { height: 6px; } 50% { height: 16px; } }
+@keyframes eq-pulse-2 { 0%, 100% { height: 16px; } 50% { height: 8px; } }
+@keyframes eq-pulse-3 { 0%, 100% { height: 10px; } 50% { height: 18px; } }
+.eq-bar-1 { animation: eq-pulse-1 0.75s ease-in-out infinite; }
+.eq-bar-2 { animation: eq-pulse-2 0.6s ease-in-out infinite; }
+.eq-bar-3 { animation: eq-pulse-3 0.85s ease-in-out infinite; }
+.eq-paused .eq-bar-1, .eq-paused .eq-bar-2, .eq-paused .eq-bar-3 { animation-play-state: paused; }
+</style></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><div class="relative w-9 h-9 flex items-center justify-center flex-shrink-0 cursor-pointer active:scale-95 transition-transform" onclick="showToast('Melody Studio Active')"><div class="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-[0_2px_8px_rgba(66,29,219,0.15)]"><div class="w-full h-full rounded-full bg-[#ffffff] flex items-center justify-center gap-[2.5px]"><span class="w-[2.5px] h-3 rounded-full bg-[#ff5e3a]"></span><span class="w-[2.5px] h-4.5 rounded-full bg-[#ff453a]"></span><span class="w-[2.5px] h-5 rounded-full bg-[#5b42f3]"></span><span class="w-[2.5px] h-4 rounded-full bg-[#3830a3]"></span><span class="w-[2.5px] h-2.5 rounded-full bg-[#0d9488]"></span></div></div><div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary shadow-sm ring-1 ring-surface"><span class="material-symbols-outlined text-[10px] leading-none" style="font-variation-settings: 'FILL' 1;">bolt</span></div></div><img alt="Melody" class="h-6 w-auto object-contain cursor-pointer" onclick="showToast('Melody Music Home')" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFSsgxNWvnlPeDVdsVSR8JbeksMtnOhC8ttYMVd-fDhJeETOZzt3Z2MSgw9ft02AYlpei4yHnCAhS-2nwfgQsaAFKjEACWS38t3pKz07AUpYqp3ctJSIrfrpD9ys_Kb-XeNIVLYandWbxnsD__5SdBcQHE_bHnBnDzDyRxjX5K_lVtyi6-KJjOe8PonjLG25r8LWEx14F9cZ7Ctp6oX0l97RWAAZ2MGelQz-7YkD-wMUNRPQIyg4t_wgefVXrFUVNyjCo"/><span class="font-title-md text-title-md text-on-surface-variant hidden">Library</span></div><div class="flex items-center gap-space-xs"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95" onclick="setActiveNav('search')"><span class="material-symbols-outlined text-[24px]">search</span></button><div class="w-11 h-11 flex items-center justify-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)] cursor-pointer active:scale-90 transition-transform" onclick="setActiveNav('profile')" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-[140px] bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive Pill Tabs Carousel -->
+<div class="px-margin pt-space-xs pb-space-sm flex items-center gap-space-sm overflow-x-auto no-scrollbar" id="library-tabs-container">
+<button class="filter-tab px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-[0_4px_12px_rgba(66,29,219,0.2)] whitespace-nowrap transition-all active:scale-95 flex items-center gap-1.5" data-category="playlists">
+<span class="material-symbols-outlined text-[16px]">queue_music</span>
+      Playlists
+    </button>
+<button class="filter-tab px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap transition-all active:scale-95 hover:bg-surface-container-highest" data-category="liked">
+      Liked Songs
+    </button>
+<button class="filter-tab px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap transition-all active:scale-95 hover:bg-surface-container-highest" data-category="albums">
+      Albums
+    </button>
+<button class="filter-tab px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap transition-all active:scale-95 hover:bg-surface-container-highest" data-category="artists">
+      Artists
+    </button>
+<button class="filter-tab px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md whitespace-nowrap transition-all active:scale-95 hover:bg-surface-container-highest" data-category="downloads">
+      Downloads
+    </button>
+</div>
+<!-- Featured Spotlight Card: Liked Telugu & Bollywood Anthems -->
+<div class="px-margin mb-space-md">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary-container via-primary to-surface-tint p-space-md text-on-primary shadow-[0_12px_28px_rgba(91,66,243,0.22)] cursor-pointer group" onclick="playCollection('Liked Telugu &amp; Bollywood Anthems', 'Curated Mix • 142 Songs')">
+<!-- Playful Decorative Arc Shapes in Background -->
+<div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-secondary-container/20 blur-2xl pointer-events-none"></div>
+<div class="absolute right-4 -top-6 w-24 h-24 rounded-full bg-tertiary-fixed/30 blur-lg pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-on-primary font-label-sm text-label-sm uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px] text-secondary-fixed">favorite</span>
+            Pinned Collection
+          </span>
+<span class="font-body-sm text-body-sm text-on-primary-container/90">Updated today</span>
+</div>
+<div class="flex items-center justify-between gap-space-md mt-space-xs">
+<div class="flex-1 min-w-0">
+<h2 class="font-headline-md text-headline-md font-bold tracking-tight text-on-primary leading-tight">
+              Liked Telugu &amp; Bollywood Anthems
+            </h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-sm text-label-sm">
+                142 Songs
+              </span>
+<span class="text-on-primary-container font-body-sm text-body-sm">• 8h 45m</span>
+</div>
+</div>
+<!-- Mosaic Collage Preview Stack with Play Floating Badge -->
+<div class="relative w-20 h-20 flex-shrink-0">
+<div class="w-20 h-20 rounded-lg overflow-hidden grid grid-cols-2 grid-rows-2 gap-0.5 shadow-md bg-surface-container-lowest/15 p-0.5">
+<img class="w-full h-full object-cover rounded-sm" data-alt="Vibrant close-up of a charismatic South Indian male playback singer in warm terracotta and mint lighting studio portrait with audio mic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbUWiuyE0aL6_6Awf3-TkiJgzB0jD3FZjyabCiUnb9igvLC5VWdego5EpzfUXo9KZiHvLgVAmvby9fIGj0PpLK7p-EiVIjHggzYoaCTlQnGhqZmwadiUpi5QjRlUqPC_Ak_HRml_9KkXi4NnKdX8dnRxw1cO1J2PmayvtEPGMbcdeC3qev255Osp5Mn8nR8H8qgkojUgNGc9h31pCDouxoyq-O3UZP8hNVKOD6J77ZUAhOHXLWZ0B3Vw"/>
+<img class="w-full h-full object-cover rounded-sm" data-alt="Joyful Bollywood heroine dancing in cinematic golden hour lights with flowing dupatta, colorful retro aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB73wY1uVjqsCW_uUHSsWsinczjH8zL7Xvt7OargaPEAb93PBsLMuJqUkEePzhdeRL1AVbZjNi3JHEuv73XUfAugnDhZMJNlYdAuLJaSx5Wy-wKfLcmDXBD_afk-Yyp9oyNA8L5BCERprLriDwe7AKAtmQKYTeRG8TyVOgNonVqE7dTXKO3iN-LPY7rNloonM9rWfztpOZHqsKtTRs9zyJe2irKtITp6IVwj_PxWpUU5_dKtZO4_PXPQQ"/>
+<img class="w-full h-full object-cover rounded-sm" data-alt="Traditional Indian sitar and modern synthesizer acoustic fusion instruments on soft butter-cream studio backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAjJdJfFti9LXx4mwKkv9QvP8tb_VZxL5cMi9vbumrU9v1gDXrTZMXtbV9V_nHRrgypCjAGygtkv05Pr_Dmn8VrQhCfboctWsralomX6uEBIQS1_AnZE0O5AmYawhdJkfwRrlzJT7-zzwRFv9N6Cky1dX2jF8_CRFmC4nbOpA_J7FKOUBMKOPN9xv5tkh06YPyENcje_viz6LIdxyi61cTZf3OMycoMSi3rQwqYqf3HbfQoN_DAMWbHg"/>
+<img class="w-full h-full object-cover rounded-sm" data-alt="Contemporary music producer working on soundboard with warm amber backlit equalizer panels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7VqJqPRQChLKU2jj108FnZeJtCYKL_fSVTFyry7Z1GJcrFVmyS6L4Hk8RR4XuuQJEiW3iBa5NBaxqnXUa5mdy3hq7yMQvX92V_JEE4zprtJ0p4EeSZlXHDNpHU5PPS2lNxwt3J4BvyOnrj_xgbKwqMzeMJuGMEtAnM8WCl0y8hzzEqehNvni6lKlB8ee0Kj-uURCEWtJ8qCsyc8ZqcFdh6qzRBoGjJrlpMxQ8LVnIxrBo4NoF9MA_KA"/>
+</div>
+<button aria-label="Play Liked Songs" class="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-secondary-container text-on-secondary shadow-[0_4px_12px_rgba(254,93,57,0.4)] flex items-center justify-center transition-transform active:scale-90" id="pinned-play-btn" onclick="event.stopPropagation(); togglePinnedPlay();">
+<span class="material-symbols-outlined text-[20px]" id="pinned-play-icon" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Waveform Sneak Peek -->
+<div class="flex items-center justify-between pt-space-xs border-t border-on-primary/10 mt-1 cursor-pointer hover:opacity-90 active:scale-98 transition-all" onclick="event.stopPropagation(); toggleSmartShuffle();">
+<div class="flex items-center gap-1.5 text-on-primary-container font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed transition-transform duration-300" id="radio-icon">graphic_eq</span>
+<span id="radio-text">Shuffled by Melody Smart Radio</span>
+</div>
+<span class="material-symbols-outlined text-on-primary text-[20px] transition-transform duration-300" id="radio-chevron">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar: Create Playlist + Filter Dropdown -->
+<div class="px-margin mb-space-md flex items-center justify-between gap-space-sm relative">
+<!-- Tactile Create Button -->
+<button class="flex-1 flex items-center justify-center gap-space-xs py-2.5 px-space-md rounded-full bg-surface-container-high text-primary font-label-md text-label-md shadow-sm transition-all active:scale-95 hover:bg-surface-container-highest cursor-pointer" id="create-playlist-btn" onclick="openCreatePlaylistModal()">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>New Playlist</span>
+</button>
+<!-- Sort Dropdown Pill -->
+<div class="relative">
+<button class="flex items-center gap-1.5 py-2.5 px-space-md rounded-full bg-surface-container-lowest shadow-sm text-on-surface font-label-md text-label-md transition-colors active:scale-95 border border-outline-variant/30" id="sort-filter-btn" onclick="toggleSortMenu(event)">
+<span class="material-symbols-outlined text-[18px] text-outline">swap_vert</span>
+<span id="sort-filter-label">Recently Added</span>
+<span class="material-symbols-outlined text-[16px] text-outline transition-transform duration-200" id="sort-arrow">expand_more</span>
+</button>
+<!-- Dropdown Menu -->
+<div class="hidden absolute right-0 top-12 z-40 w-48 rounded-xl bg-surface-container-lowest p-1.5 shadow-[0_10px_24px_rgba(24,24,36,0.12)] border border-outline-variant/30" id="sort-menu">
+<button class="sort-option w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-primary font-semibold bg-surface-container-low transition-colors flex items-center justify-between" onclick="selectSort('Recently Added', this)">
+          Recently Added
+          <span class="material-symbols-outlined text-[16px] text-primary sort-check">check</span>
+</button>
+<button class="sort-option w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-low transition-colors flex items-center justify-between" onclick="selectSort('Alphabetical (A-Z)', this)">
+          Alphabetical (A-Z)
+          <span class="material-symbols-outlined text-[16px] text-primary sort-check hidden">check</span>
+</button>
+<button class="sort-option w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-low transition-colors flex items-center justify-between" onclick="selectSort('Most Played', this)">
+          Most Played
+          <span class="material-symbols-outlined text-[16px] text-primary sort-check hidden">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Personal Playlists Grid (Single & Paired Cards) -->
+<div class="px-margin mb-space-lg"><div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Your Playlists</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-label-sm text-[11px] font-bold" id="playlists-count-badge">4 Custom</span>
+</div>
+<button class="flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors group active:scale-95" onclick="managePlaylists()">
+<span>Manage</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-2 gap-space-sm" id="playlists-grid">
+<!-- 1. Midnight Telugu Melodies -->
+<div class="playlist-card group relative flex flex-col rounded-2xl bg-surface-container-lowest p-2.5 shadow-[0_4px_20px_rgba(24,24,36,0.06)] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97] cursor-pointer" data-subtitle="Sid Sriram, Chinmayi • 48 tracks" data-title="Midnight Telugu" onclick="playPlaylist('Midnight Telugu', 'Midnight Telugu Melodies • 48 tracks')">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-[#3c10d7]/30 to-primary/40 shadow-inner mb-2.5">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Editorial duotone portrait cutout of soulful singer under crescent moon artwork with warm lavender and buttery pastel hues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLH1C8lxmTe3GaxO1lXA1aTrstiFvFZoczJ2kOP0CaxHtVdc7YZTqqXYMnvefk9AyclcWLDbG180u64XTKuOQR_yG_aIxnt3wru2Jkxg5Cv01nDx9NNq0FH4pgqB1voXe3QbtJ7iWH6OAFfAT1fSEifrnyBOsxe7ZW5-LUO4S8dSugwYxEJYlloGVt6aqP6PKNvajaZ4Dv4fUFonB_fizyQsXlltzOb5gxPgaGUmG8JORye-mTK7gCGw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-70 group-hover:opacity-60 transition-opacity"></div>
+<!-- Floating Category Pill -->
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span class="text-[10px] font-bold text-white tracking-wide">Chill Vibes</span>
+</div>
+<!-- Floating Frosted Glass Play Button -->
+<button class="playlist-card-play-btn absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary flex items-center justify-center shadow-[0_4px_12px_rgba(66,29,219,0.25)] border border-white/60 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300" onclick="event.stopPropagation(); playPlaylist('Midnight Telugu', 'Midnight Telugu Melodies • 48 tracks');">
+<span class="material-symbols-outlined text-[20px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col px-0.5">
+<h4 class="font-title-md text-[15px] font-bold text-on-surface truncate leading-tight group-hover:text-primary transition-colors">Midnight Telugu</h4>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant text-[12px]">
+<span class="truncate">48 tracks • By You</span>
+<span class="material-symbols-outlined text-[14px] text-primary/70 shrink-0">graphic_eq</span>
+</div>
+</div>
+</div>
+<!-- 2. Bollywood 90s & 2000s Nostalgia -->
+<div class="playlist-card group relative flex flex-col rounded-2xl bg-surface-container-lowest p-2.5 shadow-[0_4px_20px_rgba(24,24,36,0.06)] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97] cursor-pointer" data-subtitle="Udit Narayan, Alka • 86 tracks" data-title="Bollywood 90s &amp; 00s" onclick="playPlaylist('Bollywood 90s &amp; 00s', 'Bollywood 90s Nostalgia • 86 tracks')">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-secondary-container/30 to-secondary/30 shadow-inner mb-2.5">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Retro cassette player and duo-tone Bollywood cassette cover illustration with salmon pink and canary yellow tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4qAb91Q1zi9eADatG8U4R4oGmxaPtFUH9Xy-ilbfJw8Wrx-W4PJ_QNsa2gt01K8SOB9M2ToBO8QG11dzeE39pPGAEqjCbeNaVv7oAcwjtfTOHZhwX-Pyk1IrvFUMZu77eyjQKd1ZR1MzX5n-VXlAAfKKPqSg_u9_yTgsbhnkCBZALM7yzFeY1Aw2Em4U8vRidmKd7dsUKEIgGZFPJUok0FlWlRNcIWvvsRgixkcFMWyBZYXAkZgu5Gg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-70 group-hover:opacity-60 transition-opacity"></div>
+<!-- Floating Category Pill -->
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-[#ff5e3a]"></span>
+<span class="text-[10px] font-bold text-white tracking-wide">90s Retro</span>
+</div>
+<!-- Floating Frosted Glass Play Button -->
+<button class="playlist-card-play-btn absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-secondary-container flex items-center justify-center shadow-[0_4px_12px_rgba(254,93,57,0.3)] border border-white/60 group-hover:scale-110 group-hover:bg-secondary-container group-hover:text-white transition-all duration-300" onclick="event.stopPropagation(); playPlaylist('Bollywood 90s &amp; 00s', 'Bollywood 90s Nostalgia • 86 tracks');">
+<span class="material-symbols-outlined text-[20px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col px-0.5">
+<h4 class="font-title-md text-[15px] font-bold text-on-surface truncate leading-tight group-hover:text-secondary-container transition-colors">Bollywood 90s &amp; 00s</h4>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant text-[12px]">
+<span class="truncate">86 tracks • Nostalgia</span>
+<span class="material-symbols-outlined text-[14px] text-secondary-container/70 shrink-0">auto_awesome</span>
+</div>
+</div>
+</div>
+<!-- 3. South Masala Beats -->
+<div class="playlist-card group relative flex flex-col rounded-2xl bg-surface-container-lowest p-2.5 shadow-[0_4px_20px_rgba(24,24,36,0.06)] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97] cursor-pointer" data-subtitle="Anirudh, Thaman S • 32 tracks" data-title="South Masala Beats" onclick="playPlaylist('South Masala Beats', 'South Masala Fast Beats • 32 tracks')">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-tertiary/30 to-tertiary-fixed/40 shadow-inner mb-2.5">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Energetic South Indian traditional dhol drum percussion artist dynamic action pose in mint green and coral studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2jP557y-0JGmwPea1WkzTCE2biJeR2hBmYVuNrDypFTUQZFJEXh1XZFRiPLoHQj72Eu1vlDgz7LuuYEEeRp_Q7Cpt7sV7kP3LuJLsmlxXRTBtM25FRmeWwzr8z_acsMLnydev4TA5Bkpp78HGjdT_H5Ri-zrk-hiCVt6QPC04de5jC2FEKBSjHya2Yjkf0WMrNuI8Dh8F9v6mtEQkUlMDpv74kLDzttVBPbybtI0-hdlzg5Lc1J5RNA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-70 group-hover:opacity-60 transition-opacity"></div>
+<!-- Floating Category Pill -->
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+<span class="text-[10px] font-bold text-white tracking-wide">Mass Beats</span>
+</div>
+<!-- Floating Frosted Glass Play Button -->
+<button class="playlist-card-play-btn absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-tertiary flex items-center justify-center shadow-[0_4px_12px_rgba(21,85,68,0.25)] border border-white/60 group-hover:scale-110 group-hover:bg-tertiary group-hover:text-white transition-all duration-300" onclick="event.stopPropagation(); playPlaylist('South Masala Beats', 'South Masala Fast Beats • 32 tracks');">
+<span class="material-symbols-outlined text-[20px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col px-0.5">
+<h4 class="font-title-md text-[15px] font-bold text-on-surface truncate leading-tight group-hover:text-tertiary transition-colors">South Masala Beats</h4>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant text-[12px]">
+<span class="truncate">32 tracks • 140+ BPM</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary shrink-0">bolt</span>
+</div>
+</div>
+</div>
+<!-- 4. Sid Sriram Unplugged -->
+<div class="playlist-card group relative flex flex-col rounded-2xl bg-surface-container-lowest p-2.5 shadow-[0_4px_20px_rgba(24,24,36,0.06)] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97] cursor-pointer" data-subtitle="Sid Sriram • 18 tracks" data-title="Sid Sriram Unplugged" onclick="playPlaylist('Sid Sriram Unplugged', 'Sid Sriram Live Concert • 18 tracks')">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-surface-container-highest to-surface-dim shadow-inner mb-2.5">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Monochrome soulful singer acoustic concert cutout with arching soft butter yellow backdrop and warm golden stage lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC76IYx_H2NCccgk-wECexFTvPBOMnN7lp6AIjspAI9nG05Y4xY5vnSMS7eNuXrjIAfma2o-Kul72RT9i4hrGKW-qfyeFUAZWEWeQbd8rcOs4Km7UHrb_NExc6zOsLTi4evmG_0h4pAvntwwB2WQbKZz56yYuAK98Jd33liUZ-ToyG8sBcAQ3anPYgntnyX1J-GsDmUboYvO9GfD5RfhNKJi1ynUqK6Roi8Mk6LRCfZK_JpxvZJf1avNg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 opacity-70 group-hover:opacity-60 transition-opacity"></div>
+<!-- Floating Category Pill -->
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center gap-1 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-inverse-primary"></span>
+<span class="text-[10px] font-bold text-white tracking-wide">Live Acoustic</span>
+</div>
+<!-- Floating Frosted Glass Play Button -->
+<button class="playlist-card-play-btn absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary flex items-center justify-center shadow-[0_4px_12px_rgba(66,29,219,0.25)] border border-white/60 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300" onclick="event.stopPropagation(); playPlaylist('Sid Sriram Unplugged', 'Sid Sriram Live Concert • 18 tracks');">
+<span class="material-symbols-outlined text-[20px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="flex flex-col px-0.5">
+<h4 class="font-title-md text-[15px] font-bold text-on-surface truncate leading-tight group-hover:text-primary transition-colors">Sid Sriram Unplugged</h4>
+<div class="flex items-center justify-between mt-1 text-on-surface-variant text-[12px]">
+<span class="truncate">18 tracks • Acoustic</span>
+<span class="material-symbols-outlined text-[14px] text-outline shrink-0">mic</span>
+</div>
+</div>
+</div>
+</div></div>
+<!-- "Artists You Follow" Horizontal Avatar Row -->
+<div class="mb-space-lg">
+<div class="px-margin flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Artists You Follow</h3>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+</div>
+<button class="font-label-md text-label-md text-primary hover:underline cursor-pointer" onclick="viewAllArtists()">View All</button>
+</div>
+<!-- Scrolling Artist Cards -->
+<div class="flex items-start gap-space-md px-margin overflow-x-auto no-scrollbar pb-1">
+<!-- Artist 1: Sid Sriram (Has New Release) -->
+<div class="artist-item flex flex-col items-center w-20 flex-shrink-0 group cursor-pointer" onclick="toggleArtist(this, 'Sid Sriram')">
+<div class="relative w-18 h-18 p-0.5 rounded-full bg-gradient-to-tr from-secondary-container to-primary transition-transform duration-300 group-hover:scale-105 active:scale-95 artist-ring ring-2 ring-transparent">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-lowest p-0.5">
+<img class="w-full h-full object-cover rounded-full" data-alt="Close up warm candid portrait of Sid Sriram smiling with acoustic lighting on studio setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBICdl7CDf9JhiPu1HsHfmqDlms3Hr8O5-Gd_Og5bEmHIenHHmc4Cgh-LF-YiXQV08DEk1BY_Rj-O_67ZmZ5KJPt2zmfWP882E384qEw6i4jIfneI0kRrPluyecZ__z9ml3Y5Sw_4_SXrnIgyDvJRGfsefMIhewNx0kprFkjVoJ2_fAIKKK1cxfPKFN6JOCWXL9CJGrP1Jb4FiCPxmhR5MWJpKsvzy88kqN_AuBye4Pk5T98KfjQfeVCg"/>
+</div>
+<!-- New Release Badge -->
+<span class="artist-badge absolute top-0 right-0 w-3.5 h-3.5 bg-secondary-container rounded-full ring-2 ring-surface shadow-sm"></span>
+</div>
+<span class="mt-1.5 font-label-md text-label-md text-on-surface text-center truncate w-full group-hover:text-primary transition-colors">Sid Sriram</span>
+<span class="font-label-sm text-label-sm text-secondary-container font-semibold">New Single</span>
+</div>
+<!-- Artist 2: Shreya Ghoshal -->
+<div class="artist-item flex flex-col items-center w-20 flex-shrink-0 group cursor-pointer" onclick="toggleArtist(this, 'Shreya Ghoshal')">
+<div class="relative w-18 h-18 rounded-full overflow-hidden bg-primary-fixed p-0.5 shadow-sm transition-transform duration-300 group-hover:scale-105 active:scale-95 artist-ring ring-2 ring-transparent">
+<img class="w-full h-full object-cover rounded-full" data-alt="Elegant cinematic studio portrait of female playback singer Shreya Ghoshal with warm aesthetic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc5UnvqWxVISoEPgrv2fKX4-7NXW15O4f-YZfosC-OOnaNkZSbmkII96l9NwBum8IEcdEO-9zO6C-9EuT6IBg-pUR8NM591iPfloAH-7uuzfu1Jqaea5_XgaQJn9qvqCHQA4PR6ITdcsuOgnz2aeiSmCAysYvY3XtE4kArZF2jXw2J9m5uTPJifrsMeU-P8fdEadtn8rs0P9-YXF0N5e5GFDuOVLfvBtmN1sEw_1bO0Ms4O9cRuXjLJA"/>
+</div>
+<span class="mt-1.5 font-label-md text-label-md text-on-surface text-center truncate w-full group-hover:text-primary transition-colors">Shreya G.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Artist</span>
+</div>
+<!-- Artist 3: Anirudh Ravichander (Has New Album) -->
+<div class="artist-item flex flex-col items-center w-20 flex-shrink-0 group cursor-pointer" onclick="toggleArtist(this, 'Anirudh Ravichander')">
+<div class="relative w-18 h-18 p-0.5 rounded-full bg-gradient-to-tr from-secondary-container to-primary transition-transform duration-300 group-hover:scale-105 active:scale-95 artist-ring ring-2 ring-transparent">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-lowest p-0.5">
+<img class="w-full h-full object-cover rounded-full" data-alt="High energy portrait of young Indian rock composer Anirudh Ravichander wearing sunglasses on concert background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA00Zic0ZUcFr5IWnFwntyHPutfsKwRnWrkGkOI1dANcF01En8d8sStkh7tjcNlM_2S4tbEwY6-rp4EuDu-XUu65XLhoJKUvUWb4kiQWrKdwYtjbX0kHQ1AUjoR4PCEBm-FN8sQoYITvTgJ1IzyLuk1QaxF5ZBstCmbqUXErbtJP-pu4mzKXAQlpThPap_9Lcx7JJYM7ns3c2NvF37EyilAs0H4N9n-mDkvs4Oa0cCRstHQfh3TEedn4g"/>
+</div>
+<span class="artist-badge absolute top-0 right-0 w-3.5 h-3.5 bg-secondary-container rounded-full ring-2 ring-surface shadow-sm"></span>
+</div>
+<span class="mt-1.5 font-label-md text-label-md text-on-surface text-center truncate w-full group-hover:text-primary transition-colors">Anirudh</span>
+<span class="font-label-sm text-label-sm text-secondary-container font-semibold">New Album</span>
+</div>
+<!-- Artist 4: A.R. Rahman -->
+<div class="artist-item flex flex-col items-center w-20 flex-shrink-0 group cursor-pointer" onclick="toggleArtist(this, 'A.R. Rahman')">
+<div class="relative w-18 h-18 rounded-full overflow-hidden bg-tertiary-fixed p-0.5 shadow-sm transition-transform duration-300 group-hover:scale-105 active:scale-95 artist-ring ring-2 ring-transparent">
+<img class="w-full h-full object-cover rounded-full" data-alt="Master composer A.R. Rahman serene portrait wearing classic dark blazer against soft emerald ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ6tlcQZVlHiCW03vyG-7mP6zAz_HRAionOmUr8diXB24QMSjpCZVY8mBHP9Q-wTdfh9EAu8Yyu3x9OsdeF3GbUFRo3TR5AyMiwnN6RWUIfXUX0CgCl6JNn9DGrNvMyw5833TvllZXKkufoIGQjaVP5Vv2gnAOq1OtH5Q9MX6GIKksSX50BMk0iTelbwk98NfLWYG0kxrc34j3LpeuWbNOQvWXlW967lWRDtI91P109Lox9E4CyHS0kQ"/>
+</div>
+<span class="mt-1.5 font-label-md text-label-md text-on-surface text-center truncate w-full group-hover:text-primary transition-colors">A.R. Rahman</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Artist</span>
+</div>
+<!-- Artist 5: Anurag Kulkarni -->
+<div class="artist-item flex flex-col items-center w-20 flex-shrink-0 group cursor-pointer" onclick="toggleArtist(this, 'Anurag Kulkarni')">
+<div class="relative w-18 h-18 rounded-full overflow-hidden bg-surface-container-high p-0.5 shadow-sm transition-transform duration-300 group-hover:scale-105 active:scale-95 artist-ring ring-2 ring-transparent">
+<img class="w-full h-full object-cover rounded-full" data-alt="Telugu playback vocalist Anurag Kulkarni in cheerful studio portrait setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaMjW3MQ_2Ob-K1BpldUB_La1wjld0BN4HlF8-NksflXvNfDe-rIRIy9aCAe5OmBWdi8Uug7Um9cOX8CfdKHUZ-w1xndFDP4rPb8AHCV7cyIXyI-yYvhDrNYQWAgiRDxvCzeGgv-cPrPC5LZFGLCyc4fDj87KBaTFprwcPc09O8j4bhEKdR-Du_JMQV1aK2gtzOqUUNZIou8GwyK5sWyl7UnUELN2efwuXMafzjS1LRKqub5Y--uOcwA"/>
+</div>
+<span class="mt-1.5 font-label-md text-label-md text-on-surface text-center truncate w-full group-hover:text-primary transition-colors">Anurag K.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Artist</span>
+</div>
+</div>
+</div>
+<!-- Quick Access: Recently Downloaded Songs List -->
+<div class="px-margin pb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]">offline_pin</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Offline Telugu Hits</h3>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-semibold">
+        Saved Locally
+      </span>
+</div>
+<!-- Song Items Container -->
+<div class="space-y-space-xs" id="offline-songs-list">
+<!-- Song Item 1 (Active / Now Playing) -->
+<div class="song-item group flex items-center justify-between p-space-xs rounded-xl bg-surface-container-low transition-all cursor-pointer active:scale-[0.99] border border-transparent hover:border-outline-variant/30" data-artist="Sid Sriram • Ala Vaikunthapurramuloo" data-index="0" data-title="Samajavaragamana" onclick="selectSong(0)">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 shadow-sm song-thumb">
+<img class="w-full h-full object-cover" data-alt="Album art for Samajavaragamana song from Ala Vaikunthapurramuloo with iconic warm golden poster framing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwHUqs-A__PNpvqW232yTKk7UurU-WUcw4nnKsAXSjn3CZWosTGuwGb-EaMfjfdIYzcARmIZMAoZ2EIP5z9mDxQ_sIRGxeVdBOqaGoulcohAu2eg2FGvRlHyWmku_gw7isaynyoZxvQAWBVMlih9vn3JXXRgLOL5yDTzzkZTtxRLePzDO-q8Sd7oIfoLDsn55wxH4BdfIGBZTpjy_VPJGRyWchE28PUY5tf8yH9WsTyIfrTLwmiKopjw"/>
+<div class="song-overlay absolute inset-0 bg-primary/20 flex items-center justify-center">
+<span class="song-icon material-symbols-outlined text-on-primary text-[20px]">volume_up</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="song-title font-title-md text-title-md text-primary font-semibold truncate">Samajavaragamana</p>
+<p class="song-artist font-body-sm text-body-sm text-on-surface-variant truncate">Sid Sriram • Ala Vaikunthapurramuloo</p>
+</div>
+</div>
+<!-- Equalizer / Play Action Container -->
+<div class="song-trailing flex items-center justify-end">
+<div class="eq-bars flex items-end gap-0.5 h-4 px-2">
+<span class="w-1 bg-secondary-container rounded-full h-3 eq-bar-1"></span>
+<span class="w-1 bg-secondary-container rounded-full h-4 eq-bar-2"></span>
+<span class="w-1 bg-secondary-container rounded-full h-2 eq-bar-3"></span>
+</div>
+<button aria-label="Play Track" class="play-btn hidden w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary transition-colors" onclick="event.stopPropagation(); selectSong(0);">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Song Item 2 -->
+<div class="song-item group flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-lowest transition-all cursor-pointer active:scale-[0.99] border border-transparent hover:border-outline-variant/30" data-artist="Armaan Malik • Thaman S" data-index="1" data-title="Butta Bomma" onclick="selectSong(1)">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 shadow-sm song-thumb">
+<img class="w-full h-full object-cover" data-alt="Butta Bomma vibrant celebration poster portrait featuring pastel colors and playful musical vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTo1S5aTQXOvbpig14bbu5gpbCYPqfWNYk4z44HRyv0bM1rn1BJZbqJ5tu-6eHdDSIXxp9PSBpyGt79Mu-EcXySfQlRdEiqpqGvpAlqOAzb70RKGiswJp921z1TEtFNFN8eq1OREmMC4RqU7rO2Zi6V_g4IdAb1ChiJ2WmQX_hIgTOmJlQaDh6xKk0cs90DmD4Cc8luIFshOVTtZ9h8ReDPonNpq5DQ76d_plQU7JgfBLe6vb_rS4DXw"/>
+<div class="song-overlay hidden absolute inset-0 bg-primary/20 items-center justify-center">
+<span class="song-icon material-symbols-outlined text-on-primary text-[20px]">volume_up</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="song-title font-title-md text-title-md text-on-surface truncate">Butta Bomma</p>
+<p class="song-artist font-body-sm text-body-sm text-on-surface-variant truncate">Armaan Malik • Thaman S</p>
+</div>
+</div>
+<div class="song-trailing flex items-center justify-end">
+<div class="eq-bars hidden flex items-end gap-0.5 h-4 px-2">
+<span class="w-1 bg-secondary-container rounded-full h-3 eq-bar-1"></span>
+<span class="w-1 bg-secondary-container rounded-full h-4 eq-bar-2"></span>
+<span class="w-1 bg-secondary-container rounded-full h-2 eq-bar-3"></span>
+</div>
+<button aria-label="Play Butta Bomma" class="play-btn w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary transition-colors" onclick="event.stopPropagation(); selectSong(1);">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Song Item 3 -->
+<div class="song-item group flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-lowest transition-all cursor-pointer active:scale-[0.99] border border-transparent hover:border-outline-variant/30" data-artist="Sid Sriram • Geetha Govindam" data-index="2" data-title="Inkem Inkem Inkem Kaavaale" onclick="selectSong(2)">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden bg-surface-container flex-shrink-0 shadow-sm song-thumb">
+<img class="w-full h-full object-cover" data-alt="Inkem Inkem Inkem Kaavaale song album cover artwork featuring Vijay Deverakonda and Rashmika Mandanna soft romantic theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvxNWQF-OMKURUFUU-dcXW_lVp6yClVm4aXajq51epi1ZQ8JLUGiUN8ei_AJ3PcRgUFcGoM_sf1pUf7gbiiLFY29X7B_zKYArI9ez35tYaRSdJehdBdy_bTQjZz0QHtqpglBB495W_t7zD5jQTjnJbxR-ciDchtp_6uqENtLkLTkold63Z3gajiShkERTwcjsnXmY6pl37UIHWEf_SHPGDUoyBogjnQS6FMl6nDfRxiXAIp2RrYjdbEA"/>
+<div class="song-overlay hidden absolute inset-0 bg-primary/20 items-center justify-center">
+<span class="song-icon material-symbols-outlined text-on-primary text-[20px]">volume_up</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="song-title font-title-md text-title-md text-on-surface truncate">Inkem Inkem Inkem Kaavaale</p>
+<p class="song-artist font-body-sm text-body-sm text-on-surface-variant truncate">Sid Sriram • Geetha Govindam</p>
+</div>
+</div>
+<div class="song-trailing flex items-center justify-end">
+<div class="eq-bars hidden flex items-end gap-0.5 h-4 px-2">
+<span class="w-1 bg-secondary-container rounded-full h-3 eq-bar-1"></span>
+<span class="w-1 bg-secondary-container rounded-full h-4 eq-bar-2"></span>
+<span class="w-1 bg-secondary-container rounded-full h-2 eq-bar-3"></span>
+</div>
+<button aria-label="Play Inkem Inkem" class="play-btn w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary transition-colors" onclick="event.stopPropagation(); selectSong(2);">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Interactive Toast Message Container -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-[60] pointer-events-none transition-all duration-300 opacity-0 -translate-y-2" id="app-toast">
+<div class="px-4 py-2 rounded-full bg-inverse-surface/95 text-inverse-on-surface text-label-md font-label-md shadow-xl backdrop-blur-md flex items-center gap-2 border border-white/10">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed" id="toast-icon">check_circle</span>
+<span id="toast-message">Playlist Created</span>
+</div>
+</div>
+<!-- Create Playlist Modal -->
+<div class="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-4 transition-all duration-200" id="playlist-modal" onclick="closeCreateModal(event)">
+<div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl p-5 shadow-2xl border border-outline-variant/30 transform transition-transform" onclick="event.stopPropagation()">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">playlist_add</span>
+</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">New Playlist</h3>
+</div>
+<button class="w-8 h-8 rounded-full text-outline hover:text-on-surface flex items-center justify-center transition-colors" onclick="hideCreatePlaylistModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="space-y-4" onsubmit="handleCreatePlaylistSubmit(event)">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Playlist Name</label>
+<input autofocus="" class="w-full px-3.5 py-2.5 rounded-xl bg-surface-container border border-outline-variant/40 text-on-surface placeholder:text-outline/70 focus:outline-none focus:ring-2 focus:ring-primary text-body-md" id="playlist-name-input" placeholder="e.g., Telugu Drive Beats" required="" type="text"/>
+</div>
+<div class="flex gap-2 pt-1">
+<button class="flex-1 py-2.5 rounded-full bg-surface-container text-on-surface font-label-md active:scale-95 transition-all" onclick="hideCreatePlaylistModal()" type="button">Cancel</button>
+<button class="flex-1 py-2.5 rounded-full bg-primary text-on-primary font-label-md font-bold shadow-[0_4px_12px_rgba(66,29,219,0.25)] active:scale-95 transition-all" type="submit">Create</button>
+</div>
+</form>
+</div>
+</div>
+<div class="fixed bottom-0 w-full z-50 pointer-events-none"><div class="px-margin pb-space-xs pointer-events-auto"><div class="relative overflow-hidden rounded-xl bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_8px_20px_rgba(255,94,58,0.22)] flex items-center gap-space-sm p-space-xs pr-space-md border border-outline-variant/20"><div class="w-10 h-10 rounded-default bg-surface-container-high flex-shrink-0 flex items-center justify-center overflow-hidden cursor-pointer active:scale-95 transition-transform" onclick="toggleMiniPlayer()"><span class="material-symbols-outlined text-primary text-[22px]" id="mini-player-album-icon">music_note</span></div><div class="flex-1 min-w-0 flex flex-col justify-center cursor-pointer" onclick="toggleMiniPlayer()"><p class="font-label-lg text-label-lg text-on-surface truncate font-semibold" id="mini-player-title">Samajavaragamana</p><p class="font-body-sm text-body-sm text-on-surface-variant truncate" id="mini-player-artist">Sid Sriram • Ala Vaikunthapurramuloo</p></div><div class="flex items-center gap-space-xs"><button aria-label="Play or Pause" class="w-11 h-11 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary shadow-[0_4px_12px_rgba(254,93,57,0.3)] transition-transform active:scale-90" id="mini-play-btn" onclick="togglePlayback()"><span class="material-symbols-outlined text-[22px]" id="mini-play-icon">pause</span></button><button aria-label="Next Track" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors active:scale-90" onclick="nextTrack()"><span class="material-symbols-outlined text-[24px]">skip_next</span></button></div><div class="absolute bottom-0 left-0 right-0 h-[3px] bg-surface-container-high"><div class="h-full w-2/5 bg-secondary-container rounded-full transition-all duration-300" id="mini-player-progress"></div></div></div></div><nav class="w-full pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(24,24,36,0.04)] pointer-events-auto" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs" id="bottom-nav"><a class="nav-item flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="home" href="#" onclick="setActiveNav('home', event)"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm">Home</span></a><a class="nav-item flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="search" href="#" onclick="setActiveNav('search', event)"><span class="material-symbols-outlined text-[24px]">search</span><span class="font-label-sm text-label-sm">Search</span></a><a aria-current="page" class="nav-item flex flex-col items-center justify-center gap-space-xs w-16 h-12 transition-colors text-primary font-bold" data-path="library" href="#" onclick="setActiveNav('library', event)"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">library_music</span><span class="font-label-sm text-label-sm">Library</span></a><a class="nav-item flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-on-surface-variant transition-colors" data-path="profile" href="#" onclick="setActiveNav('profile', event)"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm">Profile</span></a></div></nav></div>
+<script>
+  // Complete State Manager
+  const state = {
+    isPlaying: true,
+    currentSongIndex: 0,
+    currentCollection: 'Samajavaragamana',
+    songs: [
+      {
+        title: 'Samajavaragamana',
+        artist: 'Sid Sriram • Ala Vaikunthapurramuloo',
+        progress: '45%'
+      },
+      {
+        title: 'Butta Bomma',
+        artist: 'Armaan Malik • Thaman S',
+        progress: '25%'
+      },
+      {
+        title: 'Inkem Inkem Inkem Kaavaale',
+        artist: 'Sid Sriram • Geetha Govindam',
+        progress: '70%'
+      }
+    ],
+    isShuffleActive: true,
+    customPlaylistsCount: 4
+  };
+
+  // Toast System
+  let toastTimer = null;
+  function showToast(message, icon = 'info') {
+    const toast = document.getElementById('app-toast');
+    const toastMsg = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+    if (!toast) return;
+
+    toastMsg.textContent = message;
+    toastIcon.textContent = icon;
+    toast.classList.remove('opacity-0', '-translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', '-translate-y-2');
+    }, 2200);
+  }
+
+  // 1. Library Filter Tabs Switcher
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.filter-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-primary', 'text-on-primary', 'shadow-[0_4px_12px_rgba(66,29,219,0.2)]');
+          t.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+          const icon = t.querySelector('.material-symbols-outlined');
+          if (icon && t !== tab) icon.remove();
+        });
+        tab.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        tab.classList.add('bg-primary', 'text-on-primary', 'shadow-[0_4px_12px_rgba(66,29,219,0.2)]');
+
+        const catName = tab.textContent.trim();
+        showToast(`Showing: ${catName}`, 'filter_list');
+      });
+    });
+
+    // Close sort dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const sortMenu = document.getElementById('sort-menu');
+      const sortBtn = document.getElementById('sort-filter-btn');
+      if (sortMenu && !sortMenu.contains(e.target) && !sortBtn.contains(e.target)) {
+        sortMenu.classList.add('hidden');
+        document.getElementById('sort-arrow')?.classList.remove('rotate-180');
+      }
+    });
+  });
+
+  // 2. Pinned Collection Controls
+  function togglePinnedPlay() {
+    state.isPlaying = !state.isPlaying;
+    updatePlaybackUI();
+    if (state.isPlaying) {
+      updateMiniPlayerDetails('Liked Telugu & Bollywood Anthems', 'Shuffled Radio Mix • 142 Songs');
+      showToast('Playing Pinned Collection', 'play_circle');
+    } else {
+      showToast('Playback Paused', 'pause_circle');
+    }
+  }
+
+  function playCollection(title, subtitle) {
+    state.isPlaying = true;
+    updateMiniPlayerDetails(title, subtitle);
+    updatePlaybackUI();
+    showToast(`Playing: ${title}`, 'play_circle');
+  }
+
+  function toggleSmartShuffle() {
+    state.isShuffleActive = !state.isShuffleActive;
+    const radioIcon = document.getElementById('radio-icon');
+    const radioText = document.getElementById('radio-text');
+    if (state.isShuffleActive) {
+      radioIcon.classList.add('text-tertiary-fixed', 'animate-pulse');
+      radioText.textContent = 'Shuffled by Melody Smart Radio';
+      showToast('Smart Radio Shuffle Enabled', 'shuffle');
+    } else {
+      radioIcon.classList.remove('animate-pulse');
+      radioText.textContent = 'Smart Radio Sequential Order';
+      showToast('Regular playback mode', 'repeat');
+    }
+  }
+
+  // 3. New Playlist Modal & Creation
+  function openCreatePlaylistModal() {
+    const modal = document.getElementById('playlist-modal');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      document.getElementById('playlist-name-input')?.focus();
+    }, 50);
+  }
+
+  function hideCreatePlaylistModal() {
+    const modal = document.getElementById('playlist-modal');
+    modal.classList.add('hidden');
+    document.getElementById('playlist-name-input').value = '';
+  }
+
+  function closeCreateModal(e) {
+    if (e.target.id === 'playlist-modal') {
+      hideCreatePlaylistModal();
+    }
+  }
+
+  function handleCreatePlaylistSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('playlist-name-input').value.trim();
+    if (!name) return;
+
+    state.customPlaylistsCount++;
+    document.getElementById('playlists-count-badge').textContent = `${state.customPlaylistsCount} Custom`;
+    
+    // Create new element in grid
+    const grid = document.getElementById('playlists-grid');
+    const newCard = document.createElement('div');
+    newCard.className = "playlist-card group relative flex flex-col rounded-2xl bg-surface-container-lowest p-2.5 shadow-[0_4px_20px_rgba(24,24,36,0.06)] border border-outline-variant/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.97] cursor-pointer animate-fade-in";
+    newCard.onclick = () => playPlaylist(name, '0 tracks • Created Just Now');
+    newCard.innerHTML = `
+      <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary-container to-secondary-container shadow-inner mb-2.5 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[42px] text-white/90">queue_music</span>
+        <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center gap-1 shadow-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+          <span class="text-[10px] font-bold text-white tracking-wide">New</span>
+        </div>
+        <button class="absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary flex items-center justify-center shadow-md">
+          <span class="material-symbols-outlined text-[20px] ml-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        </button>
+      </div>
+      <div class="flex flex-col px-0.5">
+        <h4 class="font-title-md text-[15px] font-bold text-on-surface truncate leading-tight">${name}</h4>
+        <div class="flex items-center justify-between mt-1 text-on-surface-variant text-[12px]">
+          <span class="truncate">0 tracks • Just Now</span>
+          <span class="material-symbols-outlined text-[14px] text-primary/70 shrink-0">edit</span>
+        </div>
+      </div>
+    `;
+    grid.prepend(newCard);
+
+    hideCreatePlaylistModal();
+    showToast(`"${name}" created successfully!`, 'library_add_check');
+  }
+
+  // 4. Sort Dropdown
+  function toggleSortMenu(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('sort-menu');
+    const arrow = document.getElementById('sort-arrow');
+    menu.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+  }
+
+  function selectSort(label, element) {
+    document.getElementById('sort-filter-label').textContent = label;
+    const options = document.querySelectorAll('.sort-option');
+    options.forEach(opt => {
+      opt.classList.remove('text-primary', 'font-semibold', 'bg-surface-container-low');
+      opt.classList.add('text-on-surface');
+      opt.querySelector('.sort-check').classList.add('hidden');
+    });
+    element.classList.add('text-primary', 'font-semibold', 'bg-surface-container-low');
+    element.classList.remove('text-on-surface');
+    element.querySelector('.sort-check').classList.remove('hidden');
+
+    document.getElementById('sort-menu').classList.add('hidden');
+    document.getElementById('sort-arrow').classList.remove('rotate-180');
+
+    // Simple visual re-order simulation
+    const grid = document.getElementById('playlists-grid');
+    if (grid && label.includes('Alphabetical')) {
+      const cards = Array.from(grid.children);
+      cards.sort((a, b) => a.querySelector('h4').textContent.localeCompare(b.querySelector('h4').textContent));
+      cards.forEach(card => grid.appendChild(card));
+    }
+    showToast(`Sorted by ${label}`, 'sort');
+  }
+
+  // 5. Playlist Card Interactions
+  function playPlaylist(title, info) {
+    state.isPlaying = true;
+    updateMiniPlayerDetails(title, info);
+    updatePlaybackUI();
+    showToast(`Playing playlist "${title}"`, 'playlist_play');
+  }
+
+  function managePlaylists() {
+    showToast('Playlist Management options opened', 'tune');
+  }
+
+  // 6. Artists Follow Interactions
+  function toggleArtist(element, artistName) {
+    const ring = element.querySelector('.artist-ring');
+    const badge = element.querySelector('.artist-badge');
+
+    if (ring.classList.contains('ring-primary')) {
+      ring.classList.remove('ring-primary', 'ring-4');
+      ring.classList.add('ring-transparent');
+      showToast(`Viewed ${artistName}'s Profile`, 'person');
+    } else {
+      ring.classList.remove('ring-transparent');
+      ring.classList.add('ring-primary', 'ring-4');
+      if (badge) badge.classList.add('hidden');
+      showToast(`${artistName} • Now playing top tracks`, 'headphones');
+      updateMiniPlayerDetails(artistName, 'Top Songs Radio');
+      state.isPlaying = true;
+      updatePlaybackUI();
+    }
+  }
+
+  function viewAllArtists() {
+    showToast('Showing all 24 artists you follow', 'group');
+  }
+
+  // 7. Song selection in Offline Hits
+  function selectSong(index) {
+    state.currentSongIndex = index;
+    state.isPlaying = true;
+    const song = state.songs[index];
+
+    const songRows = document.querySelectorAll('.song-item');
+    songRows.forEach((row, i) => {
+      const isSelected = i === index;
+      const title = row.querySelector('.song-title');
+      const overlay = row.querySelector('.song-overlay');
+      const eqBars = row.querySelector('.eq-bars');
+      const playBtn = row.querySelector('.play-btn');
+
+      if (isSelected) {
+        row.classList.add('bg-surface-container-low');
+        row.classList.remove('hover:bg-surface-container-lowest');
+        title.classList.add('text-primary');
+        title.classList.remove('text-on-surface');
+        overlay.classList.remove('hidden');
+        eqBars.classList.remove('hidden');
+        playBtn.classList.add('hidden');
+      } else {
+        row.classList.remove('bg-surface-container-low');
+        row.classList.add('hover:bg-surface-container-lowest');
+        title.classList.remove('text-primary');
+        title.classList.add('text-on-surface');
+        overlay.classList.add('hidden');
+        eqBars.classList.add('hidden');
+        playBtn.classList.remove('hidden');
+      }
+    });
+
+    updateMiniPlayerDetails(song.title, song.artist, song.progress);
+    updatePlaybackUI();
+    showToast(`Playing ${song.title}`, 'music_note');
+  }
+
+  // 8. Bottom Mini Player Operations
+  function updateMiniPlayerDetails(title, artist, progress = '35%') {
+    document.getElementById('mini-player-title').textContent = title;
+    document.getElementById('mini-player-artist').textContent = artist;
+    document.getElementById('mini-player-progress').style.width = progress;
+  }
+
+  function togglePlayback() {
+    state.isPlaying = !state.isPlaying;
+    updatePlaybackUI();
+    showToast(state.isPlaying ? 'Resumed playback' : 'Playback paused', state.isPlaying ? 'play_arrow' : 'pause');
+  }
+
+  function nextTrack() {
+    state.currentSongIndex = (state.currentSongIndex + 1) % state.songs.length;
+    selectSong(state.currentSongIndex);
+  }
+
+  function toggleMiniPlayer() {
+    showToast(`Now Playing: ${document.getElementById('mini-player-title').textContent}`, 'graphic_eq');
+  }
+
+  function updatePlaybackUI() {
+    const playIcon = document.getElementById('mini-play-icon');
+    const pinnedIcon = document.getElementById('pinned-play-icon');
+    const offlineList = document.getElementById('offline-songs-list');
+
+    if (state.isPlaying) {
+      playIcon.textContent = 'pause';
+      if (pinnedIcon) pinnedIcon.textContent = 'pause';
+      offlineList?.classList.remove('eq-paused');
+    } else {
+      playIcon.textContent = 'play_arrow';
+      if (pinnedIcon) pinnedIcon.textContent = 'play_arrow';
+      offlineList?.classList.add('eq-paused');
+    }
+  }
+
+  // 9. Bottom Navigation Tabs
+  function setActiveNav(path, e) {
+    if (e) e.preventDefault();
+    const navItems = document.querySelectorAll('#bottom-nav .nav-item');
+    navItems.forEach(item => {
+      const isTarget = item.getAttribute('data-path') === path;
+      const icon = item.querySelector('.material-symbols-outlined');
+      if (isTarget) {
+        item.classList.add('text-primary', 'font-bold');
+        item.classList.remove('text-on-surface-variant');
+        item.setAttribute('aria-current', 'page');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        item.classList.remove('text-primary', 'font-bold');
+        item.classList.add('text-on-surface-variant');
+        item.removeAttribute('aria-current');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    });
+    showToast(`Switched to ${path.charAt(0).toUpperCase() + path.slice(1)} Tab`, 'tab');
+  }
+</script></body></html>
