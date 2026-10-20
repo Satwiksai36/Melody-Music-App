@@ -704,4 +704,17 @@ export const LibraryScreen: React.FC = () => {
                 >
                   Cancel
                 </button>
-                <
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-full bg-primary text-on-primary font-label-md font-bold shadow-[0_4px_12px_rgba(66,29,219,0.25)] active:scale-95 transition-all cursor-pointer"
+                >
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

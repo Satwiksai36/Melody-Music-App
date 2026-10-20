@@ -34,6 +34,8 @@ export const SyncedLyricsOverlay: React.FC = () => {
 
   if (!isLyricsOpen) return null;
 
+  const hasWordSync = lyrics.some((line) => line.words && line.words.length > 0);
+
   return (
     <div className="absolute inset-0 z-30 flex flex-col rounded-3xl backdrop-blur-2xl bg-surface/95 border border-outline-variant/30 shadow-2xl p-5 transition-all duration-300">
       {/* Header inside lyrics overlay */}
@@ -45,7 +47,11 @@ export const SyncedLyricsOverlay: React.FC = () => {
               Synchronized Lyrics
             </span>
             <span className="font-label-sm text-label-sm text-on-surface-variant">
-              {lyricsMode === 'word' ? 'Karaoke Word Sync' : 'Line-by-Line Flow'}
+              {lyricsMode === 'word' && hasWordSync
+                ? 'Karaoke Word Sync'
+                : lyrics.length > 0
+                ? 'Line-by-Line Flow'
+                : 'Instrumental Track'}
             </span>
           </div>
         </div>
@@ -54,19 +60,26 @@ export const SyncedLyricsOverlay: React.FC = () => {
         <div className="flex items-center gap-2">
           <div className="flex items-center bg-surface-container rounded-full p-0.5">
             <button
-              onClick={() => setLyricsMode('word')}
+              onClick={() => {
+                if (hasWordSync) {
+                  setLyricsMode('word');
+                }
+              }}
+              title={hasWordSync ? 'Switch to Karaoke word sync' : 'Word-level sync unavailable for this track'}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all ${
-                lyricsMode === 'word'
+                lyricsMode === 'word' && hasWordSync
                   ? 'bg-primary text-on-primary shadow-sm'
-                  : 'text-on-surface-variant hover:text-on-surface'
+                  : hasWordSync
+                  ? 'text-on-surface-variant hover:text-on-surface'
+                  : 'text-outline/40 cursor-not-allowed'
               }`}
             >
-              Karaoke
+              Karaoke {hasWordSync ? '' : '•'}
             </button>
             <button
               onClick={() => setLyricsMode('line')}
               className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all ${
-                lyricsMode === 'line'
+                lyricsMode === 'line' || !hasWordSync
                   ? 'bg-primary text-on-primary shadow-sm'
                   : 'text-on-surface-variant hover:text-on-surface'
               }`}

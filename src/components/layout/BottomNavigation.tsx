@@ -21,6 +21,7 @@ export const BottomNavigation: React.FC = () => {
         {tabs.map((tab) => {
           const isActive =
             location.pathname === tab.path ||
+            (tab.id === 'profile' && location.pathname === '/settings') ||
             (tab.path === '/home' && location.pathname === '/');
 
           return (

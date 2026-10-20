@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MelodyAnimatedLogo } from '../components/common/MelodyAnimatedLogo';
+import { storageService } from '../services/storageService';
 
 export const AuthScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -24,19 +25,32 @@ export const AuthScreen: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identifier) {
+    const cleanId = identifier.trim();
+    if (!cleanId) {
       showToast('Please enter your email or mobile number');
       return;
     }
-    if (!password) {
-      showToast('Please enter your secure password');
+    if (cleanId.includes('@') && !cleanId.includes('.')) {
+      showToast('Please enter a valid email address');
+      return;
+    }
+    if (!password || password.length < 6) {
+      showToast('Password must be at least 6 characters');
       return;
     }
 
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      showToast(tab === 'signin' ? 'Welcome back to Melody!' : 'Account created successfully!');
+      const isEmail = cleanId.includes('@');
+      const displayName = isEmail ? cleanId.split('@')[0] : 'Arjun Reddy';
+      storageService.updateUserProfile({
+        name: displayName,
+        email: isEmail ? cleanId : 'arjun.reddy@melody.in',
+        phone: !isEmail ? cleanId : '+91 98765 43210',
+        isLoggedIn: true,
+      });
+      showToast(tab === 'signin' ? `Welcome back, ${displayName}!` : 'Account created successfully!');
       setTimeout(() => {
         navigate('/onboarding');
       }, 700);
@@ -45,9 +59,14 @@ export const AuthScreen: React.FC = () => {
 
   const handleSocialAuth = (provider: string) => {
     setIsLoading(true);
-    showToast(`Signing in with ${provider}...`);
+    showToast(`Demo Sign-In: Connecting with ${provider}...`);
     setTimeout(() => {
       setIsLoading(false);
+      storageService.updateUserProfile({
+        name: `${provider} User`,
+        email: `user@${provider.toLowerCase().replace(/\s+/g, '')}.com`,
+        isLoggedIn: true,
+      });
       navigate('/onboarding');
     }, 800);
   };
@@ -219,6 +238,21 @@ export const AuthScreen: React.FC = () => {
                 </span>
               </button>
             </form>
+          </div>
+
+          {/* Clearly Identified Demo Authentication Banner */}
+          <div className="w-full bg-surface-container-high/60 border border-outline-variant/30 rounded-xl px-3 py-2 mb-space-md flex items-center justify-between text-left text-xs text-on-surface-variant">
+            <div className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-tertiary">info</span>
+              <span><strong>Demo Auth:</strong> Local session mode active. Real auth integration in Phase 3.</span>
+            </div>
+            <button
+              type="button"
+              onClick={fillDemoPhone}
+              className="text-primary font-bold hover:underline shrink-0 pl-2"
+            >
+              Auto-Fill
+            </button>
           </div>
 
           {/* Divider Section */}

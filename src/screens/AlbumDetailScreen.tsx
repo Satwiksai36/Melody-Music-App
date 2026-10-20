@@ -3,17 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { usePlayer } from '../context/PlayerContext';
 import { Header } from '../components/common/Header';
 import { Track } from '../types';
+import { storageService } from '../services/storageService';
 
 export const AlbumDetailScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { currentTrack, isPlaying, playTrack, togglePlayPause, setLyricsOpen } = usePlayer();
+  const {
+    currentTrack,
+    isPlaying,
+    playTrack,
+    togglePlayPause,
+    setLyricsOpen,
+    isLiked,
+    toggleLike,
+  } = usePlayer();
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [selectedTrackForOptions, setSelectedTrackForOptions] = useState<any | null>(null);
   const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
   const [isInLibrary, setIsInLibrary] = useState<boolean>(true);
-  const [isFollowingDSP, setIsFollowingDSP] = useState<boolean>(false);
-  const [likedTrackIds, setLikedTrackIds] = useState<Record<string, boolean>>({});
+  const [isFollowingDSP, setIsFollowingDSP] = useState<boolean>(() =>
+    storageService.getFollowedArtistIds().includes('dsp')
+  );
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -21,11 +31,16 @@ export const AlbumDetailScreen: React.FC = () => {
   };
 
   const toggleTrackLike = (id: string) => {
-    setLikedTrackIds((prev) => {
-      const updated = { ...prev, [id]: !prev[id] };
-      showToast(updated[id] ? 'Added to Liked Songs' : 'Removed from Liked Songs');
-      return updated;
-    });
+    toggleLike(id);
+    const nowLiked = !isLiked(id);
+    showToast(nowLiked ? 'Added to Liked Songs' : 'Removed from Liked Songs');
+  };
+
+  const handleToggleFollowDSP = () => {
+    const updated = storageService.toggleFollowArtist('dsp');
+    const isNowFollowing = updated.includes('dsp');
+    setIsFollowingDSP(isNowFollowing);
+    showToast(isNowFollowing ? 'Following Rockstar DSP' : 'Unfollowed DSP');
   };
 
   // Exact 6 Tracks from Stitch melody_movie_album_playlist/code.html
@@ -402,7 +417,7 @@ export const AlbumDetailScreen: React.FC = () => {
             <div className="flex flex-col gap-1.5 mt-1">
               {albumTracks.map((track, index) => {
                 const isCurrent = currentTrack.id === track.id || (index === 0 && currentTrack.id === 'pushpa-pushpa');
-                const isTrackLiked = !!likedTrackIds[track.id];
+                const isTrackLiked = isLiked(track.id);
 
                 return (
                   <div
@@ -537,10 +552,7 @@ export const AlbumDetailScreen: React.FC = () => {
                   </p>
                 </div>
                 <button
-                  onClick={() => {
-                    setIsFollowingDSP(!isFollowingDSP);
-                    showToast(isFollowingDSP ? 'Unfollowed DSP' : 'Following Rockstar DSP');
-                  }}
+                  onClick={handleToggleFollowDSP}
                   className={`px-3.5 py-1.5 rounded-full font-label-md text-label-md font-semibold active:scale-95 transition-all shadow-sm ${
                     isFollowingDSP
                       ? 'bg-surface-container-lowest text-primary ring-1 ring-primary/30'

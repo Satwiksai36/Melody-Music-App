@@ -465,63 +465,45 @@ export const FullScreenPlayer: React.FC<FullScreenPlayerProps> = ({ onBack, forc
             {/* Quick Lyrics Glance & Up Next Peek Pull Bar */}
             <div className="w-full rounded-2xl bg-surface-container p-space-md shadow-sm flex flex-col gap-space-sm transition-all duration-300">
               <div
-                onClick={() => showToast('Opening Playback Queue (14 songs)')}
-                className="flex items-center justify-between cursor-pointer"
+                onClick={() => setShowQueueModal(true)}
+                className="flex items-center justify-between cursor-pointer group"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 truncate">
                   <span className="material-symbols-outlined text-secondary text-[20px]">
                     queue_music
                   </span>
-                  <span className="font-title-md text-title-md text-on-surface font-bold">
-                    Up Next: Butta Bomma
+                  <span className="font-title-md text-title-md text-on-surface font-bold truncate">
+                    {playbackQueue.length > 1
+                      ? `Up Next: ${playbackQueue[(queueIndex + 1) % playbackQueue.length]?.title}`
+                      : 'Playback Queue'}
                   </span>
                 </div>
-                <div className="flex items-center gap-1 font-label-md text-label-md text-primary font-bold active:scale-95 transition-transform">
-                  <span>Queue (14)</span>
+                <div className="flex items-center gap-1 font-label-md text-label-md text-primary font-bold active:scale-95 transition-transform flex-shrink-0">
+                  <span>Queue ({playbackQueue.length})</span>
                   <span className="material-symbols-outlined text-[18px]">chevron_right</span>
                 </div>
               </div>
 
-              {/* Lyrics Snippet Peek Line (expandable) */}
-              <div
-                onClick={() => setIsLyricsExpanded(!isLyricsExpanded)}
-                className="px-3 py-2 rounded-xl bg-surface-container-lowest/80 flex flex-col gap-2 cursor-pointer transition-all duration-300 hover:bg-surface-container-lowest text-left"
-              >
-                <div className="flex items-center justify-between w-full">
-                  <p className="font-body-sm text-body-sm text-on-surface-variant italic truncate max-w-[80%]">
-                    "Samajavaragamana... Ninu choosi aagagalaana..."
+              {/* Lyrics Snippet Peek Line */}
+              <div className="px-3 py-2 rounded-xl bg-surface-container-lowest/80 flex flex-col gap-2 transition-all duration-300 hover:bg-surface-container-lowest text-left">
+                <div
+                  onClick={() => setLyricsOpen(true)}
+                  className="flex items-center justify-between w-full cursor-pointer group"
+                >
+                  <p className="font-body-sm text-body-sm text-on-surface-variant italic truncate max-w-[75%] group-hover:text-on-surface transition-colors">
+                    {currentTrack.lyrics && currentTrack.lyrics.length > 0
+                      ? `"${currentTrack.lyrics.find(l => currentTime >= l.startTime && currentTime <= l.endTime)?.text || currentTrack.lyrics[0].text}"`
+                      : `Lossless Instrumental Segment • "${currentTrack.title}"`}
                   </p>
-                  <div className="flex items-center gap-1">
-                    <span className="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">
-                      Lyrics
+                  <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed/50 group-hover:bg-secondary-fixed transition-colors">
+                    <span className="material-symbols-outlined text-[15px] text-secondary">
+                      lyrics
                     </span>
-                    <span
-                      className={`material-symbols-outlined text-[16px] text-secondary transition-transform duration-300 ${
-                        isLyricsExpanded ? 'rotate-180' : ''
-                      }`}
-                    >
-                      expand_more
+                    <span className="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">
+                      Synced
                     </span>
                   </div>
                 </div>
-
-                {/* Collapsible Accordion Lyrics */}
-                {isLyricsExpanded && (
-                  <div className="pt-2 border-t border-surface-variant/40 flex flex-col gap-1.5 text-center animate-fadeIn">
-                    <p className="font-body-sm text-body-sm text-on-surface-variant/70">
-                      Mallela vaanala navvula thoothina vela
-                    </p>
-                    <p className="font-body-md text-body-md font-bold text-secondary">
-                      "Samajavaragamana... Ninu choosi aagagalaana..."
-                    </p>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant/70">
-                      Naluguriki thelisela cheppana praanam meeda
-                    </p>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant/60">
-                      Gunde layalone nindi unna prema...
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -598,4 +580,117 @@ export const FullScreenPlayer: React.FC<FullScreenPlayerProps> = ({ onBack, forc
                     <span className="font-body-sm text-body-sm text-on-surface-variant">
                       Lossless Spatial Available
                     </span>
-    
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Interactive Playback Queue Drawer */}
+      {showQueueModal && (
+        <div
+          onClick={() => setShowQueueModal(false)}
+          className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex flex-col justify-end transition-opacity duration-300"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full bg-surface rounded-t-3xl p-margin pb-safe shadow-2xl flex flex-col max-h-[80vh] border-t border-outline-variant/30"
+          >
+            <div className="w-12 h-1 bg-outline-variant/60 rounded-full mx-auto mb-3"></div>
+            <div className="flex items-center justify-between pb-3 border-b border-outline-variant/30">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary text-[24px]">queue_music</span>
+                <div>
+                  <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                    Up Next ({playbackQueue.length})
+                  </h3>
+                  <span className="font-label-sm text-xs text-outline">
+                    Tap to play • Swipe or trash to remove
+                  </span>
+                </div>
+              </div>
+              <button
+                aria-label="Close Queue"
+                onClick={() => setShowQueueModal(false)}
+                className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95 hover:bg-surface-container-high transition-colors"
+              >
+                <span className="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+
+            {/* Queue List */}
+            <div className="flex-1 overflow-y-auto no-scrollbar py-2 flex flex-col gap-1.5 max-h-[50vh]">
+              {playbackQueue.map((t, idx) => {
+                const isCurrent = idx === queueIndex;
+                return (
+                  <div
+                    key={`${t.id}-${idx}`}
+                    onClick={() => {
+                      playFromQueue(idx);
+                      showToast(`Playing ${t.title}`);
+                    }}
+                    className={`flex items-center justify-between p-2.5 rounded-xl cursor-pointer transition-all active:scale-[0.98] ${
+                      isCurrent
+                        ? 'bg-primary/10 border border-primary/30'
+                        : 'bg-surface-container-low hover:bg-surface-container'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="font-label-sm text-xs font-bold text-outline w-5 text-center">
+                        {isCurrent ? (
+                          <span className="material-symbols-outlined text-[18px] text-primary animate-pulse">
+                            graphic_eq
+                          </span>
+                        ) : (
+                          idx + 1
+                        )}
+                      </span>
+                      <img
+                        alt={t.title}
+                        src={t.coverUrl}
+                        className="w-11 h-11 rounded-lg object-cover shadow-sm flex-shrink-0"
+                      />
+                      <div className="min-w-0 flex-1 text-left">
+                        <p
+                          className={`font-title-md text-sm truncate ${
+                            isCurrent ? 'text-primary font-bold' : 'text-on-surface font-semibold'
+                          }`}
+                        >
+                          {t.title}
+                        </p>
+                        <p className="font-body-sm text-xs text-outline truncate">{t.artist}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {isCurrent ? (
+                        <span className="px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[10px] font-bold">
+                          Playing
+                        </span>
+                      ) : (
+                        <button
+                          aria-label="Remove from queue"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeFromQueue(t.id);
+                            showToast(`Removed "${t.title}" from queue`);
+                          }}
+                          className="w-8 h-8 rounded-full text-outline hover:text-error flex items-center justify-center active:scale-90 transition-colors"
+                          title="Remove from queue"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">remove_circle_outline</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

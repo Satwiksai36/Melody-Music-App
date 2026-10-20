@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { storageService } from '../services/storageService';
 
 export const OnboardingScreen: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedIds, setSelectedIds] = useState<string[]>(['sid-sriram', 'arijit-singh']);
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const saved = storageService.getSelectedLanguages();
+    return saved && saved.length > 0 ? saved : ['sid-sriram', 'arijit-singh'];
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -95,6 +99,17 @@ export const OnboardingScreen: React.FC = () => {
       card.languageBadge.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleComplete = (idsToSave: string[]) => {
+    storageService.setSelectedLanguages(idsToSave);
+    idsToSave.forEach((id) => {
+      const currentFollowed = storageService.getFollowedArtistIds();
+      if (!currentFollowed.includes(id)) {
+        storageService.toggleFollowArtist(id);
+      }
+    });
+    navigate('/home');
+  };
+
   return (
     <div className="flex-1 flex flex-col relative w-full pb-32 pt-safe bg-surface min-h-screen select-none overflow-y-auto no-scrollbar">
       {/* Toast Notification */}
@@ -119,7 +134,7 @@ export const OnboardingScreen: React.FC = () => {
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
             </button>
             <button
-              onClick={() => navigate('/home')}
+              onClick={() => handleComplete(selectedIds)}
               className="text-body-md font-semibold text-on-surface-variant hover:text-on-surface transition-colors py-1 px-3 rounded-full hover:bg-surface-container cursor-pointer"
             >
               Skip
@@ -261,7 +276,7 @@ export const OnboardingScreen: React.FC = () => {
       <div className="absolute bottom-0 left-0 right-0 p-margin bg-gradient-to-t from-surface via-surface/90 to-transparent pt-6 z-40 w-full">
         <button
           id="continueBtn"
-          onClick={() => navigate('/home')}
+          onClick={() => handleComplete(selectedIds)}
           className="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-[0_8px_24px_rgba(91,66,243,0.35)] flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
         >
           <span>Continue with {selectedIds.length} Languages</span>

@@ -22,6 +22,7 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   avatarUrl: string;
   tier: string;
   isLoggedIn: boolean;

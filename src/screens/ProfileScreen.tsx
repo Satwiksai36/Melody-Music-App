@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/common/Header';
+import { storageService } from '../services/storageService';
 
 export const ProfileScreen: React.FC = () => {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Settings states
-  const [crossfadeActive, setCrossfadeActive] = useState<boolean>(true);
-  const [normalizeActive, setNormalizeActive] = useState<boolean>(true);
+  // Load preferences from storageService
+  const initialPrefs = storageService.getPreferences();
+  const [crossfadeActive, setCrossfadeActive] = useState<boolean>(initialPrefs.crossfadeSeconds > 0);
+  const [normalizeActive, setNormalizeActive] = useState<boolean>(initialPrefs.normalizeVolume);
   const [explicitActive, setExplicitActive] = useState<boolean>(true);
-  const [offlineActive, setOfflineActive] = useState<boolean>(false);
+  const [offlineActive, setOfflineActive] = useState<boolean>(initialPrefs.offlineDownloads);
   const [isSoundbarConnected, setIsSoundbarConnected] = useState<boolean>(true);
   const [isClearingCache, setIsClearingCache] = useState<boolean>(false);
   const [cacheSize, setCacheSize] = useState<string>('380 MB');
@@ -18,11 +20,9 @@ export const ProfileScreen: React.FC = () => {
   const [showPlanModal, setShowPlanModal] = useState<boolean>(false);
 
   // Languages state
-  const [languages, setLanguages] = useState<string[]>([
-    'Telugu (తెలుగు)',
-    'Hindi (हिंदी)',
-    'Tamil (தமிழ்)',
-  ]);
+  const [languages, setLanguages] = useState<string[]>(() =>
+    storageService.getSelectedLanguages().map((l) => `${l.charAt(0).toUpperCase() + l.slice(1)}`)
+  );
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -31,6 +31,7 @@ export const ProfileScreen: React.FC = () => {
 
   const handleClearCache = () => {
     setIsClearingCache(true);
+    storageService.clearAppCache();
     setTimeout(() => {
       setIsClearingCache(false);
       setCacheSize('0 MB');
@@ -40,6 +41,7 @@ export const ProfileScreen: React.FC = () => {
   };
 
   const handleLogout = () => {
+    storageService.updateUserProfile({ isLoggedIn: false });
     showToast('Signed out of Melody');
     setTimeout(() => {
       navigate('/auth');

@@ -175,6 +175,12 @@ export const MOCK_TRACKS: Track[] = [
     isLossless: true,
     playsCount: '88.9M',
     year: '2023',
+    lyrics: [
+      { id: 'c1', text: 'Ishq mein dil bana hai, ishq mein dil fanaa hai', startTime: 0, endTime: 6 },
+      { id: 'c2', text: 'Mita de ya bana de, maine tujhko chuna hai', startTime: 6.5, endTime: 13 },
+      { id: 'c3', text: 'Teri ore khincha chala aa raha hoon', startTime: 13.5, endTime: 19 },
+      { id: 'c4', text: 'Chaleya ishq mein chaleya tera ho gaya', startTime: 19.5, endTime: 27 },
+    ],
   },
   {
     id: 'tatakkara',
