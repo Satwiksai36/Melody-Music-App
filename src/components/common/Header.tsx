@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MelodyAnimatedLogo } from './MelodyAnimatedLogo';
+import { storageService } from '../../services/storageService';
 
 interface HeaderProps {
   title?: string;
@@ -9,6 +10,13 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, showBack = false }) => {
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(() => storageService.getUserProfile());
+
+  useEffect(() => {
+    return storageService.subscribeToProfile((updated) => {
+      setUserProfile(updated);
+    });
+  }, []);
 
   return (
     <header className="sticky top-0 left-0 right-0 z-40 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] w-full">
@@ -62,9 +70,12 @@ export const Header: React.FC<HeaderProps> = ({ title, showBack = false }) => {
             className="w-11 h-11 flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
           >
             <img
-              alt="Profile"
+              alt={userProfile.name || 'Profile'}
               className="w-8 h-8 rounded-full object-cover shadow-[0_2px_8px_rgba(66,29,219,0.15)] ring-2 ring-primary/20"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w"
+              src={
+                userProfile.avatarUrl ||
+                'https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w'
+              }
             />
           </button>
         </div>

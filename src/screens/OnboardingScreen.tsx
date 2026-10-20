@@ -6,7 +6,7 @@ export const OnboardingScreen: React.FC = () => {
   const navigate = useNavigate();
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
     const saved = storageService.getSelectedLanguages();
-    return saved && saved.length > 0 ? saved : ['sid-sriram', 'arijit-singh'];
+    return saved && saved.length > 0 ? saved : [];
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);

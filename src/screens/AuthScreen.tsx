@@ -18,13 +18,6 @@ export const AuthScreen: React.FC = () => {
     setTimeout(() => setToastMessage(null), 2500);
   };
 
-  const fillDemoPhone = () => {
-    setFullName('Riyad');
-    setIdentifier('riyad@melody.in');
-    setPassword('Tollywood2026!');
-    showToast('Demo credentials filled: Riyad');
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanId = identifier.trim();
@@ -39,6 +32,13 @@ export const AuthScreen: React.FC = () => {
     if (!password || password.length < 6) {
       showToast('Password must be at least 6 characters');
       return;
+    }
+    if (tab === 'signup') {
+      const name = fullName.trim();
+      if (!name) {
+        showToast('Please enter your full name');
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -55,14 +55,17 @@ export const AuthScreen: React.FC = () => {
             .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
             .join(' ');
         } else {
-          displayName = 'Riyad';
+          displayName = 'User';
         }
       }
+      const userId = `user-${Date.now()}`;
       storageService.updateUserProfile({
+        id: userId,
         name: displayName,
         email: isEmail ? cleanId : `${displayName.toLowerCase().replace(/\s+/g, '')}@melody.in`,
-        phone: !isEmail ? cleanId : '+91 98765 43210',
+        phone: !isEmail ? cleanId : undefined,
         isLoggedIn: true,
+        joinedDate: `Member since ${new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}`,
       });
       showToast(tab === 'signin' ? `Welcome back, ${displayName}!` : `Account created for ${displayName}!`);
       setTimeout(() => {
@@ -72,17 +75,7 @@ export const AuthScreen: React.FC = () => {
   };
 
   const handleSocialAuth = (provider: string) => {
-    setIsLoading(true);
-    showToast(`Connecting with ${provider}...`);
-    setTimeout(() => {
-      setIsLoading(false);
-      storageService.updateUserProfile({
-        name: 'Riyad',
-        email: 'riyad@melody.in',
-        isLoggedIn: true,
-      });
-      navigate('/onboarding');
-    }, 800);
+    showToast(`${provider} sign-in coming soon`);
   };
 
   return (
@@ -165,6 +158,31 @@ export const AuthScreen: React.FC = () => {
           {/* Primary Interactive Credentials Form Card */}
           <div className="w-full bg-surface-container-lowest rounded-2xl p-space-md shadow-[0_10px_26px_rgba(91,66,243,0.06)] mb-space-lg text-left border border-outline-variant/30">
             <form onSubmit={handleSubmit} className="flex flex-col gap-space-md">
+              {/* Full Name Input (Sign Up) */}
+              {tab === 'signup' && (
+                <div className="flex flex-col gap-1.5 animate-fadeIn">
+                  <label
+                    className="font-label-md text-label-md text-on-surface-variant font-bold"
+                    htmlFor="auth-fullname"
+                  >
+                    FULL NAME
+                  </label>
+                  <div className="relative flex items-center">
+                    <span className="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">
+                      person
+                    </span>
+                    <input
+                      id="auth-fullname"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="e.g. Riyad"
+                      type="text"
+                      className="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-xl py-space-sm pl-11 pr-space-md outline-none focus:bg-surface-container focus:ring-2 focus:ring-primary-container/40 transition-all placeholder:text-outline/60"
+                    />
+                  </div>
+                </div>
+              )}
+
               {/* Email or Phone Input */}
               <div className="flex flex-col gap-1.5">
                 <label
@@ -172,12 +190,6 @@ export const AuthScreen: React.FC = () => {
                   htmlFor="auth-identifier"
                 >
                   <span className="font-bold">EMAIL OR MOBILE NUMBER</span>
-                  <span
-                    onClick={fillDemoPhone}
-                    className="text-primary font-body-sm text-body-sm cursor-pointer hover:underline font-bold"
-                  >
-                    Use Demo
-                  </span>
                 </label>
                 <div className="relative flex items-center">
                   <span className="material-symbols-outlined absolute left-space-md text-outline text-[20px] pointer-events-none">
@@ -205,7 +217,7 @@ export const AuthScreen: React.FC = () => {
                   </label>
                   <button
                     type="button"
-                    onClick={fillDemoPhone}
+                    onClick={() => showToast('Password reset coming soon')}
                     className="font-body-sm text-body-sm text-secondary hover:text-secondary-container transition-colors font-medium"
                   >
                     Forgot?
@@ -254,20 +266,6 @@ export const AuthScreen: React.FC = () => {
             </form>
           </div>
 
-          {/* Clearly Identified Demo Authentication Banner */}
-          <div className="w-full bg-surface-container-high/60 border border-outline-variant/30 rounded-xl px-3 py-2 mb-space-md flex items-center justify-between text-left text-xs text-on-surface-variant">
-            <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[16px] text-tertiary">info</span>
-              <span><strong>Demo Auth:</strong> Local session mode active. Real auth integration in Phase 3.</span>
-            </div>
-            <button
-              type="button"
-              onClick={fillDemoPhone}
-              className="text-primary font-bold hover:underline shrink-0 pl-2"
-            >
-              Auto-Fill
-            </button>
-          </div>
 
           {/* Divider Section */}
           <div className="relative w-full flex items-center justify-center my-space-xs">

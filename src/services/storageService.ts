@@ -6,7 +6,6 @@
  */
 
 import { Track, Playlist } from '../types';
-import { MOCK_PLAYLISTS, MOCK_TRACKS } from '../data/mockData';
 import { getSupabaseClient } from './supabaseClient';
 
 export interface UserPreferences {
@@ -53,14 +52,13 @@ const DEFAULT_PREFERENCES: UserPreferences = {
 };
 
 const DEFAULT_PROFILE: UserProfile = {
-  id: 'user-riyad',
-  name: 'Riyad',
-  email: 'riyad@melody.in',
-  avatarUrl:
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w',
+  id: '',
+  name: '',
+  email: '',
+  avatarUrl: '',
   tier: 'Melody HiFi Pro',
   isLoggedIn: false,
-  joinedDate: 'Member since Oct 2024',
+  joinedDate: `Member since ${new Date().toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}`,
 };
 
 class StorageService {
@@ -118,7 +116,7 @@ class StorageService {
 
   // Liked Tracks
   getLikedTrackIds(): string[] {
-    return this.safeGet<string[]>(STORAGE_KEYS.LIKED_TRACKS, ['samaja', 'pushpa-pushpa']);
+    return this.safeGet<string[]>(STORAGE_KEYS.LIKED_TRACKS, []);
   }
 
   setLikedTrackIds(ids: string[]): void {
@@ -137,11 +135,7 @@ class StorageService {
 
   // Followed Artists
   getFollowedArtistIds(): string[] {
-    return this.safeGet<string[]>(STORAGE_KEYS.FOLLOWED_ARTISTS, [
-      'sid-sriram',
-      'arijit-singh',
-      'dsp',
-    ]);
+    return this.safeGet<string[]>(STORAGE_KEYS.FOLLOWED_ARTISTS, []);
   }
 
   toggleFollowArtist(artistId: string): string[] {
@@ -155,7 +149,7 @@ class StorageService {
 
   // Playlists
   getPlaylists(): Playlist[] {
-    return this.safeGet<Playlist[]>(STORAGE_KEYS.PLAYLISTS, MOCK_PLAYLISTS);
+    return this.safeGet<Playlist[]>(STORAGE_KEYS.PLAYLISTS, []);
   }
 
   savePlaylists(playlists: Playlist[]): void {
@@ -258,11 +252,7 @@ class StorageService {
 
   // Recently Played
   getRecentlyPlayed(): Track[] {
-    return this.safeGet<Track[]>(STORAGE_KEYS.RECENTLY_PLAYED, [
-      MOCK_TRACKS[0], // Samajavaragamana
-      MOCK_TRACKS[1], // Pushpa Pushpa
-      MOCK_TRACKS[3], // Kurchi Madathapetti
-    ]);
+    return this.safeGet<Track[]>(STORAGE_KEYS.RECENTLY_PLAYED, []);
   }
 
   addRecentlyPlayed(track: Track): Track[] {
@@ -274,11 +264,7 @@ class StorageService {
 
   // Selected Languages
   getSelectedLanguages(): string[] {
-    return this.safeGet<string[]>(STORAGE_KEYS.SELECTED_LANGUAGES, [
-      'telugu',
-      'hindi',
-      'tamil',
-    ]);
+    return this.safeGet<string[]>(STORAGE_KEYS.SELECTED_LANGUAGES, []);
   }
 
   setSelectedLanguages(languages: string[]): void {

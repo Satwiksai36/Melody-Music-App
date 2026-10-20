@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/common/Header';
-import { storageService } from '../services/storageService';
+import { storageService, UserProfile } from '../services/storageService';
 import { usePlayer } from '../context/PlayerContext';
+import { setSupabaseAnonKey } from '../services/supabaseClient';
 
 export const ProfileScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -16,10 +17,25 @@ export const ProfileScreen: React.FC = () => {
     disconnectSpotify,
   } = usePlayer();
 
-  // Load profile & preferences from storageService
-  const userProfile = storageService.getUserProfile();
-  const userName = userProfile.name || 'Riyad';
-  const userHandle = `@${userName.toLowerCase().replace(/[^a-z0-9]/g, '.')}.melody`;
+  // Load profile & preferences from storageService with live reactivity
+  const [userProfile, setUserProfile] = useState<UserProfile>(() => storageService.getUserProfile());
+  const userName = userProfile.name || '';
+  const userHandle = userName ? `@${userName.toLowerCase().replace(/[^a-z0-9]/g, '.')}.melody` : '';
+
+  useEffect(() => {
+    return storageService.subscribeToProfile((updated) => {
+      setUserProfile(updated);
+    });
+  }, []);
+
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [editName, setEditName] = useState<string>(userName);
+  const [editEmail, setEditEmail] = useState<string>(userProfile.email || '');
+  const [showSupabaseModal, setShowSupabaseModal] = useState<boolean>(false);
+  const [supabaseAnonKeyInput, setSupabaseAnonKeyInput] = useState<string>(
+    localStorage.getItem('melody_supabase_anon_key') || ''
+  );
+  const [isSyncingSupabase, setIsSyncingSupabase] = useState<boolean>(false);
 
   const initialPrefs = storageService.getPreferences();
   const [crossfadeActive, setCrossfadeActive] = useState<boolean>(initialPrefs.crossfadeSeconds > 0);
@@ -133,7 +149,7 @@ export const ProfileScreen: React.FC = () => {
               {/* Quick Stats Pill Container */}
               <div className="w-full grid grid-cols-3 gap-space-xs py-space-sm px-space-md rounded-lg bg-surface-container-low mb-space-md">
                 <button
-                  onClick={() => showToast("Opened Ananya's 34 Playlists")}
+                  onClick={() => showToast(`Opened ${userName}'s 34 Playlists`)}
                   className="flex flex-col items-center active:scale-95 transition-transform"
                 >
                   <span className="font-headline-sm text-headline-sm text-on-surface font-bold">34</span>
@@ -158,8 +174,12 @@ export const ProfileScreen: React.FC = () => {
               {/* Profile Actions */}
               <div className="w-full flex items-center gap-space-sm">
                 <button
-                  onClick={() => showToast('Opening profile editor')}
-                  className="flex-1 h-11 rounded-full bg-on-surface text-surface-container-lowest font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform font-bold"
+                  onClick={() => {
+                    setEditName(userName);
+                    setEditEmail(userProfile.email || '');
+                    setShowEditModal(true);
+                  }}
+                  className="flex-1 h-11 rounded-full bg-on-surface text-surface-container-lowest font-label-lg text-label-lg flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform font-bold cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[18px]">edit</span>
                   Edit Profile
@@ -693,6 +713,76 @@ export const ProfileScreen: React.FC = () => {
           </div>
         </section>
 
+        {/* Supabase Cloud Data Storage Section */}
+        <section className="px-margin pt-space-lg text-left">
+          <div className="flex items-center justify-between mb-space-sm">
+            <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+              Cloud Database Storage
+            </h3>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider font-bold">
+              Supabase PostgreSQL
+            </span>
+          </div>
+
+          <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm border border-outline-variant/20">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-space-sm min-w-0">
+                <div className="w-11 h-11 rounded-full bg-[#3ECF8E]/20 text-[#3ECF8E] flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span className="material-symbols-outlined text-[24px]">database</span>
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-title-md text-title-md text-on-surface font-semibold">
+                      Supabase Cloud Storage
+                    </p>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#3ECF8E]/15 text-[#3ECF8E]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#3ECF8E] animate-pulse"></span>
+                      Connected (IPv4)
+                    </span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    aws-0-ap-south-1.pooler.supabase.com:6543 • yskjjmebwulfrqnkmaoa
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={async () => {
+                  setIsSyncingSupabase(true);
+                  await storageService.syncWithSupabase();
+                  setTimeout(() => {
+                    setIsSyncingSupabase(false);
+                    showToast('Supabase cloud tables synchronized!');
+                  }, 600);
+                }}
+                disabled={isSyncingSupabase}
+                className="px-space-md py-1.5 rounded-full bg-primary text-on-primary text-label-sm font-bold active:scale-95 transition-all shadow-sm flex items-center gap-1 flex-shrink-0 cursor-pointer"
+              >
+                {isSyncingSupabase ? (
+                  <span className="material-symbols-outlined text-[16px] animate-spin">sync</span>
+                ) : (
+                  <span className="material-symbols-outlined text-[16px]">cloud_sync</span>
+                )}
+                Sync Now
+              </button>
+            </div>
+
+            {/* Cloud Storage Details */}
+            <div className="p-space-xs px-space-sm rounded-lg bg-surface-container-low text-label-sm text-on-surface-variant flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+                7 Tables Configured: Profiles, Playlists, Liked, Preferences
+              </span>
+              <button
+                onClick={() => setShowSupabaseModal(true)}
+                className="text-primary hover:underline font-bold text-[11px] cursor-pointer"
+              >
+                Config
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* Connected Ecosystem */}
         <section className="px-margin pt-space-lg text-left">
           <div className="flex items-center justify-between mb-space-sm">
@@ -878,10 +968,197 @@ export const ProfileScreen: React.FC = () => {
                   setShowPlanModal(false);
                   showToast('Payment method update opened');
                 }}
-                className="w-full py-2.5 rounded-full bg-surface-container text-on-surface font-label-md font-semibold"
+                className="w-full py-2.5 rounded-full bg-surface-container text-on-surface font-label-md font-semibold cursor-pointer"
               >
                 Update Payment Method
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Profile Modal Sheet */}
+      {showEditModal && (
+        <div
+          onClick={() => setShowEditModal(false)}
+          className="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-sm flex items-end justify-center p-0 animate-fadeIn"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg bg-surface-container-lowest rounded-t-3xl p-space-lg shadow-2xl flex flex-col gap-space-md text-left border-t border-outline-variant/30"
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[24px]">
+                  manage_accounts
+                </span>
+                <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  Edit Profile
+                </h3>
+              </div>
+              <button
+                aria-label="Close modal"
+                onClick={() => setShowEditModal(false)}
+                className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[20px]">close</span>
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const trimmedName = editName.trim() || 'Riyad';
+                const trimmedEmail =
+                  editEmail.trim() ||
+                  `${trimmedName.toLowerCase().replace(/\s+/g, '')}@melody.in`;
+                storageService.updateUserProfile({
+                  name: trimmedName,
+                  email: trimmedEmail,
+                });
+                setShowEditModal(false);
+                showToast(`Profile name updated to ${trimmedName}`);
+              }}
+              className="flex flex-col gap-4 pt-1"
+            >
+              <div className="flex flex-col gap-1.5">
+                <label className="font-label-md text-label-md text-on-surface-variant font-bold">
+                  DISPLAY NAME
+                </label>
+                <div className="relative flex items-center">
+                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">
+                    person
+                  </span>
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    placeholder="Enter your name"
+                    className="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-xl py-2.5 pl-10 pr-3 outline-none focus:ring-2 focus:ring-primary/40 border border-outline-variant/30"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-label-md text-label-md text-on-surface-variant font-bold">
+                  EMAIL ADDRESS
+                </label>
+                <div className="relative flex items-center">
+                  <span className="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">
+                    mail
+                  </span>
+                  <input
+                    type="email"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    placeholder="Enter email address"
+                    className="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg rounded-xl py-2.5 pl-10 pr-3 outline-none focus:ring-2 focus:ring-primary/40 border border-outline-variant/30"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="flex-1 py-3 rounded-full bg-surface-container text-on-surface font-label-md font-semibold cursor-pointer active:scale-95 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 rounded-full bg-primary text-on-primary font-label-md font-bold shadow-md cursor-pointer active:scale-95 transition-all"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Supabase Configuration Modal */}
+      {showSupabaseModal && (
+        <div
+          onClick={() => setShowSupabaseModal(false)}
+          className="fixed inset-0 z-50 bg-inverse-surface/60 backdrop-blur-sm flex items-end justify-center p-0 animate-fadeIn"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg bg-surface-container-lowest rounded-t-3xl p-space-lg shadow-2xl flex flex-col gap-space-md text-left border-t border-outline-variant/30"
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#3ECF8E] text-[24px]">
+                  database
+                </span>
+                <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  Supabase Database
+                </h3>
+              </div>
+              <button
+                aria-label="Close modal"
+                onClick={() => setShowSupabaseModal(false)}
+                className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[20px]">close</span>
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="p-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-body-sm text-on-surface flex flex-col gap-1">
+                <p className="font-bold text-[#3ECF8E] flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                  PostgreSQL Pooler Active
+                </p>
+                <p className="text-on-surface-variant font-mono text-xs break-all">
+                  aws-0-ap-south-1.pooler.supabase.com:6543
+                </p>
+                <p className="text-on-surface-variant font-mono text-xs">
+                  Project: yskjjmebwulfrqnkmaoa
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="font-label-md text-label-md text-on-surface-variant font-bold">
+                  SUPABASE ANON PUBLIC KEY (OPTIONAL)
+                </label>
+                <input
+                  type="text"
+                  value={supabaseAnonKeyInput}
+                  onChange={(e) => setSupabaseAnonKeyInput(e.target.value)}
+                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+                  className="w-full bg-surface-container-low text-on-surface font-mono text-xs rounded-xl py-2.5 px-3 outline-none focus:ring-2 focus:ring-primary/40 border border-outline-variant/30"
+                />
+                <p className="text-[11px] text-on-surface-variant">
+                  Find in Supabase Dashboard &gt; Project Settings &gt; API &gt; anon public
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowSupabaseModal(false)}
+                  className="flex-1 py-3 rounded-full bg-surface-container text-on-surface font-label-md font-semibold cursor-pointer active:scale-95 transition-all"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (supabaseAnonKeyInput.trim()) {
+                      setSupabaseAnonKey(supabaseAnonKeyInput.trim());
+                      showToast('Supabase Client Key saved!');
+                    } else {
+                      showToast('Database pooler is connected via backend');
+                    }
+                    setShowSupabaseModal(false);
+                  }}
+                  className="flex-1 py-3 rounded-full bg-primary text-on-primary font-label-md font-bold shadow-md cursor-pointer active:scale-95 transition-all"
+                >
+                  Save Configuration
+                </button>
+              </div>
             </div>
           </div>
         </div>

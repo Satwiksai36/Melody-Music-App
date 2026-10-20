@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/common/Header';
 import { usePlayer } from '../context/PlayerContext';
@@ -10,9 +10,15 @@ export const HomeScreen: React.FC = () => {
   const navigate = useNavigate();
   const { currentTrack, isPlaying, playTrack, togglePlayPause, isLiked, toggleLike } = usePlayer();
 
-  const userProfile = storageService.getUserProfile();
-  const userName = userProfile.name || 'Riyad';
-  const firstName = userName.split(' ')[0] || userName;
+  const [userProfile, setUserProfile] = useState(() => storageService.getUserProfile());
+  const userName = userProfile.name || '';
+  const firstName = userName.split(' ')[0] || 'there';
+
+  useEffect(() => {
+    return storageService.subscribeToProfile((updated) => {
+      setUserProfile(updated);
+    });
+  }, []);
 
   const [activeGenre, setActiveGenre] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
