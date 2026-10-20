@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/common/Header';
 import { usePlayer } from '../context/PlayerContext';
 import { MOCK_TRACKS } from '../data/mockData';
@@ -7,8 +6,7 @@ import { Track } from '../types';
 import { storageService } from '../services/storageService';
 
 export const LibraryScreen: React.FC = () => {
-  const navigate = useNavigate();
-  const { currentTrack, isPlaying, playTrack, togglePlayPause, likedTrackIds } = usePlayer();
+  const { currentTrack, isPlaying, playTrack, togglePlayPause } = usePlayer();
 
   const [activeCategory, setActiveCategory] = useState<string>('playlists');
   const [sortOption, setSortOption] = useState<string>('Recently Added');
@@ -17,9 +15,6 @@ export const LibraryScreen: React.FC = () => {
   const [newPlaylistTitle, setNewPlaylistTitle] = useState<string>('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [activeOfflineIndex, setActiveOfflineIndex] = useState<number>(0);
-  const [followedArtistIds, setFollowedArtistIds] = useState<string[]>(() =>
-    storageService.getFollowedArtistIds()
-  );
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -190,7 +185,6 @@ export const LibraryScreen: React.FC = () => {
 
   const handleToggleArtistFollow = (artistId: string, artistName: string) => {
     const updated = storageService.toggleFollowArtist(artistId);
-    setFollowedArtistIds(updated);
     const isNowFollowing = updated.includes(artistId);
     showToast(isNowFollowing ? `Following ${artistName}` : `Unfollowed ${artistName}`);
   };
@@ -602,7 +596,7 @@ export const LibraryScreen: React.FC = () => {
                         className="w-full h-full object-cover"
                         src={song.coverUrl}
                       />
-                      {isSelected && (
+                      {(isSelected || isSongPlaying) && (
                         <div className="song-overlay absolute inset-0 bg-primary/20 flex items-center justify-center">
                           <span className="song-icon material-symbols-outlined text-on-primary text-[20px]">
                             volume_up

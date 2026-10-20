@@ -79,6 +79,7 @@ class SpotifyPlayerService {
 
   getStatus(): PlaybackStatus { return this._status; }
   getPosition(): PlaybackPosition | null { return this._position; }
+  getCurrentTrack(): MusicTrack | null { return this._currentTrack; }
 
   onStatusChange(cb: StatusListener): () => void {
     this.statusListeners.add(cb);
@@ -102,7 +103,7 @@ class SpotifyPlayerService {
    * Returns true if Premium full-track playback is available.
    * Returns false if only 30-second previews are possible.
    */
-  async initialize(accessToken: string): Promise<boolean> {
+  async initialize(_accessToken?: string): Promise<boolean> {
     this.setStatus('connecting');
 
     try {

@@ -111,7 +111,7 @@ export const OnboardingScreen: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col relative w-full pb-32 pt-safe bg-surface min-h-screen select-none overflow-y-auto no-scrollbar">
+    <div className="flex-1 flex flex-col relative w-full pt-safe bg-surface select-none h-full min-h-0 overflow-hidden">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="absolute top-16 left-1/2 -translate-x-1/2 z-[70] px-4 py-2.5 rounded-full bg-inverse-surface/90 backdrop-blur-md text-inverse-on-surface text-body-sm shadow-xl flex items-center gap-2 animate-fadeIn whitespace-nowrap">
@@ -122,8 +122,8 @@ export const OnboardingScreen: React.FC = () => {
         </div>
       )}
 
-      <main className="flex-1 flex flex-col relative w-full bg-surface">
-        <div className="flex flex-col w-full min-w-0 pb-16">
+      <main className="flex-1 overflow-y-auto no-scrollbar w-full flex flex-col min-h-0">
+        <div className="flex flex-col w-full min-w-0 pb-6">
           {/* Top Navigation & Stepper Header */}
           <div className="px-margin pt-2 pb-2 flex items-center justify-between">
             <button
@@ -272,12 +272,12 @@ export const OnboardingScreen: React.FC = () => {
         </div>
       </main>
 
-      {/* Floating Bottom Button */}
-      <div className="absolute bottom-0 left-0 right-0 p-margin bg-gradient-to-t from-surface via-surface/90 to-transparent pt-6 z-40 w-full">
+      {/* Docked Bottom Floating Action Button */}
+      <div className="flex-shrink-0 w-full px-margin pb-safe pt-3 bg-gradient-to-t from-surface via-surface/95 to-transparent z-40">
         <button
           id="continueBtn"
           onClick={() => handleComplete(selectedIds)}
-          className="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-[0_8px_24px_rgba(91,66,243,0.35)] flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer"
+          className="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-[0_8px_24px_rgba(91,66,243,0.35)] flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer mb-2"
         >
           <span>Continue with {selectedIds.length} Languages</span>
           <span className="material-symbols-outlined text-[20px]">arrow_forward</span>

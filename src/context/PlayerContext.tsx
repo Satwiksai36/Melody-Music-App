@@ -6,7 +6,6 @@ import {
   spotifyAuth,
   spotifyPlayer,
   resolveTrackOnSpotify,
-  musicTrackToInternalTrack,
   getSpotifyTrackId,
 } from '../services/spotify';
 import type { MusicAuthUser, PlaybackStatus } from '../services/spotify';

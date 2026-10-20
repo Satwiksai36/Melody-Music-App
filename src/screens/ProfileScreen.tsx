@@ -11,8 +11,6 @@ export const ProfileScreen: React.FC = () => {
     spotifyStatus,
     spotifyUser,
     isSpotifyPremium,
-    isPreviewMode,
-    playbackStatus,
     playbackError,
     connectSpotify,
     disconnectSpotify,
@@ -31,9 +29,9 @@ export const ProfileScreen: React.FC = () => {
   const [showPlanModal, setShowPlanModal] = useState<boolean>(false);
 
   // Languages state
-  const [languages, setLanguages] = useState<string[]>(() =>
-    storageService.getSelectedLanguages().map((l) => `${l.charAt(0).toUpperCase() + l.slice(1)}`)
-  );
+  const languages = storageService
+    .getSelectedLanguages()
+    .map((l) => `${l.charAt(0).toUpperCase() + l.slice(1)}`);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);

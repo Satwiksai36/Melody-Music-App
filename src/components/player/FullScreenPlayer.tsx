@@ -36,7 +36,6 @@ export const FullScreenPlayer: React.FC<FullScreenPlayerProps> = ({ onBack, forc
   } = usePlayer();
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [isLyricsExpanded, setIsLyricsExpanded] = useState<boolean>(false);
   const [showDeviceModal, setShowDeviceModal] = useState<boolean>(false);
   const [showQueueModal, setShowQueueModal] = useState<boolean>(false);
   const [currentDevice, setCurrentDevice] = useState<string>('Melody Stream • HD Audio 24-bit');

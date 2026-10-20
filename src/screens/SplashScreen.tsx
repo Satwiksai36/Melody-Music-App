@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MelodyAnimatedLogo } from '../components/common/MelodyAnimatedLogo';
+import { storageService } from '../services/storageService';
 
 export const SplashScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -41,11 +42,14 @@ export const SplashScreen: React.FC = () => {
     return () => clearInterval(interval);
   }, [statuses.length]);
 
-  // Auto-redirect to /home after calibration completes
+  // Auto-redirect after calibration completes:
+  // - First-time / not registered: redirect to /auth
+  // - Registered user: redirect to /home
   useEffect(() => {
     if (step >= statuses.length - 1) {
       autoNavTimeoutRef.current = window.setTimeout(() => {
-        navigate('/home');
+        const isRegistered = storageService.getUserProfile().isLoggedIn;
+        navigate(isRegistered ? '/home' : '/auth');
       }, 900);
     }
 
@@ -56,9 +60,14 @@ export const SplashScreen: React.FC = () => {
     };
   }, [step, statuses.length, navigate]);
 
+  const handleSkip = () => {
+    const isRegistered = storageService.getUserProfile().isLoggedIn;
+    navigate(isRegistered ? '/home' : '/auth');
+  };
+
   return (
     <main
-      onClick={() => navigate('/home')}
+      onClick={handleSkip}
       className="flex-1 flex flex-col relative w-full bg-surface pt-safe pb-safe h-full min-h-full justify-between items-center px-margin py-6 select-none overflow-hidden cursor-pointer"
     >
       {/* Ambient Gradient Light Pods (Pure CSS, Smooth & Lightweight) */}

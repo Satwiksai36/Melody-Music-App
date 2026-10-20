@@ -4,7 +4,7 @@
  * Designed to be easily swapped with an API/backend in Phase 3.
  */
 
-import { Track, Playlist, Artist } from '../types';
+import { Track, Playlist } from '../types';
 import { MOCK_PLAYLISTS, MOCK_TRACKS } from '../data/mockData';
 
 export interface UserPreferences {
@@ -57,7 +57,7 @@ const DEFAULT_PROFILE: UserProfile = {
   avatarUrl:
     'https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w',
   tier: 'HiFi Lossless Family Master',
-  isLoggedIn: true,
+  isLoggedIn: false,
   joinedDate: 'Member since Oct 2023',
 };
 

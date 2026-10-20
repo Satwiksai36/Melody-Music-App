@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MelodyAnimatedLogo } from './MelodyAnimatedLogo';
 
 interface HeaderProps {
@@ -9,9 +9,6 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, showBack = false }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const isHome = location.pathname === '/home' || location.pathname === '/';
 
   return (
     <header className="sticky top-0 left-0 right-0 z-40 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] w-full">
