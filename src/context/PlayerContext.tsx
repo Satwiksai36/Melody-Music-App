@@ -402,6 +402,8 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     spotifyPlayer.setVolume(clamped * 100);
   };
 
+  const toggleMute = () => setIsMuted((prev) => !prev);
+
   // ─── MediaSession API (Android Notification & Lock Screen Controls) ────────
   useEffect(() => {
     if (typeof window === 'undefined' || !('mediaSession' in navigator)) return;
