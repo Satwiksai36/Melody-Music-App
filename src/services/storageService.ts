@@ -1,11 +1,13 @@
 /**
  * Storage Service Abstraction for Melody Music Streaming App
  * Provides safe typed access to persistent storage.
- * Designed to be easily swapped with an API/backend in Phase 3.
+ * Seamlessly integrates with Supabase for cloud persistence
+ * with immediate local cache fallback.
  */
 
 import { Track, Playlist } from '../types';
 import { MOCK_PLAYLISTS, MOCK_TRACKS } from '../data/mockData';
+import { getSupabaseClient } from './supabaseClient';
 
 export interface UserPreferences {
   audioQuality: 'lossless-24bit' | 'hi-res-lossless' | 'high-320kbps' | 'standard';
@@ -51,17 +53,26 @@ const DEFAULT_PREFERENCES: UserPreferences = {
 };
 
 const DEFAULT_PROFILE: UserProfile = {
-  id: 'user-ananya-sharma',
-  name: 'Ananya Sharma',
-  email: 'ananya.sharma@example.com',
+  id: 'user-riyad',
+  name: 'Riyad',
+  email: 'riyad@melody.in',
   avatarUrl:
     'https://lh3.googleusercontent.com/aida-public/AB6AXuCRqS3qnQM5TbuqkL-P8_DiCnVXHXj3zMndoTzztD80V9GvZGSFXyHg5dOp0tzLlVagK_rs7PcrvURmclXBFOfNt_bXWlcsw9TVsHWd5nSI7tMzMMk6zE8SVzo_WYyKHif98280rTf_JwqEyWAzvRFDgUxLA0N9rrzxjIi0O-t2CgOrIHcPJNuxO6tzc7PINQeMnR9SpOMs7DdU_77pBlA15-K14QAlLePN6ZvtkBmPkNu-w5vnCiKm4w',
-  tier: 'HiFi Lossless Family Master',
+  tier: 'Melody HiFi Pro',
   isLoggedIn: false,
-  joinedDate: 'Member since Oct 2023',
+  joinedDate: 'Member since Oct 2024',
 };
 
 class StorageService {
+  private listeners: Set<(profile: UserProfile) => void> = new Set();
+
+  constructor() {
+    // Attempt initial background sync with Supabase
+    if (typeof window !== 'undefined') {
+      setTimeout(() => this.syncWithSupabase(), 1000);
+    }
+  }
+
   private safeGet<T>(key: string, defaultValue: T): T {
     try {
       const item = localStorage.getItem(key);
@@ -81,6 +92,30 @@ class StorageService {
     }
   }
 
+  // Subscribe to profile changes across any screen
+  subscribeToProfile(cb: (profile: UserProfile) => void): () => void {
+    this.listeners.add(cb);
+    return () => {
+      this.listeners.delete(cb);
+    };
+  }
+
+  private notifyProfileListeners(profile: UserProfile) {
+    this.listeners.forEach((cb) => {
+      try {
+        cb(profile);
+      } catch (err) {
+        console.warn('[StorageService] Error in profile listener:', err);
+      }
+    });
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('melody_user_profile_updated', { detail: profile })
+      );
+    }
+  }
+
   // Liked Tracks
   getLikedTrackIds(): string[] {
     return this.safeGet<string[]>(STORAGE_KEYS.LIKED_TRACKS, ['samaja', 'pushpa-pushpa']);
@@ -88,6 +123,7 @@ class StorageService {
 
   setLikedTrackIds(ids: string[]): void {
     this.safeSet(STORAGE_KEYS.LIKED_TRACKS, ids);
+    this.syncLikedTracksToSupabase(ids);
   }
 
   toggleLikeTrack(trackId: string): string[] {
@@ -124,6 +160,7 @@ class StorageService {
 
   savePlaylists(playlists: Playlist[]): void {
     this.safeSet(STORAGE_KEYS.PLAYLISTS, playlists);
+    this.syncPlaylistsToSupabase(playlists);
   }
 
   createPlaylist(title: string, description: string = 'User Playlist'): Playlist {
@@ -160,7 +197,7 @@ class StorageService {
   addTrackToPlaylist(playlistId: string, track: Track): Playlist[] {
     const playlists = this.getPlaylists().map((p) => {
       if (p.id !== playlistId) return p;
-      if (p.tracks.some((t) => t.id === track.id)) return p; // already added
+      if (p.tracks.some((t) => t.id === track.id)) return p;
       const newTracks = [...p.tracks, track];
       const totalSecs = newTracks.reduce((acc, t) => acc + (t.duration || 200), 0);
       const mins = Math.floor(totalSecs / 60);
@@ -201,6 +238,7 @@ class StorageService {
     const current = this.getPreferences();
     const updated = { ...current, ...prefs };
     this.safeSet(STORAGE_KEYS.PREFERENCES, updated);
+    this.syncPreferencesToSupabase(updated);
     return updated;
   }
 
@@ -211,8 +249,10 @@ class StorageService {
 
   updateUserProfile(profile: Partial<UserProfile>): UserProfile {
     const current = this.getUserProfile();
-    const updated = { ...current, ...profile };
+    const updated: UserProfile = { ...current, ...profile };
     this.safeSet(STORAGE_KEYS.PROFILE, updated);
+    this.notifyProfileListeners(updated);
+    this.syncProfileToSupabase(updated);
     return updated;
   }
 
@@ -247,27 +287,135 @@ class StorageService {
 
   // Cache calculation & cleanup
   getStorageUsageMB(): number {
-    try {
-      let totalLength = 0;
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key) {
-          totalLength += (localStorage.getItem(key) || '').length;
-        }
-      }
-      // Simulate realistic media cache size for the 4.2 GB UI meter
-      return 4.2;
-    } catch {
-      return 4.2;
-    }
+    return 4.2;
   }
 
   clearAppCache(): void {
     try {
-      // Clear playback cache items without wiping core profile
       localStorage.removeItem(STORAGE_KEYS.RECENTLY_PLAYED);
     } catch (e) {
       console.warn('Failed to clear cache:', e);
+    }
+  }
+
+  // ----------------------------------------------------
+  // Supabase Cloud Synchronization Layer
+  // ----------------------------------------------------
+  public async syncWithSupabase(): Promise<void> {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+      const currentProfile = this.getUserProfile();
+      const { data, error } = await client
+        .from('users_profile')
+        .select('*')
+        .eq('id', currentProfile.id || 'user-riyad')
+        .maybeSingle();
+
+      if (data && !error) {
+        const merged: UserProfile = {
+          id: data.id,
+          name: data.name || currentProfile.name,
+          email: data.email || currentProfile.email,
+          phone: data.phone || currentProfile.phone,
+          avatarUrl: data.avatar_url || currentProfile.avatarUrl,
+          tier: data.tier || currentProfile.tier,
+          isLoggedIn: data.is_logged_in ?? currentProfile.isLoggedIn,
+          joinedDate: data.joined_date || currentProfile.joinedDate,
+        };
+        this.safeSet(STORAGE_KEYS.PROFILE, merged);
+        this.notifyProfileListeners(merged);
+        console.log('[Melody Supabase] Synchronized profile from Supabase:', merged.name);
+      }
+    } catch (e) {
+      console.warn('[Melody Supabase] Background sync failed:', e);
+    }
+  }
+
+  private async syncProfileToSupabase(profile: UserProfile): Promise<void> {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+      await client.from('users_profile').upsert({
+        id: profile.id || 'user-riyad',
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone || null,
+        avatar_url: profile.avatarUrl,
+        tier: profile.tier,
+        is_logged_in: profile.isLoggedIn,
+        joined_date: profile.joinedDate,
+        updated_at: new Date().toISOString(),
+      });
+      console.log('[Melody Supabase] Upserted profile to Supabase:', profile.name);
+    } catch (e) {
+      console.warn('[Melody Supabase] Failed to upsert profile:', e);
+    }
+  }
+
+  private async syncPlaylistsToSupabase(playlists: Playlist[]): Promise<void> {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+      const profile = this.getUserProfile();
+      for (const pl of playlists) {
+        await client.from('user_playlists').upsert({
+          id: pl.id,
+          user_id: profile.id || 'user-riyad',
+          title: pl.title,
+          description: pl.description || '',
+          cover_url: pl.coverUrl || '',
+          track_count: pl.trackCount || 0,
+          duration_text: pl.durationText || '',
+          tracks: pl.tracks || [],
+          updated_at: new Date().toISOString(),
+        });
+      }
+    } catch (e) {
+      console.warn('[Melody Supabase] Failed to sync playlists:', e);
+    }
+  }
+
+  private async syncLikedTracksToSupabase(trackIds: string[]): Promise<void> {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+      const profile = this.getUserProfile();
+      for (const trackId of trackIds) {
+        await client.from('user_liked_tracks').upsert({
+          user_id: profile.id || 'user-riyad',
+          track_id: trackId,
+        });
+      }
+    } catch (e) {
+      console.warn('[Melody Supabase] Failed to sync liked tracks:', e);
+    }
+  }
+
+  private async syncPreferencesToSupabase(prefs: UserPreferences): Promise<void> {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+      const profile = this.getUserProfile();
+      await client.from('user_preferences').upsert({
+        user_id: profile.id || 'user-riyad',
+        audio_quality: prefs.audioQuality,
+        dolby_atmos: prefs.dolbyAtmos,
+        normalize_volume: prefs.normalizeVolume,
+        crossfade_seconds: prefs.crossfadeSeconds,
+        offline_downloads: prefs.offlineDownloads,
+        download_quality: prefs.downloadQuality,
+        cellular_streaming: prefs.cellularStreaming,
+        equalizer_preset: prefs.equalizerPreset,
+        updated_at: new Date().toISOString(),
+      });
+    } catch (e) {
+      console.warn('[Melody Supabase] Failed to sync preferences:', e);
     }
   }
 }

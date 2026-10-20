@@ -4,10 +4,15 @@ import { Header } from '../components/common/Header';
 import { usePlayer } from '../context/PlayerContext';
 import { MOCK_TRACKS } from '../data/mockData';
 import { Track } from '../types';
+import { storageService } from '../services/storageService';
 
 export const HomeScreen: React.FC = () => {
   const navigate = useNavigate();
   const { currentTrack, isPlaying, playTrack, togglePlayPause, isLiked, toggleLike } = usePlayer();
+
+  const userProfile = storageService.getUserProfile();
+  const userName = userProfile.name || 'Riyad';
+  const firstName = userName.split(' ')[0] || userName;
 
   const [activeGenre, setActiveGenre] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -213,8 +218,8 @@ export const HomeScreen: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
               <div className="flex items-center gap-space-xs">
-                <span className="font-headline-md text-headline-md text-on-surface tracking-tight">
-                  Hey Riyad!
+                <span className="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">
+                  Hey {firstName}!
                 </span>
                 <span
                   onClick={() => {

@@ -273,7 +273,7 @@ export const OnboardingScreen: React.FC = () => {
       </main>
 
       {/* Docked Bottom Floating Action Button */}
-      <div className="flex-shrink-0 w-full px-margin pb-safe pt-3 bg-gradient-to-t from-surface via-surface/95 to-transparent z-40">
+      <div className="flex-shrink-0 w-full px-margin pb-5 sm:pb-7 pt-4 bg-gradient-to-t from-surface via-surface/95 to-transparent z-40">
         <button
           id="continueBtn"
           onClick={() => handleComplete(selectedIds)}

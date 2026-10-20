@@ -6,6 +6,7 @@ import { storageService } from '../services/storageService';
 export const AuthScreen: React.FC = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<'signin' | 'signup'>('signin');
+  const [fullName, setFullName] = useState('');
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,9 +19,10 @@ export const AuthScreen: React.FC = () => {
   };
 
   const fillDemoPhone = () => {
-    setIdentifier('arjun.reddy@melody.in');
-    setPassword('Tollywood2024!');
-    showToast('Demo credentials filled');
+    setFullName('Riyad');
+    setIdentifier('riyad@melody.in');
+    setPassword('Tollywood2026!');
+    showToast('Demo credentials filled: Riyad');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -43,14 +45,26 @@ export const AuthScreen: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
       const isEmail = cleanId.includes('@');
-      const displayName = isEmail ? cleanId.split('@')[0] : 'Arjun Reddy';
+      let displayName = fullName.trim();
+      if (!displayName) {
+        if (isEmail) {
+          const rawName = cleanId.split('@')[0];
+          displayName = rawName
+            .split(/[._-]+/)
+            .filter(Boolean)
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+            .join(' ');
+        } else {
+          displayName = 'Riyad';
+        }
+      }
       storageService.updateUserProfile({
         name: displayName,
-        email: isEmail ? cleanId : 'arjun.reddy@melody.in',
+        email: isEmail ? cleanId : `${displayName.toLowerCase().replace(/\s+/g, '')}@melody.in`,
         phone: !isEmail ? cleanId : '+91 98765 43210',
         isLoggedIn: true,
       });
-      showToast(tab === 'signin' ? `Welcome back, ${displayName}!` : 'Account created successfully!');
+      showToast(tab === 'signin' ? `Welcome back, ${displayName}!` : `Account created for ${displayName}!`);
       setTimeout(() => {
         navigate('/onboarding');
       }, 700);
@@ -59,12 +73,12 @@ export const AuthScreen: React.FC = () => {
 
   const handleSocialAuth = (provider: string) => {
     setIsLoading(true);
-    showToast(`Demo Sign-In: Connecting with ${provider}...`);
+    showToast(`Connecting with ${provider}...`);
     setTimeout(() => {
       setIsLoading(false);
       storageService.updateUserProfile({
-        name: `${provider} User`,
-        email: `user@${provider.toLowerCase().replace(/\s+/g, '')}.com`,
+        name: 'Riyad',
+        email: 'riyad@melody.in',
         isLoggedIn: true,
       });
       navigate('/onboarding');

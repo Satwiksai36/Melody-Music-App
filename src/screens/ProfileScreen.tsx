@@ -16,7 +16,11 @@ export const ProfileScreen: React.FC = () => {
     disconnectSpotify,
   } = usePlayer();
 
-  // Load preferences from storageService
+  // Load profile & preferences from storageService
+  const userProfile = storageService.getUserProfile();
+  const userName = userProfile.name || 'Riyad';
+  const userHandle = `@${userName.toLowerCase().replace(/[^a-z0-9]/g, '.')}.melody`;
+
   const initialPrefs = storageService.getPreferences();
   const [crossfadeActive, setCrossfadeActive] = useState<boolean>(initialPrefs.crossfadeSeconds > 0);
   const [normalizeActive, setNormalizeActive] = useState<boolean>(initialPrefs.normalizeVolume);
@@ -83,9 +87,9 @@ export const ProfileScreen: React.FC = () => {
               <div className="relative mb-space-sm group">
                 <div className="w-24 h-24 rounded-full p-[3px] bg-gradient-to-tr from-secondary-container via-primary-container to-primary shadow-md">
                   <img
-                    alt="Ananya Sharma"
+                    alt={userName}
                     className="w-full h-full rounded-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Nca8Wryg-0g7h4gBFqPVv1UPDP5UmCGwM5xFNrhfEzvncZlNrLjwwHm7YFoQT8Z_hMaPjO9g-P-hLU_4jm5SrOA-7i5p6UtaiZijMPu3PD-cWHXuOt_Qp3yLliS6iiMFh6dH8xEgudGQAbLPQx8aW2Pdiqd58gLxfvO2Xfa8JNaV0EHwEqlfLlif6yxxdiv4flgqG5vOh5ocg9xavF4CnwGX6e9hLxRXE6P1RHPuITjZUqivdZQ6cw"
+                    src={userProfile.avatarUrl || "https://lh3.googleusercontent.com/aida-public/AB6AXuB_Nca8Wryg-0g7h4gBFqPVv1UPDP5UmCGwM5xFNrhfEzvncZlNrLjwwHm7YFoQT8Z_hMaPjO9g-P-hLU_4jm5SrOA-7i5p6UtaiZijMPu3PD-cWHXuOt_Qp3yLliS6iiMFh6dH8xEgudGQAbLPQx8aW2Pdiqd58gLxfvO2Xfa8JNaV0EHwEqlfLlif6yxxdiv4flgqG5vOh5ocg9xavF4CnwGX6e9hLxRXE6P1RHPuITjZUqivdZQ6cw"}
                   />
                 </div>
                 <button
@@ -100,7 +104,7 @@ export const ProfileScreen: React.FC = () => {
               {/* Name & Identity */}
               <div className="flex items-center gap-space-xs mb-1">
                 <h2 className="font-headline-md text-headline-md text-on-surface font-bold">
-                  Ananya Sharma
+                  {userName}
                 </h2>
                 <span
                   className="material-symbols-outlined text-primary text-[20px]"
@@ -110,7 +114,7 @@ export const ProfileScreen: React.FC = () => {
                 </span>
               </div>
               <p className="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
-                @ananya.melody
+                {userHandle}
               </p>
 
               {/* Membership Badge */}
