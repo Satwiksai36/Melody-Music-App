@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/common/Header';
 import { storageService } from '../services/storageService';
+import { usePlayer } from '../context/PlayerContext';
 
 export const ProfileScreen: React.FC = () => {
   const navigate = useNavigate();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const {
+    spotifyStatus,
+    spotifyUser,
+    isSpotifyPremium,
+    isPreviewMode,
+    playbackStatus,
+    playbackError,
+    connectSpotify,
+    disconnectSpotify,
+  } = usePlayer();
 
   // Load preferences from storageService
   const initialPrefs = storageService.getPreferences();
@@ -574,6 +585,109 @@ export const ProfileScreen: React.FC = () => {
                 <span>{cacheSize === '0 MB' ? 'Cleared' : 'Clear Cache'}</span>
               </button>
             </div>
+          </div>
+        </section>
+
+        {/* Authorized Music Service Integration */}
+        <section className="px-margin pt-space-lg text-left">
+          <div className="flex items-center justify-between mb-space-sm">
+            <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+              Music Streaming Service
+            </h3>
+            <span className="font-label-sm text-label-sm text-primary uppercase tracking-wider font-bold">
+              {spotifyStatus === 'connected' ? 'Authorized' : 'Optional'}
+            </span>
+          </div>
+
+          <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-space-sm min-w-0">
+                <div className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm ${
+                  spotifyStatus === 'connected'
+                    ? 'bg-[#1DB954] text-white'
+                    : 'bg-surface-container-high text-on-surface-variant'
+                }`}>
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.494 17.306c-.215.353-.677.466-1.03.251-2.825-1.726-6.381-2.117-10.569-1.161-.403.092-.806-.157-.899-.56-.092-.403.157-.806.56-.899 4.593-1.049 8.528-.609 11.687 1.339.353.215.466.677.251 1.03zm1.467-3.26c-.27.441-.849.58-1.29.31-3.235-1.988-8.167-2.563-11.994-1.401-.497.151-1.026-.134-1.177-.631-.151-.497.134-1.026.631-1.177 4.38-1.329 9.809-.691 13.52 1.599.441.27.58.849.31 1.29zm.126-3.396C15.215 8.35 8.831 8.139 5.137 9.261c-.596.181-1.229-.158-1.41-.754-.181-.596.158-1.229.754-1.41 4.249-1.29 11.298-1.044 15.753 1.601.536.318.71 1.011.392 1.547-.318.536-1.011.71-1.547.392z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <p className="font-title-md text-title-md text-on-surface font-semibold">
+                      Spotify Service
+                    </p>
+                    {spotifyStatus === 'connected' && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#1DB954]/15 text-[#1DB954]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954] animate-pulse"></span>
+                        {isSpotifyPremium ? 'Premium SDK' : 'Free Preview'}
+                      </span>
+                    )}
+                  </div>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant truncate">
+                    {spotifyStatus === 'connected' && spotifyUser
+                      ? `${spotifyUser.name || spotifyUser.id} (${spotifyUser.email || 'Authorized'})`
+                      : spotifyStatus === 'connecting'
+                      ? 'Connecting to Spotify...'
+                      : 'Not connected • Local fallback audio active'}
+                  </p>
+                </div>
+              </div>
+
+              {spotifyStatus === 'connected' ? (
+                <button
+                  onClick={() => {
+                    disconnectSpotify();
+                    showToast('Disconnected from Spotify');
+                  }}
+                  className="px-space-sm py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-variant text-label-sm font-semibold active:scale-95 transition-all flex-shrink-0"
+                >
+                  Disconnect
+                </button>
+              ) : (
+                <button
+                  onClick={async () => {
+                    try {
+                      await connectSpotify();
+                    } catch (err: any) {
+                      showToast(err?.message || 'Could not initiate Spotify connection');
+                    }
+                  }}
+                  disabled={spotifyStatus === 'connecting'}
+                  className="px-space-md py-1.5 rounded-full bg-[#1DB954] text-white hover:bg-[#1AA34A] text-label-sm font-bold active:scale-95 transition-all shadow-sm flex items-center gap-1 flex-shrink-0"
+                >
+                  {spotifyStatus === 'connecting' ? (
+                    <span className="material-symbols-outlined text-[16px] animate-spin">
+                      progress_activity
+                    </span>
+                  ) : (
+                    <span className="material-symbols-outlined text-[16px]">login</span>
+                  )}
+                  Connect
+                </button>
+              )}
+            </div>
+
+            {/* Mode & Engine details */}
+            <div className="p-space-xs px-space-sm rounded-lg bg-surface-container-low text-label-sm text-on-surface-variant flex items-center justify-between">
+              <span className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[16px] text-primary">verified</span>
+                {spotifyStatus === 'connected'
+                  ? isSpotifyPremium
+                    ? 'Spotify Web Playback SDK • Full Song Playback'
+                    : 'Spotify Web API • 30s High-Quality Previews'
+                  : 'Melody Native Audio Engine • Lossless Indian & Telugu Hits'}
+              </span>
+              <span className="text-[11px] text-primary font-bold uppercase tracking-wider">
+                Active
+              </span>
+            </div>
+
+            {playbackError && (
+              <p className="text-body-sm text-error flex items-center gap-1 pt-1">
+                <span className="material-symbols-outlined text-[16px]">warning</span>
+                {playbackError}
+              </p>
+            )}
           </div>
         </section>
 

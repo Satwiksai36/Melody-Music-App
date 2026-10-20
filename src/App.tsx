@@ -11,6 +11,7 @@ import { LibraryScreen } from './screens/LibraryScreen';
 import { AlbumDetailScreen } from './screens/AlbumDetailScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { PlayerScreen } from './screens/PlayerScreen';
+import SpotifyCallbackScreen from './screens/SpotifyCallbackScreen';
 
 export const App: React.FC = () => {
   return (
@@ -63,6 +64,9 @@ export const App: React.FC = () => {
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/home" replace />} />
+
+          {/* Spotify OAuth Callback — outside AppLayout for full-screen handling */}
+          <Route path="/callback" element={<SpotifyCallbackScreen />} />
         </Routes>
       </BrowserRouter>
     </PlayerProvider>
