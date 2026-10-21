@@ -16,8 +16,13 @@
 
 import type { MusicAuthTokens, MusicAuthUser } from '../music/musicTypes';
 
-const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID as string;
-const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URI as string;
+const CLIENT_ID =
+  (import.meta.env.VITE_SPOTIFY_CLIENT_ID as string) || 'c2b14671c6c3410d80e2e69841fdadad';
+const REDIRECT_URI =
+  (import.meta.env.VITE_SPOTIFY_REDIRECT_URI as string) ||
+  (typeof window !== 'undefined'
+    ? `${window.location.origin}/callback`
+    : 'http://127.0.0.1:5173/callback');
 
 const SCOPES = [
   'streaming',
@@ -62,16 +67,20 @@ async function generateCodeChallenge(verifier: string): Promise<string> {
   return base64urlEncode(await sha256(verifier));
 }
 
-// ─── Token Storage (sessionStorage for access token security) ─────────────────
+// ─── Token Storage (localStorage with sessionStorage fallback) ───────────────
 
 function saveTokens(tokens: MusicAuthTokens): void {
-  // Use sessionStorage so tokens are cleared when the tab closes
-  sessionStorage.setItem(STORAGE_KEYS.TOKENS, JSON.stringify(tokens));
+  try {
+    localStorage.setItem(STORAGE_KEYS.TOKENS, JSON.stringify(tokens));
+  } catch {}
+  try {
+    sessionStorage.setItem(STORAGE_KEYS.TOKENS, JSON.stringify(tokens));
+  } catch {}
 }
 
 function loadTokens(): MusicAuthTokens | null {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEYS.TOKENS);
+    const raw = localStorage.getItem(STORAGE_KEYS.TOKENS) || sessionStorage.getItem(STORAGE_KEYS.TOKENS);
     return raw ? (JSON.parse(raw) as MusicAuthTokens) : null;
   } catch {
     return null;
@@ -79,12 +88,17 @@ function loadTokens(): MusicAuthTokens | null {
 }
 
 function saveUser(user: MusicAuthUser): void {
-  sessionStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+  try {
+    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+  } catch {}
+  try {
+    sessionStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+  } catch {}
 }
 
 function loadUser(): MusicAuthUser | null {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEYS.USER);
+    const raw = localStorage.getItem(STORAGE_KEYS.USER) || sessionStorage.getItem(STORAGE_KEYS.USER);
     return raw ? (JSON.parse(raw) as MusicAuthUser) : null;
   } catch {
     return null;
@@ -92,9 +106,15 @@ function loadUser(): MusicAuthUser | null {
 }
 
 function clearAuth(): void {
-  sessionStorage.removeItem(STORAGE_KEYS.TOKENS);
-  sessionStorage.removeItem(STORAGE_KEYS.USER);
-  sessionStorage.removeItem(STORAGE_KEYS.CODE_VERIFIER);
+  try {
+    localStorage.removeItem(STORAGE_KEYS.TOKENS);
+    localStorage.removeItem(STORAGE_KEYS.USER);
+  } catch {}
+  try {
+    sessionStorage.removeItem(STORAGE_KEYS.TOKENS);
+    sessionStorage.removeItem(STORAGE_KEYS.USER);
+    sessionStorage.removeItem(STORAGE_KEYS.CODE_VERIFIER);
+  } catch {}
 }
 
 // ─── Public Auth API ──────────────────────────────────────────────────────────

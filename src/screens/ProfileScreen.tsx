@@ -48,10 +48,21 @@ export const ProfileScreen: React.FC = () => {
   const [storageText, setStorageText] = useState<string>('4.2 GB of 64 GB');
   const [showPlanModal, setShowPlanModal] = useState<boolean>(false);
 
+  const ARTIST_TO_LANG_MAP: Record<string, string> = {
+    'sid-sriram': 'Telugu',
+    'arijit-singh': 'Hindi',
+    'anirudh': 'Tamil',
+    'diljit-dosanjh': 'Punjabi',
+    'yesudas': 'Malayalam',
+    'the-weeknd': 'English',
+    'vijay-prakash': 'Kannada',
+    'shreya-ghoshal': 'Bengali',
+  };
+
   // Languages state
   const languages = storageService
     .getSelectedLanguages()
-    .map((l) => `${l.charAt(0).toUpperCase() + l.slice(1)}`);
+    .map((l) => ARTIST_TO_LANG_MAP[l.toLowerCase()] || `${l.charAt(0).toUpperCase() + l.slice(1)}`);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);

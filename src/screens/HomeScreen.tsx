@@ -5,10 +5,25 @@ import { usePlayer } from '../context/PlayerContext';
 import { MOCK_TRACKS } from '../data/mockData';
 import { Track } from '../types';
 import { storageService } from '../services/storageService';
+import { spotifyApi, musicTrackToInternalTrack } from '../services/spotify';
 
 export const HomeScreen: React.FC = () => {
   const navigate = useNavigate();
-  const { currentTrack, isPlaying, playTrack, togglePlayPause, isLiked, toggleLike } = usePlayer();
+  const {
+    currentTrack,
+    isPlaying,
+    playTrack,
+    togglePlayPause,
+    isLiked,
+    toggleLike,
+    spotifyStatus,
+    spotifyUser,
+    isSpotifyPremium,
+    connectSpotify,
+  } = usePlayer();
+
+  const [spotifyNewReleases, setSpotifyNewReleases] = useState<Track[]>([]);
+  const [isLoadingSpotify, setIsLoadingSpotify] = useState<boolean>(false);
 
   const [userProfile, setUserProfile] = useState(() => storageService.getUserProfile());
   const userName = userProfile.name || '';
@@ -20,10 +35,49 @@ export const HomeScreen: React.FC = () => {
     });
   }, []);
 
+  const [spotifyTrendingHits, setSpotifyTrendingHits] = useState<Track[]>([]);
+  const [isLoadingTrending, setIsLoadingTrending] = useState<boolean>(false);
+
+  // Load new releases from Spotify on mount
+  useEffect(() => {
+    setIsLoadingSpotify(true);
+    if (typeof spotifyApi.getNewReleases === 'function') {
+      spotifyApi
+        .getNewReleases(12)
+        .then((tracks) => {
+          if (tracks && tracks.length > 0) {
+            setSpotifyNewReleases(tracks.map(musicTrackToInternalTrack));
+          }
+        })
+        .catch((e: unknown) => console.warn('[HomeScreen] Could not load Spotify new releases:', e))
+        .finally(() => setIsLoadingSpotify(false));
+    } else {
+      setIsLoadingSpotify(false);
+    }
+  }, []);
+
   const [activeGenre, setActiveGenre] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [waveWiggle, setWaveWiggle] = useState<boolean>(false);
   const [historyCleared, setHistoryCleared] = useState<boolean>(false);
+
+  // Load trending hits whenever activeGenre changes
+  useEffect(() => {
+    setIsLoadingTrending(true);
+    if (typeof spotifyApi.getGenreTracks === 'function') {
+      spotifyApi
+        .getGenreTracks(activeGenre, 10)
+        .then((tracks) => {
+          if (tracks && tracks.length > 0) {
+            setSpotifyTrendingHits(tracks.map(musicTrackToInternalTrack));
+          }
+        })
+        .catch((e: unknown) => console.warn('[HomeScreen] Could not load genre tracks:', e))
+        .finally(() => setIsLoadingTrending(false));
+    } else {
+      setIsLoadingTrending(false);
+    }
+  }, [activeGenre]);
   const [followingMap, setFollowingMap] = useState<Record<string, boolean>>({
     'sid-sriram': false,
     'arijit-singh': true,
@@ -181,28 +235,33 @@ export const HomeScreen: React.FC = () => {
     },
   ];
 
-  const handlePlaySong = (song: {
+  const handlePlaySong = (song: Track | {
     id: string;
     title: string;
     artist: string;
     coverUrl: string;
     audioUrl?: string;
+    movieOrAlbum?: string;
+    duration?: number;
+    genre?: string;
   }) => {
+    const trackId = song.id.startsWith('spotify:') ? song.id : `spotify:${song.id}`;
     const trackToPlay: Track = {
-      id: song.id,
+      id: trackId,
       title: song.title,
       artist: song.artist,
-      movieOrAlbum: 'Melody Hits',
-      duration: 218,
+      movieOrAlbum: song.movieOrAlbum || 'Melody Hits',
+      duration: song.duration || 218,
       coverUrl: song.coverUrl,
-      audioUrl: song.audioUrl || 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=electronic-future-beats-117997.mp3',
-      genre: 'telugu',
+      audioUrl: song.audioUrl || '',
+      genre: (song.genre as any) || 'telugu',
     };
 
-    if (currentTrack.id === song.id) {
+    if (currentTrack.id === trackToPlay.id) {
       togglePlayPause();
     } else {
-      playTrack(trackToPlay, MOCK_TRACKS);
+      const activeQueue = spotifyTrendingHits.length > 0 ? spotifyTrendingHits : [trackToPlay];
+      playTrack(trackToPlay, activeQueue);
     }
   };
 
@@ -262,7 +321,17 @@ export const HomeScreen: React.FC = () => {
           </div>
 
           {/* Expressive Pill Search Bar */}
-          <div className="relative w-full flex items-center bg-surface-container rounded-full px-space-md py-space-sm shadow-[0_4px_16px_rgba(91,66,243,0.05)] focus-within:bg-surface-container-lowest focus-within:shadow-[0_6px_20px_rgba(91,66,243,0.12)] transition-all">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchQuery.trim()) {
+                navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+              } else {
+                navigate('/search');
+              }
+            }}
+            className="relative w-full flex items-center bg-surface-container rounded-full px-space-md py-space-sm shadow-[0_4px_16px_rgba(91,66,243,0.05)] focus-within:bg-surface-container-lowest focus-within:shadow-[0_6px_20px_rgba(91,66,243,0.12)] transition-all cursor-text"
+          >
             <span className="material-symbols-outlined text-outline text-[22px] mr-space-xs">
               search
             </span>
@@ -270,19 +339,53 @@ export const HomeScreen: React.FC = () => {
               id="main-search-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Telugu, Bollywood, artists..."
+              placeholder="Search any song, artist, album on Spotify..."
               className="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none"
               type="text"
             />
             <button
-              aria-label="Audio & Filters"
+              type="submit"
+              aria-label="Search"
               id="search-filter-btn"
-              onClick={() => navigate('/search')}
               className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:text-primary transition-colors flex-shrink-0 active:scale-95 cursor-pointer"
             >
-              <span className="material-symbols-outlined text-[18px]">tune</span>
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </button>
-          </div>
+          </form>
+
+          {/* Spotify Real-Time Integration Indicator */}
+          {spotifyStatus === 'connected' ? (
+            <div className="flex items-center justify-between px-3.5 py-1.5 rounded-full bg-[#1DB954]/10 border border-[#1DB954]/25">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#1DB954] animate-pulse"></span>
+                <span className="text-[#1DB954] font-label-sm text-xs font-bold">
+                  Spotify Premium Active {spotifyUser?.name ? `• ${spotifyUser.name}` : ''}
+                </span>
+              </div>
+              <span className="text-[11px] text-on-surface-variant font-medium">SDK Connected</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-[#191414] via-[#1a1420] to-[#1DB954]/15 border border-[#1DB954]/30">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-[#1DB954] flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-black fill-current" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.485 17.318c-.215.353-.675.467-1.028.252-2.817-1.722-6.362-2.112-10.538-1.157-.404.093-.81-.16-.902-.564-.093-.404.16-.81.564-.903 4.568-1.045 8.487-.6 11.652 1.344.353.216.467.676.252 1.028zm1.465-3.26c-.27.441-.849.582-1.29.312-3.224-1.982-8.14-2.556-11.954-1.398-.498.151-1.03-.135-1.18-.633-.152-.498.134-1.03.632-1.181 4.364-1.324 9.774-.683 13.48 1.594.441.27.582.849.312 1.29zm.126-3.398c-3.868-2.296-10.25-2.508-13.94-1.387-.594.18-1.228-.155-1.408-.75-.18-.594.155-1.228.75-1.408 4.237-1.286 11.277-1.037 15.719 1.6 1.536.319.682 1.156.363 1.581-.318.536-1.156.682-1.581.364z"/>
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-white text-xs font-bold leading-tight">Connect Spotify Premium</span>
+                  <span className="text-white/70 text-[11px] leading-tight">Stream any song in HD quality</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={connectSpotify}
+                className="px-3 py-1.5 rounded-full bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer"
+              >
+                Connect
+              </button>
+            </div>
+          )}
 
           {/* Language Quick-Filter Chips */}
           <div className="flex items-center gap-space-xs overflow-x-auto no-scrollbar -mx-margin px-margin py-1">
@@ -380,6 +483,117 @@ export const HomeScreen: React.FC = () => {
           </div>
         </section>
 
+        {/* Live Spotify Fresh Releases (when connected) */}
+        {spotifyStatus === 'connected' && (
+          <section className="mb-space-lg">
+            <div className="px-margin flex items-center justify-between mb-space-sm">
+              <div className="flex items-center gap-space-xs">
+                <div className="w-2.5 h-6 rounded-full bg-[#1DB954]"></div>
+                <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold flex items-center gap-2">
+                  <span>Fresh on Spotify</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#1DB954]/15 text-[#1DB954]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954] animate-pulse"></span>
+                    Live
+                  </span>
+                </h3>
+              </div>
+              <button
+                onClick={() => navigate('/search?q=2024%20Telugu%20Hits')}
+                className="font-label-md text-label-md text-primary font-bold hover:underline flex items-center gap-0.5 active:translate-x-0.5 transition-transform cursor-pointer"
+              >
+                <span>Search Spotify</span>
+                <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              </button>
+            </div>
+
+            <div className="flex gap-space-md overflow-x-auto no-scrollbar px-margin pb-2">
+              {spotifyNewReleases.length === 0 && isLoadingSpotify ? (
+                <div className="w-full py-8 text-center text-on-surface-variant flex items-center justify-center gap-2">
+                  <span className="material-symbols-outlined animate-spin text-primary text-[20px]">
+                    progress_activity
+                  </span>
+                  <span className="text-sm">Loading latest releases from Spotify...</span>
+                </div>
+              ) : spotifyNewReleases.length === 0 ? (
+                <div className="w-full py-6 text-center text-on-surface-variant flex flex-col items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-outline text-[24px]">music_note</span>
+                  <span className="text-xs text-outline">Search above to explore millions of new tracks on Spotify</span>
+                </div>
+              ) : (
+                spotifyNewReleases.map((song) => {
+                  const isSongPlaying = currentTrack.id === song.id && isPlaying;
+                  const songLiked = isLiked(song.id);
+
+                  return (
+                    <div
+                      key={song.id}
+                      onClick={() => handlePlaySong(song)}
+                      className="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform text-left"
+                    >
+                      <div className="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(29,185,84,0.12)]">
+                        <img
+                          alt={song.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          src={song.coverUrl}
+                        />
+                        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-label-sm text-[11px] font-semibold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954]"></span>
+                          Spotify
+                        </span>
+
+                        {/* Like button */}
+                        <button
+                          aria-label={`Like ${song.title}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleLike(song.id);
+                          }}
+                          className={`like-btn absolute top-2 right-2 w-7 h-7 rounded-full backdrop-blur-md flex items-center justify-center transition-all active:scale-75 ${
+                            songLiked
+                              ? 'bg-secondary-container text-white'
+                              : 'bg-black/50 text-white hover:bg-secondary-container'
+                          }`}
+                        >
+                          <span
+                            className="material-symbols-outlined text-[16px] like-icon"
+                            style={songLiked ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                          >
+                            {songLiked ? 'favorite' : 'favorite_border'}
+                          </span>
+                        </button>
+
+                        {/* Play button */}
+                        <button
+                          aria-label={`Play ${song.title}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePlaySong(song);
+                          }}
+                          className="play-overlay-btn absolute bottom-2 right-2 w-10 h-10 rounded-full bg-[#1DB954] text-white flex items-center justify-center shadow-lg active:scale-90 transition-transform"
+                        >
+                          <span
+                            className="material-symbols-outlined text-[20px]"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            {isSongPlaying ? 'pause' : 'play_arrow'}
+                          </span>
+                        </button>
+                      </div>
+
+                      <p className="font-title-md text-sm font-bold text-on-surface truncate group-hover:text-primary transition-colors">
+                        {song.title}
+                      </p>
+                      <p className="font-body-sm text-xs text-on-surface-variant truncate">
+                        {song.artist}
+                      </p>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Horizontal Carousel: Trending Telugu & Bollywood Hits */}
         <section className="mb-space-lg">
           <div className="px-margin flex items-center justify-between mb-space-sm">
@@ -400,46 +614,55 @@ export const HomeScreen: React.FC = () => {
 
           {/* Scrollable Reel */}
           <div className="flex gap-space-md overflow-x-auto no-scrollbar px-margin pb-2">
-            {trendingHits.map((song) => {
-              const isSongPlaying = currentTrack.id === song.id && isPlaying;
-              const songLiked = isLiked(song.id);
+            {isLoadingTrending && spotifyTrendingHits.length === 0 ? (
+              <div className="w-full py-8 text-center text-on-surface-variant flex items-center justify-center gap-2">
+                <span className="material-symbols-outlined animate-spin text-primary text-[20px]">
+                  progress_activity
+                </span>
+                <span className="text-sm">Loading trending hits from Spotify...</span>
+              </div>
+            ) : (
+              (spotifyTrendingHits.length > 0 ? spotifyTrendingHits : trendingHits).map((song: any) => {
+                const isSongPlaying = currentTrack.id === song.id && isPlaying;
+                const songLiked = isLiked(song.id);
 
-              return (
-                <div
-                  key={song.id}
-                  onClick={() => handlePlaySong(song)}
-                  className="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform"
-                >
-                  <div className="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
-                    <img
-                      alt={song.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      src={song.coverUrl}
-                    />
-                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-on-surface/60 backdrop-blur-md text-surface font-label-sm text-label-sm font-semibold">
-                      {song.tag}
-                    </span>
-
-                    {/* Like button */}
-                    <button
-                      aria-label={`Like ${song.title}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleLike(song.id);
-                      }}
-                      className={`like-btn absolute top-2 right-2 w-7 h-7 rounded-full backdrop-blur-md flex items-center justify-center transition-all active:scale-75 ${
-                        songLiked
-                          ? 'bg-secondary-container text-white'
-                          : 'bg-on-surface/50 text-surface hover:bg-secondary-container hover:text-white'
-                      }`}
-                    >
-                      <span
-                        className="material-symbols-outlined text-[16px] like-icon"
-                        style={songLiked ? { fontVariationSettings: "'FILL' 1" } : undefined}
-                      >
-                        {songLiked ? 'favorite' : 'favorite_border'}
+                return (
+                  <div
+                    key={song.id}
+                    onClick={() => handlePlaySong(song)}
+                    className="song-card flex-shrink-0 w-44 flex flex-col gap-space-xs group cursor-pointer active:scale-98 transition-transform"
+                  >
+                    <div className="relative w-44 h-44 rounded-xl overflow-hidden bg-surface-container shadow-[0_8px_20px_rgba(91,66,243,0.08)]">
+                      <img
+                        alt={song.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        src={song.coverUrl}
+                      />
+                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-white font-label-sm text-[11px] font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954]"></span>
+                        {song.tag || 'Spotify'}
                       </span>
-                    </button>
+
+                      {/* Like button */}
+                      <button
+                        aria-label={`Like ${song.title}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleLike(song.id);
+                        }}
+                        className={`like-btn absolute top-2 right-2 w-7 h-7 rounded-full backdrop-blur-md flex items-center justify-center transition-all active:scale-75 ${
+                          songLiked
+                            ? 'bg-secondary-container text-white'
+                            : 'bg-black/50 text-white hover:bg-secondary-container'
+                        }`}
+                      >
+                        <span
+                          className="material-symbols-outlined text-[16px] like-icon"
+                          style={songLiked ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                        >
+                          {songLiked ? 'favorite' : 'favorite_border'}
+                        </span>
+                      </button>
 
                     {/* Play button */}
                     <button
@@ -472,7 +695,8 @@ export const HomeScreen: React.FC = () => {
                   </div>
                 </div>
               );
-            })}
+            })
+          )}
           </div>
         </section>
 

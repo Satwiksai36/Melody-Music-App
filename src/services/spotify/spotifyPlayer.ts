@@ -128,16 +128,56 @@ class SpotifyPlayerService {
           volume: 0.8,
         });
 
-        this.sdkPlayer.addListener('ready', ({ device_id }) => {
+        this.sdkPlayer.addListener('ready', async ({ device_id }) => {
           this.deviceId = device_id;
+          console.log('[Spotify SDK] Ready with Device ID:', device_id);
           this.setStatus('idle');
+          try {
+            const token = await spotifyAuth.getValidToken();
+            if (token) {
+              await fetch('https://api.spotify.com/v1/me/player', {
+                method: 'PUT',
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  device_ids: [device_id],
+                  play: false,
+                }),
+              });
+            }
+          } catch (e) {
+            console.warn('[Spotify SDK] Auto-transfer note:', e);
+          }
           resolve(true);
         });
 
-        this.sdkPlayer.addListener('not_ready', () => {
+        this.sdkPlayer.addListener('not_ready', ({ device_id }) => {
+          console.log('[Spotify SDK] Device offline:', device_id);
           this.deviceId = null;
-          this.setStatus('error');
+        });
+
+        this.sdkPlayer.addListener('initialization_error', ({ message }) => {
+          console.warn('[Spotify SDK] Initialization Error:', message);
           resolve(false);
+        });
+
+        this.sdkPlayer.addListener('authentication_error', ({ message }) => {
+          console.warn('[Spotify SDK] Authentication Error:', message);
+          this.setStatus('auth_required');
+          resolve(false);
+        });
+
+        this.sdkPlayer.addListener('account_error', ({ message }) => {
+          console.warn('[Spotify SDK] Account Error:', message);
+          this.isPremium = false;
+          this.setStatus('unavailable');
+          resolve(false);
+        });
+
+        this.sdkPlayer.addListener('playback_error', ({ message }) => {
+          console.warn('[Spotify SDK] Playback Error:', message);
         });
 
         this.sdkPlayer.addListener('player_state_changed', (state) => {
@@ -155,22 +195,11 @@ class SpotifyPlayerService {
           });
         });
 
-        this.sdkPlayer.addListener('authentication_error', () => {
-          this.setStatus('auth_required');
-          resolve(false);
-        });
-
-        this.sdkPlayer.addListener('account_error', () => {
-          // Premium required
-          this.isPremium = false;
-          this.setStatus('unavailable');
-          resolve(false);
-        });
-
         this.sdkPlayer.connect();
       });
-    } catch {
-      this.setStatus('error');
+    } catch (err) {
+      console.warn('[Spotify SDK] Init catch:', err);
+      this.setStatus('idle');
       return false;
     }
   }
@@ -238,9 +267,25 @@ class SpotifyPlayerService {
 
   // ─── SDK Playback (Premium) ────────────────────────────────────────────────
 
+  private async waitForDevice(timeoutMs = 4000): Promise<string | null> {
+    if (this.deviceId) return this.deviceId;
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      if (this.deviceId) return this.deviceId;
+      await new Promise((r) => setTimeout(r, 200));
+    }
+    return this.deviceId;
+  }
+
   private async playViaSDK(track: MusicTrack, positionMs = 0): Promise<void> {
-    if (!this.deviceId) {
-      this.setStatus('error');
+    let deviceId = this.deviceId;
+    if (!deviceId) {
+      deviceId = await this.waitForDevice(4000);
+    }
+
+    if (!deviceId) {
+      console.warn('[Spotify SDK] Device ID not ready yet, falling back to preview');
+      await this.playPreview(track);
       return;
     }
 
@@ -253,30 +298,52 @@ class SpotifyPlayerService {
     this.setStatus('loading');
     this.setCurrentTrack(track);
 
-    const res = await fetch(
-      `https://api.spotify.com/v1/me/player/play?device_id=${this.deviceId}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          uris: [`spotify:track:${track.providerId}`],
-          position_ms: positionMs,
-        }),
+    try {
+      const res = await fetch(
+        `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uris: [`spotify:track:${track.providerId}`],
+            position_ms: positionMs,
+          }),
+        }
+      );
+
+      if (res.status === 403) {
+        // Premium required — fall back to preview
+        this.isPremium = false;
+        this.setStatus('unavailable');
+        await this.playPreview(track);
+        return;
       }
-    );
 
-    if (res.status === 403) {
-      // Premium required — fall back to preview
-      this.isPremium = false;
-      this.setStatus('unavailable');
-      await this.playPreview(track);
-      return;
-    }
+      if (res.status === 404) {
+        // Device not active yet — transfer device and retry play once
+        await fetch('https://api.spotify.com/v1/me/player', {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            device_ids: [deviceId],
+            play: true,
+          }),
+        });
+        return;
+      }
 
-    if (!res.ok && res.status !== 204) {
+      if (!res.ok && res.status !== 204) {
+        console.warn('[Spotify SDK] Playback PUT returned:', res.status);
+        this.setStatus('error');
+      }
+    } catch (err) {
+      console.warn('[Spotify SDK] playViaSDK network error:', err);
       this.setStatus('error');
     }
   }
@@ -284,11 +351,16 @@ class SpotifyPlayerService {
   // ─── Public Playback API ───────────────────────────────────────────────────
 
   async play(track: MusicTrack, positionMs = 0): Promise<void> {
-    if (this.isPremium && this.sdkPlayer && this.deviceId) {
-      await this.playViaSDK(track, positionMs);
-    } else {
-      await this.playPreview(track);
+    if (this.isPremium) {
+      if (!this.deviceId && this.sdkPlayer) {
+        await this.waitForDevice(4000);
+      }
+      if (this.deviceId && this.sdkPlayer) {
+        await this.playViaSDK(track, positionMs);
+        return;
+      }
     }
+    await this.playPreview(track);
   }
 
   async pause(): Promise<void> {

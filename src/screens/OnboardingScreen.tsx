@@ -4,17 +4,6 @@ import { storageService } from '../services/storageService';
 
 export const OnboardingScreen: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
-    const saved = storageService.getSelectedLanguages();
-    return saved && saved.length > 0 ? saved : [];
-  });
-  const [searchQuery, setSearchQuery] = useState('');
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 2500);
-  };
 
   // Exact 8 Artists & Languages from Stitch melody_sound_languages_artists/code.html
   const languageCards = [
@@ -83,6 +72,32 @@ export const OnboardingScreen: React.FC = () => {
         'https://lh3.googleusercontent.com/aida-public/AB6AXuDDgOyIj9qxTUJN2bxoPwOqzq9HH7Ud060-HWnVzYuZmLc7bX1aYD1G9JgzbyHBDaSJxpvmcL_6Fwx848BWxBjEN9gu1ie7yw5DT8vdbouors-tiDasghPrayTinofcnZD-kWM-G1Q9VI6wnCsQGaLvyQs774JJuNU9ZcezqiR9f-ufy1Tln3GQ6fhJkvm7pjssCrVhqSeRggaaCWqYW8rKSAuPv8a-tcs_Ye8RJwyclHsRuvT5NrF7Dg',
     },
   ];
+
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const saved = storageService.getSelectedLanguages();
+    if (!saved || !Array.isArray(saved) || saved.length === 0) return [];
+    
+    // Clean out legacy demo mock strings ('telugu', 'hindi', 'tamil') that were hardcoded defaults
+    const cleaned = saved.filter(
+      (id) => id !== 'telugu' && id !== 'hindi' && id !== 'tamil'
+    );
+    // Keep only IDs matching available cards
+    const validCardIds = new Set(languageCards.map((c) => c.id));
+    const result = cleaned.filter((id) => validCardIds.has(id));
+    if (result.length !== saved.length) {
+      storageService.setSelectedLanguages(result);
+    }
+    return result;
+  });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2500);
+  };
+
+
 
   const toggleCard = (id: string, name: string) => {
     setSelectedIds((prev) => {
@@ -279,7 +294,13 @@ export const OnboardingScreen: React.FC = () => {
           onClick={() => handleComplete(selectedIds)}
           className="w-full py-4 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-[0_8px_24px_rgba(91,66,243,0.35)] flex items-center justify-center gap-2 active:scale-95 transition-all cursor-pointer mb-2"
         >
-          <span>Continue with {selectedIds.length} Languages</span>
+          <span>
+            {selectedIds.length === 0
+              ? 'Continue without selecting'
+              : selectedIds.length === 1
+              ? 'Continue with 1 Language'
+              : `Continue with ${selectedIds.length} Languages`}
+          </span>
           <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
         </button>
       </div>

@@ -1,23 +1,42 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Header } from '../components/common/Header';
 import { usePlayer } from '../context/PlayerContext';
 import { Track } from '../types';
 import { MOCK_TRACKS, MOCK_ARTISTS, MOCK_ALBUM_PUSHPA2 } from '../data/mockData';
 import { storageService } from '../services/storageService';
+import { spotifyApi, musicTrackToInternalTrack } from '../services/spotify';
 
 export const SearchScreen: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { currentTrack, isPlaying, playTrack, togglePlayPause, isLiked, toggleLike } = usePlayer();
 
-  const [query, setQuery] = useState<string>('Sid Sriram Telugu Hits');
+  const [query, setQuery] = useState<string>(() => searchParams.get('q') || '');
   const [activeTab, setActiveTab] = useState<string>('songs');
+  const [isSearchingSpotify, setIsSearchingSpotify] = useState<boolean>(false);
+  const [spotifySongs, setSpotifySongs] = useState<Track[]>([]);
+  const [spotifyArtists, setSpotifyArtists] = useState<any[]>([]);
+  const [spotifyAlbums, setSpotifyAlbums] = useState<any[]>([]);
+  const [defaultTrendingSongs, setDefaultTrendingSongs] = useState<Track[]>([]);
+
+  useEffect(() => {
+    spotifyApi.getTopIndianHits(15).then((tracks) => {
+      if (tracks && tracks.length > 0) {
+        setDefaultTrendingSongs(tracks.map(musicTrackToInternalTrack));
+      }
+    }).catch(() => {});
+  }, []);
+
   const [trendingTags, setTrendingTags] = useState<string[]>([
     'Pushpa 2 The Rule',
     'Arijit Singh Romantic',
     'Kalki BGM',
     'Anirudh EDM',
     'Devara',
+    'Taylor Swift',
+    'Coldplay',
+    'Naatu Naatu',
   ]);
 
   const tabs = [
@@ -95,11 +114,79 @@ export const SearchScreen: React.FC = () => {
     ];
   }, []);
 
-  // Filtered tracks based on query and active tab
+  // Sync query when URL query parameter changes
+  useEffect(() => {
+    const qFromUrl = searchParams.get('q');
+    if (qFromUrl && qFromUrl !== query) {
+      setQuery(qFromUrl);
+    }
+  }, [searchParams]);
+
+  // Debounced live Spotify search
+  useEffect(() => {
+    const cleanQ = query.trim();
+    if (!cleanQ || cleanQ.length < 2) {
+      setSpotifySongs([]);
+      setSpotifyArtists([]);
+      setSpotifyAlbums([]);
+      setIsSearchingSpotify(false);
+      return;
+    }
+
+    setIsSearchingSpotify(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await spotifyApi.search(cleanQ, 25);
+        if (res && res.tracks && res.tracks.length > 0) {
+          const mapped = res.tracks.map(musicTrackToInternalTrack);
+          setSpotifySongs(mapped);
+          setSpotifyArtists(
+            (res.artists || []).map((a) => ({
+              id: `spotify:${a.providerId}`,
+              name: a.name,
+              language: a.genres?.slice(0, 2).join(' • ') || 'Spotify Artist',
+              tagline: 'Verified Artist on Spotify',
+              imageUrl:
+                a.artworkUrl ||
+                'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500',
+              isSelected: false,
+            }))
+          );
+          setSpotifyAlbums(
+            (res.albums || []).map((alb) => ({
+              id: `spotify:${alb.providerId}`,
+              title: alb.title,
+              artist: alb.artist,
+              description: `${alb.releaseYear || '2024'} • ${alb.trackCount || 0} Tracks`,
+              coverUrl:
+                alb.artworkUrl ||
+                'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500',
+              trackCount: alb.trackCount || 0,
+              durationText: 'Album',
+              tracks: [],
+            }))
+          );
+        } else {
+          setSpotifySongs([]);
+        }
+      } catch (err) {
+        console.warn('[SearchScreen] Spotify search error:', err);
+      } finally {
+        setIsSearchingSpotify(false);
+      }
+    }, 320);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  // Filtered tracks based on query and live Spotify results
   const filteredSongs = useMemo(() => {
+    if (spotifySongs.length > 0) {
+      return spotifySongs;
+    }
     const cleanQ = query.trim().toLowerCase();
     if (!cleanQ) {
-      return baseSearchSongs.slice(0, 5);
+      return defaultTrendingSongs.length > 0 ? defaultTrendingSongs : baseSearchSongs.slice(0, 5);
     }
     return baseSearchSongs.filter((t) => {
       const matchTitle = t.title.toLowerCase().includes(cleanQ);
@@ -108,10 +195,13 @@ export const SearchScreen: React.FC = () => {
       const matchGenre = (t.genre || '').toLowerCase().includes(cleanQ);
       return matchTitle || matchArtist || matchMovie || matchGenre;
     });
-  }, [baseSearchSongs, query]);
+  }, [baseSearchSongs, defaultTrendingSongs, query, spotifySongs]);
 
-  // Filtered artists based on query
+  // Filtered artists based on query and live Spotify artists
   const filteredArtists = useMemo(() => {
+    if (spotifyArtists.length > 0) {
+      return spotifyArtists;
+    }
     const cleanQ = query.trim().toLowerCase();
     if (!cleanQ) return MOCK_ARTISTS;
     return MOCK_ARTISTS.filter(
@@ -120,9 +210,9 @@ export const SearchScreen: React.FC = () => {
         a.language.toLowerCase().includes(cleanQ) ||
         a.tagline.toLowerCase().includes(cleanQ)
     );
-  }, [query]);
+  }, [query, spotifyArtists]);
 
-  // Filtered playlists
+  // Filtered playlists and albums
   const userPlaylists = useMemo(() => storageService.getPlaylists(), []);
   const filteredPlaylists = useMemo(() => {
     const cleanQ = query.trim().toLowerCase();
@@ -206,9 +296,15 @@ export const SearchScreen: React.FC = () => {
         <section className="px-margin pt-space-sm pb-space-md flex flex-col gap-space-sm">
           {/* Active Search Bar */}
           <div className="relative w-full flex items-center bg-surface-container-low rounded-full px-space-md py-space-xs shadow-sm">
-            <span className="material-symbols-outlined text-primary text-[22px] flex-shrink-0">
-              search
-            </span>
+            {isSearchingSpotify ? (
+              <span className="material-symbols-outlined text-primary text-[20px] animate-spin flex-shrink-0">
+                progress_activity
+              </span>
+            ) : (
+              <span className="material-symbols-outlined text-primary text-[22px] flex-shrink-0">
+                search
+              </span>
+            )}
             <input
               id="search-input"
               aria-label="Search songs, artists, albums"
@@ -318,11 +414,28 @@ export const SearchScreen: React.FC = () => {
         {(activeTab === 'all' || activeTab === 'songs') && (
           <section className="px-margin pt-space-xs pb-space-lg flex flex-col gap-space-sm">
             <div className="flex items-center justify-between">
-              <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                Top Songs
-              </h2>
-              <span className="font-body-sm text-body-sm text-on-surface-variant">
-                {filteredSongs.length} results
+              <div className="flex items-center gap-2">
+                <h2 className="font-headline-sm text-headline-sm text-on-surface font-bold">
+                  Top Songs
+                </h2>
+                {spotifySongs.length > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#1DB954]/15 text-[#1DB954]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1DB954] animate-pulse"></span>
+                    Spotify Live
+                  </span>
+                )}
+              </div>
+              <span className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+                {isSearchingSpotify ? (
+                  <>
+                    <span className="material-symbols-outlined text-[14px] animate-spin text-primary">
+                      progress_activity
+                    </span>
+                    <span>Searching Spotify...</span>
+                  </>
+                ) : (
+                  <span>{filteredSongs.length} results</span>
+                )}
               </span>
             </div>
 

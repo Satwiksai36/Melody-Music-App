@@ -264,7 +264,19 @@ class StorageService {
 
   // Selected Languages
   getSelectedLanguages(): string[] {
-    return this.safeGet<string[]>(STORAGE_KEYS.SELECTED_LANGUAGES, []);
+    const saved = this.safeGet<string[]>(STORAGE_KEYS.SELECTED_LANGUAGES, []);
+    // Wipe legacy 3-language demo defaults if present
+    if (
+      Array.isArray(saved) &&
+      saved.length === 3 &&
+      saved.includes('telugu') &&
+      saved.includes('hindi') &&
+      saved.includes('tamil')
+    ) {
+      this.safeSet(STORAGE_KEYS.SELECTED_LANGUAGES, []);
+      return [];
+    }
+    return saved;
   }
 
   setSelectedLanguages(languages: string[]): void {

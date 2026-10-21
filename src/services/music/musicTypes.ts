@@ -88,6 +88,9 @@ export interface IMusicCatalogService {
   getTrack(providerId: string): Promise<MusicTrack | null>;
   getAlbum(providerId: string): Promise<MusicAlbum | null>;
   getArtist(providerId: string): Promise<MusicArtist | null>;
+  getNewReleases?(limit?: number): Promise<MusicTrack[]>;
+  getGenreTracks?(genre: string, limit?: number): Promise<MusicTrack[]>;
+  getTopIndianHits?(limit?: number): Promise<MusicTrack[]>;
 }
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
